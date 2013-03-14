@@ -1,0 +1,9 @@
+.*~
+.git
+.git/
+/.git/
+./.git
+.gitignore
+^.*\.Rproj$
+^\.Rproj\.user$
+Testing_functions.R

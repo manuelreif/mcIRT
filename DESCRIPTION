@@ -1,0 +1,9 @@
+Package: mcIRT
+Type: Package
+Title: IRT models for multiple choice items (mcIRT)
+Version: 0.01
+Date: 2013-03-14
+Author: Manuel Reif
+Maintainer: Manuel Reif <manuel.reif@univie.ac.at>
+Description: This package provides functions to estimate two popular IRT-models: The oldschool Nominal Response Model (Bock 1972) and the quite recently developed Nested Logit Model (Suh & Bolt 2010). Two models to examine multiple-choice items and other multicategorical response formats. 
+License:GPL (>= 2)

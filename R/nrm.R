@@ -1,0 +1,222 @@
+nrm <-
+function(reshOBJ,etastart=-0.1, ctrl=list())  
+{
+  call <- match.call()
+  attr(call, "date") <- date()
+  
+
+  ## check
+  RA <- qr(reshOBJ$Qmat)$rank
+  if(RA < ncol(reshOBJ$Q))
+  {
+    stop(paste("Q matrix has only rank",RA," - but must have full column rank! \n"))  
+  }
+  
+  
+  #########################################
+  ######### USER CONTROLS #################
+  #########################################
+  
+  cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, dooptim=FALSE)
+
+  user_ctrlI <- match(names(ctrl),names(cont))
+  if(any(is.na(user_ctrlI)))
+      {
+      notex <- names(ctrl)[is.na(user_ctrlI)]
+      warning("The following options in ctrl do not exist: ", paste(notex,collapse=", "))
+      ctrl       <- ctrl[!is.na(user_ctrlI)]
+      user_ctrlI <- user_ctrlI[!is.na(user_ctrlI)]
+      }
+  
+  cont[user_ctrlI] <- ctrl
+  
+  #-------------------------------------------------------------------
+  
+  ## generate starting values
+  startOBJ <- startV_nrmMG(reshOBJ=reshOBJ,etastart=etastart)
+  ##generate quadrature nodes and weights
+  quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=nlevels(reshOBJ$gr))
+  
+  
+  OLD     <- 0
+  ZAEHL   <- 1
+  PARS    <- startOBJ$ulstv
+  NLev    <- nlevels(reshOBJ$gr)
+  ESTlist <- list()
+  mueERG  <- NA
+  
+  
+  ##################################
+  ## EM Algorithm  #################
+  ##################################
+
+  
+if(cont$dooptim)
+{
+
+  repeat
+  {
+    if(cont$verbose){cat("\r Estep:",ZAEHL,"\r")}
+    
+    #E ****
+    erg_estep <- Enrm(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,PREVinp=mueERG)
+    
+    #M ****
+    oerg <- optim(par=PARS,fn=ZFnrm,gr=de1nrm,riqv_quer=erg_estep, startOBJ=startOBJ, reshOBJ=reshOBJ, quads=quads, control=list(fnscale=-1,maxit=50),method="BFGS",hessian=TRUE)
+    
+    if(NLev > 1)
+    {
+      # estimate mu and sigma
+      mueERG <- mueNRM(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest)
+      # new quads
+      quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev,mu=mueERG$mean_est,sigma=mueERG$sig_est)
+    }
+    
+
+    
+    if(abs(OLD - abs(oerg$value)) <= cont$exac & ZAEHL > 10 | ZAEHL > cont$EMmax)
+    {
+      mueERG <- mueNRM(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest,endest=TRUE)
+      
+      ESTlist[[1]]   <- oerg$par
+      ESTlist[[2]]   <- erg_estep
+      ESTlist[[3]]   <- oerg
+      ESTlist[[4]]   <- ZAEHL
+      ESTlist[[5]]   <- mueERG
+      ESTlist[[6]]   <- quads
+      ESTlist[[7]]   <- startOBJ
+      
+      names(ESTlist) <- c("etapar","last_estep","last_mstep" ,"n_steps","erg_distr","QUAD","starting_values")
+      break
+    }
+    
+    OLD <- abs(oerg$value)
+    PARS <- oerg$par
+    ZAEHL <- ZAEHL + 1
+  }  
+  
+} else 
+{
+  
+  repeat
+  {
+    if(cont$verbose & (ZAEHL == 1 | NLev <= 1)){cat("\r Estep:",ZAEHL,"| Mstep:", ZAEHL -1,"\r")}
+    
+    # E - STEP
+    erg_estep <-  Enrm(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,PREVinp=mueERG)
+    
+    # M - STEP
+    if(cont$verbose){cat("\r Estep:",ZAEHL,"| Mstep:", ZAEHL,"\r")}
+    mPARS <- PARS
+    
+    #################################
+    ## Newton Raphson Procedure  ####
+    #################################
+    
+    for(i in 1:cont$NRmax)
+      {
+        fir1 <- de1nrm(mPARS,riqv_quer=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
+        sec2 <- de2nrm(mPARS,riqv_quer=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
+        
+        newP <- mPARS - as.vector(fir1 %*% solve(sec2))
+        
+        if(sum(abs(newP - mPARS)) < cont$NRexac)
+          {
+          mPARS <- newP
+          break 
+          } else {
+                  mPARS <- newP
+                 }
+      }
+
+
+          
+###########################
+# FINISHED ? ##############
+###########################
+    
+        if(sum(abs(mPARS - PARS)) <= cont$exac & ZAEHL > 10 | ZAEHL >= cont$EMmax)
+          {
+            if(cont$verbose){cat("\r Estep:",ZAEHL,"| Mstep:", ZAEHL," --> estimating EAP & co \r")}
+            mueERG <- mueNRM(mPARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest,endest=TRUE)
+            
+            ###### LIKELIHOOD BERECHNEN #######################
+            value <- ZFnrm(mPARS,riqv_quer=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
+            ###################################################
+            
+            ESTlist[[1]]   <- mPARS
+            ESTlist[[2]]   <- erg_estep
+            ESTlist[[3]]   <- list(value=value, hessian=sec2)
+            ESTlist[[4]]   <- ZAEHL
+            ESTlist[[5]]   <- mueERG
+            ESTlist[[6]]   <- quads
+            ESTlist[[7]]   <- startOBJ
+            
+            names(ESTlist) <- c("etapar","last_estep","last_mstep" ,"n_steps","erg_distr","QUAD","starting_values")
+            break
+           }
+    
+    
+    if(NLev > 1)
+    {
+      if(cont$verbose & ZAEHL >= 1){cat("\r Estep:",ZAEHL+1,"| Mstep:", ZAEHL,"\r")}  
+      # estimate mu and sigma
+      mueERG <- mueNRM(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest)
+      # new quads
+      quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev,mu=mueERG$mean_est,sigma=mueERG$sig_est)
+    }
+     
+    PARS <- mPARS
+    ZAEHL <- ZAEHL + 1
+  }  
+  
+
+}
+
+  ## Person Parameters
+  
+  EAP_nrm <- PePNRM(quads=quads,mueERG=mueERG)
+  ESTlist$EAPs <- EAP_nrm
+  ## centering
+  
+  centmatrix <- CentMnrm(reshOBJ=reshOBJ)
+  
+  retrans1 <- as.vector(reshOBJ$Qmat %*% ESTlist$etapar) 
+  
+  zetlamP <- as.vector(retrans1 %*% centmatrix)
+  names(zetlamP) <- rownames(reshOBJ$Qmat)
+    
+  ZLpar <- relist(zetlamP, startOBJ$stwm1)
+  
+  ESTlist$ZLpar <- lapply(ZLpar,function(x)
+          {
+            names(x)  <- paste("Item",1:length(x),sep="")
+            x
+          }) 
+  names(ESTlist$ZLpar) <- levels(reshOBJ$gr)
+  
+  #SE estimation ----------------
+  comphess <- diag(reshOBJ$Qmat %*% solve(ESTlist$last_mstep$hessian) %*% t(reshOBJ$Qmat))
+  comphesq <- sqrt(comphess*(-1))
+  #
+  notest <- which(rowSums(reshOBJ$Qmat) == 0)
+  comphesq[notest] <- NA
+  attr(comphesq,"listform")  <- relist(comphesq,startOBJ$stwm1)
+  ESTlist$SE <- comphesq
+  
+  
+  # also save the reshOBJ - and of course the queens
+  ESTlist$reshOBJ   <- reshOBJ
+  
+  # -----------------------------
+  # adding category information
+  # -----------------------------
+  ESTlist$Catinf <- Infnrm(ESTlist)
+  
+  ESTlist$call <- call
+  
+  class(ESTlist) <- "nrm"
+  ## write out
+  
+  return(ESTlist)  
+}

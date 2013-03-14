@@ -1,0 +1,127 @@
+mueNRM <-
+function(Ulstv,reshOBJ,startOBJ,quads,sigmaest=FALSE,endest=FALSE)
+{
+  
+  dAtA    <- reshOBJ$recm
+  
+  SKEL  <- startOBJ$stwm1
+  Q     <- reshOBJ$Qmat
+  
+  opp    <- as.vector(Q %*% Ulstv)
+  relstv <- relist(opp,SKEL)
+  
+  
+  nrme1 <- mapply(function(stvl,ql,levs, d1)
+  { # loops all groups
+    
+  Km  <- matrix(c(rep(1,length(ql$nodes)),ql$nodes),ncol=2)
+
+    nrmez <- mapply(function(pitem,daten) # rattert pro item durch
+    { # loops all items
+      
+      LAM <- matrix(pitem,nrow=2,byrow=T)
+      
+      ez      <- exp(Km %*% LAM)
+      ezrs    <- rowSums(ez)        
+      ZQstern <- ez / ezrs
+      
+      ZQdstern <- ZQstern %*% t(daten)
+      
+      return(ZQdstern)
+    },pitem=stvl, daten=d1, SIMPLIFY = FALSE)
+    
+  },stvl=relstv, ql=quads, levs=levels(reshOBJ$gr), d1=dAtA, SIMPLIFY = FALSE)
+  
+
+  
+  mue_hat_g <- mapply(function(levs, zqgroup, ql)
+  {
+    
+    nrme2   <- array(unlist(zqgroup),c(dim(zqgroup[[1]]),length(zqgroup)))
+    
+    bullet_with_butterfly_wings <- apply(nrme2,1:2,function(x) prod(x,na.rm=T))
+    # nodes x persons
+    
+    anzahlnodes <- 1:dim(nrme2)[1]
+    LjmalA      <- bullet_with_butterfly_wings * ql$weights
+    #####
+    
+    LjmalAmalN    <- bullet_with_butterfly_wings * ql$weights * ql$nodes
+    Xquer_insum   <- colSums(LjmalAmalN) 
+    Pji_schlange  <- colSums(LjmalA) 
+    
+    Xqi_quer  <- Xquer_insum / Pji_schlange    
+    Xqi_qq    <- mean(Xqi_quer)
+    
+    
+    # SIGMA
+    if(sigmaest & length(levels(reshOBJ$gr)) > 1)
+    {
+      
+      si_term1 <- t(sapply(ql$nodes,function(NOO) (NOO - Xqi_quer)^2)) 
+      
+      sigma_xugiZ <- colSums(si_term1 * bullet_with_butterfly_wings * ql$weights)
+      sigma_xugi  <- sigma_xugiZ / Pji_schlange
+      
+      
+      Xq_min_muHat <- (Xqi_quer - Xqi_qq)^2
+      
+      SIGhatsq     <- mean(sigma_xugi + Xq_min_muHat)#
+      
+      mesi <- c(Xqi_qq, sqrt(SIGhatsq))
+      
+    } else {
+      mesi <- c(Xqi_qq, 1)  
+    }
+    
+    ####################### SE ##################
+    #NEU
+    if(endest & sigmaest) 
+      {
+      LdurchsumL <- t(LjmalA) / Pji_schlange 
+      sumOnodes <- colSums(t(LdurchsumL) * (ql$nodes - Xqi_qq)/mesi[2])^2
+      muemue    <- sum(sumOnodes)
+      
+      sumOsignodes <- colSums(t(LdurchsumL) * ((ql$nodes - Xqi_qq)^2 - mesi[2]) / (2*mesi[2]^2))^2
+      sigsig <- sum(sumOsignodes)
+      
+      muesig <- colSums(t(LdurchsumL) * (ql$nodes - Xqi_qq)/mesi[2]) %*% colSums(t(LdurchsumL) * ((ql$nodes - Xqi_qq)^2 - mesi[2]) / (2*mesi[2]^2))
+      
+      Infmat <- matrix(c(muemue,muesig,muesig,sigsig),2,2)
+      serrors <- sqrt(diag(solve(Infmat)))
+      names(serrors) <- c("SE_mue","SE_sigma")
+      } else if(endest){ 
+                        LdurchsumL <- t(LjmalA) / Pji_schlange 
+                        sumOnodes <- colSums(t(LdurchsumL) * (ql$nodes - Xqi_qq)/mesi[2])^2
+                        muemue    <- sum(sumOnodes)
+                        serrors     <- c(sqrt(1/muemue),NA)
+                        names(serrors) <- c("SE_mue","SE_sigma")
+                        } else  {
+                                 serrors <- NA
+                                }
+
+
+    names(mesi) <- paste(c("mean","var"),"_",levs,sep="")
+    #mesi
+    list(mesi=mesi,LjmalA=LjmalA,Pji_schlange=Pji_schlange,serrors=serrors)
+    
+  },levs=levels(reshOBJ$gr), zqgroup=nrme1, ql=quads, SIMPLIFY = FALSE)
+  
+  mue_hat_g$A$serrors 
+  # centering 
+  getmean <- sapply(mue_hat_g,function(x)x$mesi[1])
+  getvar <- sapply(mue_hat_g,function(x)x$mesi[2])
+  ##
+  mean_est <- (getmean - getmean[1])
+  # first mean is always zero
+  sig_est  <- getvar + (1-getvar[1])
+  # first variance is always 1
+  
+  #######
+  if(endest){
+    errmat <- sapply(mue_hat_g,function(x) x$serrors)
+  } else {errmat <- NA}
+
+  
+  return(list(mean_est=mean_est , sig_est=sig_est, mue_hat_g=mue_hat_g,errmat=errmat))
+}

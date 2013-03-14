@@ -1,0 +1,162 @@
+\name{nelm}
+\alias{nelm}
+\alias{summary.nelm}
+\alias{print.nelm}
+\alias{deviance.nelm}
+
+\title{
+Estimating a Nested Logit Model
+}
+\description{
+
+This function fits a Nested Logit model proposed by Suh and Bolt (2010). Like the Nominal Response Model this model is especially useful for multiple choice items. In contrast to the Nominal Response Model it models the correct answer category by means of a 2-PL model. For the distractors a NRM is fitted (for details take a closer look at the references mentioned below.)
+
+}
+\usage{
+nelm(reshOBJ, etastart = "aut", ctrl=list())
+
+\method{summary}{nelm}(object, \dots)
+\method{print}{nelm}(x, \dots)
+\method{deviance}{nelm}(object, \dots)
+
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{reshOBJ}{
+An object of class reshNLM is expected. So the step before fitting the model is to reshape the data by means of the \code{reshMG} function.
+}
+  \item{etastart}{
+A numerical vector or "aut" (which is the default). Starting values for the eta parameters can be changed (but is not necessary in typical cases).
+}
+
+  \item{ctrl}{
+A list of argumets to customize the computations.
+}
+
+  \item{object}{
+An object of class \code{nlm}.
+}
+  \item{x}{
+An object of class \code{nlm}.
+}
+
+\item{\dots}{ 
+}
+
+}
+\details{
+The eta parameters in \code{etastart} denote the estimable parameters of the model. For example, for an item with 4 categories (1 correct answer and 3 distractors), 1 \eqn{\alpha}, 1 \eqn{\beta}, 2 \eqn{\gamma}'s (which substitute the 3 \eqn{\zeta}'s) and 2 \eqn{\xi}'s (which substitute the 3 \eqn{\lambda}'s) are constrained for the normalization (sum of parameter sets is zero). 
+
+
+
+The following arguments can be comitted within a list (ctrl argument)
+
+\itemize{
+    \item \code{nodes}
+  A numerical vector of length 1. Set the number of quadrature nodes for the a-priori distribution. The distribution is assumed to be normal.
+
+    \item \code{absrange}
+  A numerical vector of length 1. Denotes the absolute range of the a-priori distribution. The default value is 5, so the normal distribution ranges from \eqn{[-5 ; 5]}.
+  
+    \item \code{verbose}
+  If TRUE, the estimation process is displayed in terms of the actual EMstep.
+  
+    \item \code{sigmaest}
+  If TRUE, the variance of the latent person distribution is estimated. Otherwise it is set to 1 (for each group).
+  
+    \item \code{exac}
+  A numerical vector of length 1. If the difference between two consecutive EM steps is not larger than 'exac' - the estimation will stop.
+  
+    \item \code{EMmax}
+  A numerical vector of length 1. This argument sets the maximum number of EM steps. The default value is 500. Feel free to enlarge this number.
+  
+  \item \code{NRmax}
+A numerical vector of length 1. This argument sets the maximum number of Newton Raphson steps within the M-Step of the EM Algorithm. Default: \code{20}
+
+\item \code{NRexac}
+A numerical vector of length 1. If the difference between two consecutive NR steps is not larger than \code{NRexac} - the NR procedure stops. Default: \code{0.01}
+  
+  }
+
+}
+\value{
+
+
+\item{etapar}{A numerical vector of eta-parameters}
+\item{last_estep}{A list of informations concerning the last e-step before convergence. This is nothing the typical user should care about.}
+\item{last_mstep}{The output provided by \code{optim} concerning the last M-step of the EM-Algorithm.}
+\item{n_steps}{The number of passed EM steps.}
+\item{erg_distr}{Estimates concerning the latent person distribution.}
+\item{QUAD}{Denotes a list containing the quadrature nodes and weights which were used as a-priori distribution.}
+\item{starting_values}{A list with infos concerning the starting values. The first entry gives merely the structure of the starting values whereas \code{$ulstv} gives the used starting values for the first EM step}
+\item{EAPs}{The exact a-posteriori values for each person - which is a person parameter estimate. (Group membership is considered.)}
+\item{ZLpar}{The list of item parameter estimates for each group.}
+\item{SE}{The list of Standard Errors for the item parameter estimates.}
+\item{reshOBJ}{The committed reshape object (which includes the data).}
+\item{Catinf}{A list which contains 1) the information amount for each category/item/group for a sequence of ability values; 2) the sequence of ability values; 3) test information (sum above all items) for each of the ability values.}
+\item{call}{Shows the actual call of the nrm function.}
+
+
+
+
+}
+\references{
+Suh, Y., & Bolt, D. M. (2010). Nested logit models for multiple-choice item response data.
+\emph{Psychometrika, 75}, 454-473.
+
+
+Suh, Y. & Bolt, D. M. (2011). A nested logit approach for investigating distractors as causes of differential item functioning. \emph{Journal of Educational Measurement, 48}, 188-205.
+}
+\author{
+Manuel Reif
+}
+
+
+\seealso{
+\code{\link{reshMG}}
+
+\code{\link{NLM.sim}}
+
+\code{\link{nrm}}
+}
+\examples{
+
+\dontrun{
+# create list of parameters
+Item1 <- c(1,-2,c(-0.5,0.3,0.2),c(-0.5,-0.3,0.8))
+names(Item1) <- c("a","b",paste("zeta1",1:3,sep=""),paste("lamb",1:3,sep=""))
+
+Item2 <- c(1,-1,c(-0.5,-0.3,0.8),c(-0.5,0.3,0.2))
+names(Item2) <- c("a","b",paste("zeta1",1:3,sep=""),paste("lamb",1:3,sep=""))
+
+Item3 <- c(1,0,c(-0.5,-0.3,0.8),c(-0.5,0.3,0.2))
+names(Item3) <- c("a","b",paste("zeta1",1:3,sep=""),paste("lamb",1:3,sep=""))
+
+Item4 <- c(1,1,c(-0.5,-0.3,0.8),c(-0.5,0.3,0.2))
+names(Item4) <- c("a","b",paste("zeta1",1:3,sep=""),paste("lamb",1:3,sep=""))
+
+Item5 <- c(1,2,c(-0.5,-0.3,0.8),c(-0.5,0.3,0.2))
+names(Item5) <- c("a","b",paste("zeta1",1:3,sep=""),paste("lamb",1:3,sep=""))
+
+ParList <- list(Item1=Item1,Item2=Item2,Item3=Item3,Item4=Item4,Item5=Item5)
+
+# simulate data
+perp1 <- rnorm(1000,0,1)
+simdat1 <- NLM.sim(ParList,perp1)
+
+# reshape
+reshOBJ <- reshMG(simdat1,items=1:5,groups=NA,correct=rep(1,5),design="nodif",echo=TRUE,TYPE="NLM")
+
+# estimate a nested logit model
+res.nlm <- nelm(reshOBJ=reshOBJ)
+
+summary(res.nlm)
+
+}
+
+  }
+
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{nested logit model}
+
