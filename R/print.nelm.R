@@ -38,24 +38,27 @@ function(x, ...)
   colnames(albePm) <- c("alpha","SE|alpha","beta","SE|beta")
   
   
-  #RESnlm$reshOBJ$recm
-  
-  catnr <- mapply(function(x,numbers)
+  catnrgroup <- lapply(RESnlm$reshOBJ$recm, function(grou)
   {
-    cn <- colnames(x)[-1]
-    cnn <- gsub(".*_(\\d+)","\\1",cn,perl=TRUE)
-    paste("Item",numbers, "|categ",cnn,sep="") 
     
-  },x=RESnlm$reshOBJ$recm,numbers=1:length(RESnlm$reshOBJ$aDD),SIMPLIFY=FALSE)
+    catnr <- mapply(function(x,numbers) 
+    {
+      cn <- colnames(x)[-1]
+      cnn <- gsub(".*_(\\d+)","\\1",cn, perl=TRUE)
+      paste("Item",numbers, "|categ",cnn,sep="") 
+      
+    },x=grou, numbers=1:length(RESnlm$reshOBJ$aDD),SIMPLIFY=FALSE)
+    catnr  
+  })
   
   #   
-  form1a <- mapply(function(eachG,eachSE)
+  form1a <- mapply(function(eachG,eachSE,cnrg)
   {
     forEg <- do.call("rbind",lapply(eachG,function(x)matrix(unlist(x),ncol=2)))  
-    rownames(forEg) <- unlist(catnr)
+    rownames(forEg) <- unlist(cnrg)
     colnames(forEg) <- c("zeta","lambda")
     
-    # extract the se for zeta/beta and omit those names alpha or beta.
+    # extract
     seextract <- lapply(eachSE,function(x){
       woalbe <- grep("(alpha|beta)",names(x))
       matrix(x[-woalbe],ncol=2)
@@ -67,7 +70,7 @@ function(x, ...)
     allto <- cbind(forEg,forSE)[,c(1,3,2,4)]
     
     allto
-  },eachG=RESnlm$ZLpar$nrmpar,eachSE=attr(RESnlm$SE,"listform"),SIMPLIFY=FALSE)
+  },eachG=RESnlm$ZLpar$nrmpar,eachSE=attr(RESnlm$SE,"listform"), cnrg=catnrgroup,SIMPLIFY=FALSE)
   
   
   # <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>

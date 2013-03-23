@@ -8,7 +8,8 @@ Reshaping the raw data
 Run this function before fitting a nominal response model or nested logit model. The function prepares the data.frame for the estimation, adds and displays information and allows the user to submit a group estimation design which results in the creation of a Q-Matrix (Design Matrix).
 }
 \usage{
-reshMG(da, items = 0, groups = NA, correct, design = "nodif", echo = TRUE, TYPE = "NRM")
+reshMG(da, items = 0, groups = NA, correct, design = "nodif",
+echo = TRUE, TYPE = "NRM", paraM="bock")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -33,6 +34,10 @@ Logical input, whether infos should be displayed on the console immediately afte
   \item{TYPE}{
 Character string -- which kind of model the user intends to fit afterwards. There are two valid inputs: 'NRM' and 'NLM' 
 }
+  \item{paraM}{
+Choose the parametrization. There are 2 valid inputs: "bock" and "01". If "bock" is used, the Q matrix is built following Bock 1972 - otherwise the last parameter of the NRM part is set so zero. To get a better idea of the differences take a closer look at the Q matrix after reshaping the data. 
+}
+
 }
 \details{
 

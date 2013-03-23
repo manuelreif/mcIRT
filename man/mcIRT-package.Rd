@@ -6,14 +6,14 @@
 IRT models for multiple choice items (mcIRT)
 }
 \description{
-This package provides functions to evaluate multiples choice items or other multicategorical response formats. It is possible to estimate multiple group models and to model interaction effects to examine Differential Item Functioning. Each model has a full accessible design matrix which allows the user to manipulate and set up his own weighting scheme and his own constraints. One application could be modeling and testing item properties by means of customizing the design matrix and estimating an explanatory Nominal Response Model or an explanatory Nested Logit Model (to get an idea what 'explanatoy'  means, take a look at Boeck & Wilson (2004)).
+This package provides functions to evaluate multiples choice items or other multicategorial response formats. It is possible to estimate multiple group models and to model interaction effects to examine Differential Item Functioning. Each model has a full accessible design matrix which allows the user to manipulate and set up his own weighting scheme and his own constraints. One application could be modeling and testing item properties by means of customizing the design matrix and estimating an explanatory Nominal Response Model or an explanatory Nested Logit Model (to get an idea what 'explanatory' means, take a look at Boeck & Wilson (2004)).
 }
 \details{
 \tabular{ll}{
 Package: \tab mcIRT\cr
 Type: \tab Package\cr
-Version: \tab 0.01\cr
-Date: \tab 2013-03-14\cr
+Version: \tab 0.11\cr
+Date: \tab 2013-03-23\cr
 License: GPL (>= 2)
 }
 

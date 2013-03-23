@@ -2,19 +2,13 @@ Infnrm <- function(ESTlist, fromto=c(-5,5), gran=200)
 {
   # ESTlist --> internal ESTlist created by nrm. must contain the estimated values which stem from the EM procedure as well as the centered category parameters
   
-  #SKEL  <- ESTlist$starting_values$stwm1
-  #Q     <- ESTlist$reshOBJ$Qmat
-  #opp   <- as.vector(Q %*%  ESTlist$etapar)
-  
-  # wahrscheinlich ist es besser die ZLpar list zu nehmen.
+
   
   #relstv <- relist(opp,SKEL)
   relstv  <- ESTlist$ZLpar
   thetas <- seq(fromto[1], fromto[2], length.out=gran)
   
-#   levs=levels(ESTlist$reshOBJ$gr)[1]
-#   stvl=relstv[[1]]
-#   ql=ESTlist$QUAD[[1]]
+
   
   catinfG <- mapply(function(levs,stvl)
   { # loops all groups
@@ -31,15 +25,7 @@ Infnrm <- function(ESTlist, fromto=c(-5,5), gran=200)
       ezrs <- rowSums(ez)        
       ZQstern <- ez / ezrs
       
-      # ZQstern
-      # PROB = ZQstern
-      # whichI = itemnr
-      # TT = gibts nicht - es kann erst ausserhalb der schleife mit der Q Matrix multipliziert werden!
-      
-      #TT <- PROB[[2]]
-      #     
-      # zei <- ZQstern[1,]
-      # zei <- 1
+
       LAMs <- pitem[(length(pitem)/2 + 1):length(pitem)]
       
       W_g <- sapply(1:nrow(ZQstern),function(zei) # geht die nodes durch

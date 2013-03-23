@@ -76,6 +76,11 @@ A numerical vector of length 1. This argument sets the maximum number of Newton 
 \item \code{NRexac}
 A numerical vector of length 1. If the difference between two consecutive NR steps is not larger than \code{NRexac} - the NR procedure stops. Default: \code{0.01}
   
+\item \code{centBETA} If TRUE the estimated \eqn{\beta} parameters are centered to sum up to 0. Default is FALSE.
+  
+\item \code{centALPHA} If TRUE the estimated \eqn{\alpha} parameters are centered to sum up to 1. Default is FALSE.
+
+  
   }
 
 }

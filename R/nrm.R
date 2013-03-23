@@ -179,14 +179,9 @@ if(cont$dooptim)
   ESTlist$EAPs <- EAP_nrm
   ## centering
   
-  centmatrix <- CentMnrm(reshOBJ=reshOBJ)
-  
   retrans1 <- as.vector(reshOBJ$Qmat %*% ESTlist$etapar) 
   
-  zetlamP <- as.vector(retrans1 %*% centmatrix)
-  names(zetlamP) <- rownames(reshOBJ$Qmat)
-    
-  ZLpar <- relist(zetlamP, startOBJ$stwm1)
+  ZLpar <- relist(retrans1, startOBJ$stwm1)
   
   ESTlist$ZLpar <- lapply(ZLpar,function(x)
           {

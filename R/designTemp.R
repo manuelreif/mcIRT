@@ -1,6 +1,5 @@
 designTemp <-
 function(ngru,nit,TYPE="NLM")
-# this is a function to create a template for the "design" argument in grDM (which is used by reshMG)
   {
   if(TYPE=="NLM")
       {

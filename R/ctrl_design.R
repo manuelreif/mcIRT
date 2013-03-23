@@ -51,11 +51,9 @@ function(design,aDD,gr,TYPE=TYPE)
     if(any(ctrl5)){stop("Check your matrix! At least one line refers to a group with higher number than the line itself!")}
 
   
-  
-  
 
-## in this section the design is restructurated to fit into the grDM function, and to avoid inconsistency
-## for example, it is not possible, that in the 3rd line of the matrix of item 1 (e.g.) a 2 is listed while in the first and second line a 1 is listed. so it assumed that one means, that the parameter estimation for the third group should be the same as in the second. while the estimation for the second group is like the one in the first, the third MUST also be the same. so this means that the 2 will be replaced by an 1.
+## in this section the design is restructured to fit into the grDM function, and to avoid inconsistencies
+## for example, it is not possible, that in the 3rd line of the matrix of item 1 (e.g.) a 2 is listed while in the first and second line a 1 is listed. so it is assumed that one means, that the parameter estimation for the third group should be the same as in the second. while the estimation for the second group is like the one in the first, the third MUST also be the same. so this means that the 2 will be replaced by an 1.
 
   
 design_neu <- lapply(design,function(xy)

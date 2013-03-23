@@ -1,5 +1,5 @@
 reshMG <-
-function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM")
+function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM", paraM="bock")
 {
   # d = data frame (including factors of reponses --> responses as integer beginning with 1 ending with m. contains the responses of the examinees in one of the m possible categories of item i
   #items = numerical vector which refers to the columns of the items
@@ -9,6 +9,7 @@ function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM")
   # there are 4 valid values for design:
   #1) nodif
   #2) dif1 - dif3
+  #parametrization = either "bock" or "01"
   
   #---------------------------
   # find items and groups ----
@@ -114,8 +115,16 @@ function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM")
       
 
   # create Q matrix
-
-      gdema <- grDM(aDD,gr,design,TYPE=TYPE)
+      if(paraM == "bock")
+        {
+        gdema <- grDMb(aDD,gr,design,TYPE=TYPE)
+        
+        } else if(paraM == "01")
+                {
+          
+                gdema <- grDM(aDD,gr,design,TYPE=TYPE)
+                
+                }
  
   
   if(echo){print(absF1)}

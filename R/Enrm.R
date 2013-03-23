@@ -42,7 +42,6 @@ if(all(is.na(PREVinp)))
   
   riqv_quer <- mapply(function(levs, zqgroup, ql, d1uc)
   {
-    #nrme1_1 <- lapply(nrme1[[levnr]],function(x)x[[1]]) # extract ZQdstern for each item
     nrme2   <- array(unlist(zqgroup),c(dim(zqgroup[[1]]),length(zqgroup))) #recreate it as 3d array
     # nodes x persons(groupX) x items
     

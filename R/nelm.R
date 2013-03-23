@@ -16,7 +16,7 @@ nelm <-
     ######### USER CONTROLS #################
     #########################################
     
-    cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, dooptim=FALSE)
+    cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, dooptim=FALSE, centBETA=FALSE, centALPHA=FALSE)
     
     user_ctrlI <- match(names(ctrl),names(cont))
     if(any(is.na(user_ctrlI)))
@@ -177,7 +177,7 @@ nelm <-
     EAP_nlm <- PePNLM(ESTlist[[1]],reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,mueERG=mueERG)
     ESTlist$EAPs <- EAP_nlm
     # center the parameters
-    parcent <- Cnlm(reshOBJ=reshOBJ,ESTlist=ESTlist)
+    parcent <- Cnlm(reshOBJ=reshOBJ,ESTlist=ESTlist, centBETA=cont$centBETA, centALPHA=cont$centALPHA)
     
     
     ESTlist$ZLpar <- parcent
