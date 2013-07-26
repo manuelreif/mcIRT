@@ -1,8 +1,22 @@
 Cnlm <-
-  function(reshOBJ,ESTlist,centBETA=FALSE, centALPHA=FALSE)
+  function(reshOBJ,ESTlist,centBETA=FALSE, centALPHA=FALSE, startOBJ)
 {
-  
-  retrans1 <- as.vector(reshOBJ$Qmat %*% ESTlist$etapar)
+    
+  if(all(!is.na(startOBJ$setC)))
+    {
+      
+      etainclC <- vector(mode="numeric",length=ncol(reshOBJ$Qmat))
+      etainclC[-startOBJ$setC$whichetas] <- ESTlist$etapar
+      etainclC[startOBJ$setC$whichetas]  <- startOBJ$setC$whichconstant
+      
+      retrans1 <- as.vector(reshOBJ$Qmat %*% etainclC)
+      
+    } else 
+      {
+        retrans1 <- as.vector(reshOBJ$Qmat %*% ESTlist$etapar) 
+    }
+      
+  #retrans1 <- as.vector(reshOBJ$Qmat %*% ESTlist$etapar)
   
   catzjegr <- sapply(reshOBJ$aDD,function(x)x$anz_cat)
   catanz <- rep(rep(catzjegr,each=2),each=nlevels(reshOBJ$gr))-1

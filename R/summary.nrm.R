@@ -47,16 +47,18 @@ SEmat <- RESnrm$erg_distr$errmat
 rownames(SEmat) <- c("SE|mean","SE|sigma^2")
 colnames(SEmat) <- paste("group|",levels(RESnrm$reshOBJ$gr),sep="")
 
-firstpart <- matrix(c(min2logL,as.integer(RESnrm$n_steps),ncol(RESnrm$reshOBJ$Qmat)))
-rownames(firstpart) <- c("-2logLikelihood:","Number of EM-cycles:","Number of estimated parameters: ")
-colnames(firstpart) <- ""
-
   
 ### number of parameters
 nme  <- length(RESnrm$erg_distr$mean_est) - 1
-nva  <- length(RESnrm$erg_distr$sig_est) -1
-npar <- ncol(RESnrm$reshOBJ$Qmat) + nme + nva  
+#RESnrm$ctrl$sigmaest
+nva  <- RESnrm$ctrl$sigmaest * (length(RESnrm$erg_distr$sig_est) -1)
+npar <- ncol(RESnrm$reshOBJ$Qmat) + nme + nva  - length(RESnrm$ctrl$Clist)
 
+  
+firstpart <- matrix(c(min2logL,as.integer(RESnrm$n_steps),npar))
+rownames(firstpart) <- c("-2logLikelihood:","Number of EM-cycles:","Number of estimated parameters: ")
+colnames(firstpart) <- ""
+  
   
 ######### OUTPUT:
 

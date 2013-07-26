@@ -4,6 +4,18 @@ function(Ulstv,riqv_quer,startOBJ,reshOBJ,quads)
   
   SKEL  <- startOBJ$stwm1
   Q     <- reshOBJ$Qmat
+  
+  if(all(!is.na(startOBJ$setC)))
+  {
+    
+    bigv <- vector(mode="numeric",length=ncol(Q))
+    
+    bigv[-startOBJ$setC$whichetas] <- Ulstv
+    bigv[startOBJ$setC$whichetas]  <- startOBJ$setC$whichconstant
+    
+    Ulstv <- bigv
+  }
+  
   opp   <- as.vector(Q %*% Ulstv)
   
   relstv <- relist(opp,SKEL)
@@ -46,5 +58,12 @@ function(Ulstv,riqv_quer,startOBJ,reshOBJ,quads)
   
   derivV <- as.vector(deriv %*% Q)
   names(derivV) <- colnames(Q)
+  
+  if(all(!is.na(startOBJ$setC)))
+    {
+    derivV <- derivV[-startOBJ$setC$whichetas]
+    }
+  
+  
   derivV
 }

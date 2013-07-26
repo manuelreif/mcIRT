@@ -17,7 +17,7 @@ function(reshOBJ,etastart=-0.1, ctrl=list())
   ######### USER CONTROLS #################
   #########################################
   
-  cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, dooptim=FALSE)
+  cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, dooptim=FALSE,Clist=NA)
 
   user_ctrlI <- match(names(ctrl),names(cont))
   if(any(is.na(user_ctrlI)))
@@ -33,10 +33,11 @@ function(reshOBJ,etastart=-0.1, ctrl=list())
   #-------------------------------------------------------------------
   
   ## generate starting values
-  startOBJ <- startV_nrmMG(reshOBJ=reshOBJ,etastart=etastart)
+  startOBJ <- startV_nrmMG(reshOBJ=reshOBJ,etastart=etastart,Clist=cont$Clist)
   ##generate quadrature nodes and weights
   quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=nlevels(reshOBJ$gr))
   
+  #browser()
   
   OLD     <- 0
   ZAEHL   <- 1
@@ -85,8 +86,9 @@ if(cont$dooptim)
       ESTlist[[5]]   <- mueERG
       ESTlist[[6]]   <- quads
       ESTlist[[7]]   <- startOBJ
+      ESTlist[[8]]   <- cont
       
-      names(ESTlist) <- c("etapar","last_estep","last_mstep" ,"n_steps","erg_distr","QUAD","starting_values")
+      names(ESTlist) <- c("etapar","last_estep","last_mstep" ,"n_steps","erg_distr","QUAD","starting_values","ctrl")
       break
     }
     
@@ -151,8 +153,9 @@ if(cont$dooptim)
             ESTlist[[5]]   <- mueERG
             ESTlist[[6]]   <- quads
             ESTlist[[7]]   <- startOBJ
+            ESTlist[[8]]   <- cont
             
-            names(ESTlist) <- c("etapar","last_estep","last_mstep" ,"n_steps","erg_distr","QUAD","starting_values")
+            names(ESTlist) <- c("etapar","last_estep","last_mstep" ,"n_steps","erg_distr","QUAD","starting_values","ctrl")
             break
            }
     
@@ -179,7 +182,20 @@ if(cont$dooptim)
   ESTlist$EAPs <- EAP_nrm
   ## centering
   
-  retrans1 <- as.vector(reshOBJ$Qmat %*% ESTlist$etapar) 
+  if(all(!is.na(startOBJ$setC)))
+  {
+    
+    etainclC <- vector(mode="numeric",length=ncol(reshOBJ$Qmat))
+    etainclC[-startOBJ$setC$whichetas] <- ESTlist$etapar
+    etainclC[startOBJ$setC$whichetas]  <- startOBJ$setC$whichconstant
+    
+    retrans1 <- as.vector(reshOBJ$Qmat %*% etainclC)
+    
+  } else 
+      {
+      retrans1 <- as.vector(reshOBJ$Qmat %*% ESTlist$etapar) 
+      }
+  
   
   ZLpar <- relist(retrans1, startOBJ$stwm1)
   
@@ -191,9 +207,25 @@ if(cont$dooptim)
   names(ESTlist$ZLpar) <- levels(reshOBJ$gr)
   
   #SE estimation ----------------
+  
+  if(all(!is.na(startOBJ$setC)))
+  {
+    
+    comphess <- diag(reshOBJ$Qmat[,-startOBJ$setC$whichetas] %*% solve(ESTlist$last_mstep$hessian) %*% t(reshOBJ$Qmat[,-startOBJ$setC$whichetas]))
+    comphesq <- sqrt(comphess*(-1))
+
+    ## hier noch die constanten auf NA setzen!
+    
+    comphesq[rowSums(reshOBJ$Qmat[,startOBJ$setC$whichetas])  > 0] <- NA
+    
+    
+  } else 
+  {
   comphess <- diag(reshOBJ$Qmat %*% solve(ESTlist$last_mstep$hessian) %*% t(reshOBJ$Qmat))
   comphesq <- sqrt(comphess*(-1))
   #
+  }
+  
   notest <- which(rowSums(reshOBJ$Qmat) == 0)
   comphesq[notest] <- NA
   attr(comphesq,"listform")  <- relist(comphesq,startOBJ$stwm1)

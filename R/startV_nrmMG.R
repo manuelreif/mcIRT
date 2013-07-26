@@ -1,5 +1,5 @@
 startV_nrmMG <-
-function(reshOBJ,etastart=-0.1)
+function(reshOBJ,etastart=-0.1,Clist)
 {
 
   granz <- length(levels(reshOBJ$gr))
@@ -22,5 +22,23 @@ function(reshOBJ,etastart=-0.1)
   ulstv <- vector(length=ncol(reshOBJ$Qmat),mode="numeric")
   ulstv[] <- etastart                   # values
   
-  return(list(stwm1=stwm1,ulstv=ulstv))
+  if(all(!is.na(Clist)))
+  {
+
+  Cvec <- unlist(Clist)  
+    
+  whichetas <- as.numeric(gsub("eta(\\d+)\\s*=\\s*-*\\d+","\\1",Cvec))
+  whichconstant <- as.numeric(gsub("eta\\d+\\s*=\\s*(-*\\d+)","\\1",Cvec))
+  
+  ulstv <- ulstv[-whichetas]
+  
+  setC <- list(whichetas=whichetas,whichconstant=whichconstant)
+  
+  } else
+  {
+    setC <- NA  
+  }
+  
+  
+  return(list(stwm1=stwm1,ulstv=ulstv,setC=setC))
 }

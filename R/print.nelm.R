@@ -92,9 +92,14 @@ function(x, ...)
   colnames(firstpart) <- ""
   
   ### number of parameters
+#   nme  <- length(RESnlm$erg_distr$mean_est) - 1
+#   nva  <- length(RESnlm$erg_distr$sig_est) - 1
+#   npar <- ncol(RESnlm$reshOBJ$Qmat) + nme + nva
+  
+  ### number of parameters <--- NEW
   nme  <- length(RESnlm$erg_distr$mean_est) - 1
-  nva  <- length(RESnlm$erg_distr$sig_est) - 1
-  npar <- ncol(RESnlm$reshOBJ$Qmat) + nme + nva
+  nva  <- RESnlm$ctrl$sigmaest *(length(RESnlm$erg_distr$sig_est) -1)
+  npar <- ncol(RESnlm$reshOBJ$Qmat) + nme + nva - length(RESnlm$ctrl$Clist)
   
   ######### OUTPUT:
   

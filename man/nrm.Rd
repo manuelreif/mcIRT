@@ -75,6 +75,8 @@ A numerical vector of length 1. This argument sets the maximum number of Newton 
 \item \code{NRexac}
 A numerical vector of length 1. If the difference between two consecutive NR steps is not larger than 'exac' - the estimation stops. Default: \code{0.01}
 
+\item \code{Clist}
+A list which contains informations about which parameters should be held constant during estimation. Each list element has to look similar to this expression: "eta\\d* = -*\\d*" (of course real digits instead of Regexes!). The term \code{eta} refers to a column in the Q matrix in the reshape object which actually represents the parameters. The right side of the equation is the constant the parameter should be set to. So an entry in the \code{Clist} could look like "eta2 = -1" which means that the second eta parameter will not be estimated and is set to the value of -1.
 }
 
 

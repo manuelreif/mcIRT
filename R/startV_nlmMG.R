@@ -1,5 +1,5 @@
 startV_nlmMG <-
-function(reshOBJ,etastart="aut")
+function(reshOBJ,etastart="aut",Clist)
 {
   granz <- nlevels(reshOBJ$gr)
   
@@ -41,5 +41,25 @@ function(reshOBJ,etastart="aut")
       } else {stop("Invalid input for etastart! Please use 'aut' or numeric input! 'aut' = recommanded.")}
 
   
-  return(list(stwm1=stwm1,ulstv=ulstv))
+  ## new
+  if(all(!is.na(Clist)))
+  {
+    
+    Cvec <- unlist(Clist)  
+    
+    whichetas <- as.numeric(gsub("eta(\\d+)\\s*=\\s*-*\\d+","\\1",Cvec))
+    whichconstant <- as.numeric(gsub("eta\\d+\\s*=\\s*(-*\\d+)","\\1",Cvec))
+    
+    ulstv <- ulstv[-whichetas]
+    
+    setC <- list(whichetas=whichetas,whichconstant=whichconstant)
+    
+  } else
+  {
+    setC <- NA  
+  }
+  
+  
+  
+  return(list(stwm1=stwm1,ulstv=ulstv,setC=setC))
 }

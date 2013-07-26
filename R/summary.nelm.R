@@ -89,15 +89,21 @@ function(object, ...)
   rownames(SEmat) <- c("SE|mean","SE|sigma^2")
   colnames(SEmat) <- paste("group|",levels(RESnlm$reshOBJ$gr),sep="")
   
-  firstpart <- matrix(c(min2logL,as.integer(RESnlm$n_steps),ncol(RESnlm$reshOBJ$Qmat)))
-  rownames(firstpart) <- c("-2logLikelihood:","Number of EM-cycles:","Number of estimated parameters: ")
-  colnames(firstpart) <- ""
+
   
+  ### number of parameters <--- NEW
+  nme  <- length(RESnlm$erg_distr$mean_est) - 1
+  nva  <- RESnlm$ctrl$sigmaest *(length(RESnlm$erg_distr$sig_est) -1)
+  npar <- ncol(RESnlm$reshOBJ$Qmat) + nme + nva - length(RESnlm$ctrl$Clist)
   
   ### number of parameters
-  nme  <- length(RESnlm$erg_distr$mean_est) - 1
-  nva  <- length(RESnlm$erg_distr$sig_est) - 1
-  npar <- ncol(RESnlm$reshOBJ$Qmat) + nme + nva
+#   nme  <- length(RESnlm$erg_distr$mean_est) - 1
+#   nva  <- length(RESnlm$erg_distr$sig_est) - 1
+#   npar <- ncol(RESnlm$reshOBJ$Qmat) + nme + nva
+
+  firstpart <- matrix(c(min2logL,as.integer(RESnlm$n_steps),npar))
+  rownames(firstpart) <- c("-2logLikelihood:","Number of EM-cycles:","Number of estimated parameters: ")
+  colnames(firstpart) <- ""
   
   
   ######### OUTPUT:

@@ -16,7 +16,7 @@ nelm <-
     ######### USER CONTROLS #################
     #########################################
     
-    cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, dooptim=FALSE, centBETA=FALSE, centALPHA=FALSE)
+    cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, dooptim=FALSE, centBETA=FALSE, centALPHA=FALSE,Clist=NA)
     
     user_ctrlI <- match(names(ctrl),names(cont))
     if(any(is.na(user_ctrlI)))
@@ -33,7 +33,7 @@ nelm <-
     
     
     ## generate starting values
-    startOBJ <- startV_nlmMG(reshOBJ=reshOBJ,etastart=etastart)
+    startOBJ <- startV_nlmMG(reshOBJ=reshOBJ,etastart=etastart,Clist=cont$Clist)
     ##generate quadrature nodes and weights
     quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=nlevels(reshOBJ$gr))
     
@@ -82,8 +82,9 @@ nelm <-
           ESTlist[[5]]   <- mueERG
           ESTlist[[6]]   <- quads
           ESTlist[[7]]   <- startOBJ
+          ESTlist[[8]]   <- cont
           
-          names(ESTlist) <- c("etapar","last_estep","last_mstep" ,"n_steps","erg_distr","QUAD","starting_values")
+          names(ESTlist) <- c("etapar","last_estep","last_mstep" ,"n_steps","erg_distr","QUAD","starting_values","ctrl")
           break
         }
         
@@ -150,8 +151,9 @@ nelm <-
           ESTlist[[5]]   <- mueERG
           ESTlist[[6]]   <- quads
           ESTlist[[7]]   <- startOBJ
+          ESTlist[[8]]   <- cont
           
-          names(ESTlist) <- c("etapar","last_estep","last_mstep" ,"n_steps","erg_distr","QUAD","starting_values")
+          names(ESTlist) <- c("etapar","last_estep","last_mstep" ,"n_steps","erg_distr","QUAD","starting_values", "ctrl")
           break
         }
         
@@ -177,14 +179,35 @@ nelm <-
     EAP_nlm <- PePNLM(ESTlist[[1]],reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,mueERG=mueERG)
     ESTlist$EAPs <- EAP_nlm
     # center the parameters
-    parcent <- Cnlm(reshOBJ=reshOBJ,ESTlist=ESTlist, centBETA=cont$centBETA, centALPHA=cont$centALPHA)
+    parcent <- Cnlm(reshOBJ=reshOBJ,ESTlist=ESTlist, centBETA=cont$centBETA, centALPHA=cont$centALPHA, startOBJ = startOBJ)
     
     
     ESTlist$ZLpar <- parcent
     
     #SE estimation ----------------
-    comphess <- diag(reshOBJ$Qmat %*% solve(ESTlist$last_mstep$hessian) %*% t(reshOBJ$Qmat))
-    comphesq <- sqrt(comphess*(-1))
+    
+    if(all(!is.na(startOBJ$setC)))
+    {
+      
+      comphess <- diag(reshOBJ$Qmat[,-startOBJ$setC$whichetas] %*% solve(ESTlist$last_mstep$hessian) %*% t(reshOBJ$Qmat[,-startOBJ$setC$whichetas]))
+      comphesq <- sqrt(comphess*(-1))
+      
+      ## hier noch die constanten auf NA setzen!
+
+      comphesq[rowSums(cbind(reshOBJ$Qmat[,startOBJ$setC$whichetas]))  > 0] <- NA
+      
+      
+    } else 
+    {
+      comphess <- diag(reshOBJ$Qmat %*% solve(ESTlist$last_mstep$hessian) %*% t(reshOBJ$Qmat))
+      comphesq <- sqrt(comphess*(-1))
+      #
+    }
+    
+    
+
+    #comphess <- diag(reshOBJ$Qmat %*% solve(ESTlist$last_mstep$hessian) %*% t(reshOBJ$Qmat))
+    #comphesq <- sqrt(comphess*(-1))
     #
     notest <- which(rowSums(reshOBJ$Qmat) == 0)
     comphesq[notest] <- NA

@@ -9,6 +9,19 @@ function(Ulstv,reshOBJ,startOBJ,quads,sigmaest=FALSE,endest=FALSE)
   SKEL  <- startOBJ$stwm1
   Q     <- reshOBJ$Qmat
   
+  
+  # in case some paraters are set to a certain value
+  if(all(!is.na(startOBJ$setC)))
+  {
+    bigv <- vector(mode="numeric",length=ncol(Q))
+    
+    bigv[-startOBJ$setC$whichetas] <- Ulstv
+    bigv[startOBJ$setC$whichetas]  <- startOBJ$setC$whichconstant
+    
+    Ulstv <- bigv
+  }
+  
+  
   opp    <- as.vector(Q %*% Ulstv)
   relstv <- relist(opp,SKEL)
   
