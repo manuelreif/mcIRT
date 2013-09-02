@@ -67,13 +67,14 @@ if(all(is.na(PREVinp)))
     ################################################
     #-------------------------- riqv_quer -----------
     ################################################
-    riqv_1teil  <- t(LjmalA) / Pji_schlange    
+    riqv_1teil  <- t(LjmalA) / Pji_schlange  
+    #browser()
     riqv_querG <- lapply(d1uc,function(x)
     {
       t(x) %*% riqv_1teil
     })
     
-    riqv_querG
+    return(list(riqv_querG=riqv_querG,fquer=riqv_1teil)) # fquer added for nonpar distr estimation
   },levs=levels(reshOBJ$gr), zqgroup=nrme1, ql=quads, d1uc=datuc, SIMPLIFY = FALSE)
   
 } else { 
@@ -90,11 +91,17 @@ if(all(is.na(PREVinp)))
             t(x) %*% riqv_1teil
           })
           
-          riqv_querG
+          return(list(riqv_querG=riqv_querG,fquer=riqv_1teil)) # fquer added for nonpar distr estimation
         },levs=levels(reshOBJ$gr), d1uc=datuc, ql=quads, MER=PREVinp$mue_hat_g, SIMPLIFY = FALSE)  
         
 
       }
   
-  return(riqv_quer=riqv_quer)
+  
+  riqv_querG <- lapply(riqv_quer,function(x)x[[1]]) # change the structure
+  fquer      <- lapply(riqv_quer,function(x)x[[2]]) # change the structure
+  
+  
+  return(list(riqv_querG=riqv_querG,fquer=fquer))
+  #return(riqv_quer=riqv_quer)
 }

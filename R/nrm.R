@@ -17,7 +17,7 @@ function(reshOBJ,etastart=-0.1, ctrl=list())
   ######### USER CONTROLS #################
   #########################################
   
-  cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, dooptim=FALSE,Clist=NA)
+  cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, dooptim=FALSE,Clist=NA, nonpar=FALSE)
 
   user_ctrlI <- match(names(ctrl),names(cont))
   if(any(is.na(user_ctrlI)))
@@ -37,7 +37,6 @@ function(reshOBJ,etastart=-0.1, ctrl=list())
   ##generate quadrature nodes and weights
   quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=nlevels(reshOBJ$gr))
   
-  #browser()
   
   OLD     <- 0
   ZAEHL   <- 1
@@ -63,7 +62,7 @@ if(cont$dooptim)
     erg_estep <- Enrm(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,PREVinp=mueERG)
     
     #M ****
-    oerg <- optim(par=PARS,fn=ZFnrm,gr=de1nrm,riqv_quer=erg_estep, startOBJ=startOBJ, reshOBJ=reshOBJ, quads=quads, control=list(fnscale=-1,maxit=50),method="BFGS",hessian=TRUE)
+    oerg <- optim(par=PARS,fn=ZFnrm,gr=de1nrm,riqv_quer=erg_estep$riqv_querG, startOBJ=startOBJ, reshOBJ=reshOBJ, quads=quads, control=list(fnscale=-1,maxit=50),method="BFGS",hessian=TRUE)
     
     if(NLev > 1)
     {
@@ -107,6 +106,8 @@ if(cont$dooptim)
     # E - STEP
     erg_estep <-  Enrm(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,PREVinp=mueERG)
     
+    #browser()
+    
     # M - STEP
     if(cont$verbose){cat("\r Estep:",ZAEHL,"| Mstep:", ZAEHL,"\r")}
     mPARS <- PARS
@@ -117,8 +118,8 @@ if(cont$dooptim)
     
     for(i in 1:cont$NRmax)
       {
-        fir1 <- de1nrm(mPARS,riqv_quer=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
-        sec2 <- de2nrm(mPARS,riqv_quer=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
+        fir1 <- de1nrm(mPARS,riqv_quer=erg_estep$riqv_querG,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
+        sec2 <- de2nrm(mPARS,riqv_quer=erg_estep$riqv_querG,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
         
         newP <- mPARS - as.vector(fir1 %*% solve(sec2))
         
@@ -133,9 +134,9 @@ if(cont$dooptim)
 
 
           
-###########################
-# FINISHED ? ##############
-###########################
+    ###########################
+    # FINISHED ? ##############
+    ###########################
     
         if(sum(abs(mPARS - PARS)) <= cont$exac & ZAEHL > 10 | ZAEHL >= cont$EMmax)
           {
@@ -143,7 +144,7 @@ if(cont$dooptim)
             mueERG <- mueNRM(mPARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest,endest=TRUE)
             
             ###### LIKELIHOOD BERECHNEN #######################
-            value <- ZFnrm(mPARS,riqv_quer=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
+            value <- ZFnrm(mPARS,riqv_quer=erg_estep$riqv_querG,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
             ###################################################
             
             ESTlist[[1]]   <- mPARS
@@ -160,7 +161,7 @@ if(cont$dooptim)
            }
     
     
-    if(NLev > 1)
+    if(NLev > 1 & !cont$nonpar) # more than 1 group and NOT nonpar estimation
     {
       if(cont$verbose & ZAEHL >= 1){cat("\r Estep:",ZAEHL+1,"| Mstep:", ZAEHL,"\r")}  
       # estimate mu and sigma
@@ -168,7 +169,12 @@ if(cont$dooptim)
       # new quads
       quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev,mu=mueERG$mean_est,sigma=mueERG$sig_est)
     }
-     
+    
+    if(cont$nonpar) # nonpar estimation in any case (reference group is standardized 0,1)
+    {
+    quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev, ergE=erg_estep)  
+    }
+     #browser()
     PARS <- mPARS
     ZAEHL <- ZAEHL + 1
   }  
