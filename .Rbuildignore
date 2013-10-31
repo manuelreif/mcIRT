@@ -8,3 +8,5 @@
 ^\.Rproj\.user$
 Testing_functions.R
 README.md
+Testing_functions*.R
+.RData
