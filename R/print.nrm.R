@@ -43,10 +43,20 @@ function(x, ...)
   colnames(firstpart) <- ""
   
   ### number of parameters
-  nme  <- length(RESnrm$erg_distr$mean_est) - 1
-  nva  <- RESnrm$ctrl$sigmaest *(length(RESnrm$erg_distr$sig_est) -1)
-  npar <- ncol(RESnrm$reshOBJ$Qmat) + nme + nva - length(RESnrm$ctrl$Clist)
-  
+  if(!RESnrm$ctrl$nonpar)
+  {
+    ### number of parameters
+    nme  <- length(RESnrm$erg_distr$mean_est) - 1
+    #RESnrm$ctrl$sigmaest
+    nva  <- RESnrm$ctrl$sigmaest * (length(RESnrm$erg_distr$sig_est) -1)
+    npar <- ncol(RESnrm$reshOBJ$Qmat) + nme + nva  - length(RESnrm$ctrl$Clist)
+    
+  } else 
+      {
+        pardist <- length(RESnrm$QUAD$A$nodes)*length(RESnrm$QUAD) - 3 - (length(RESnrm$QUAD) - 1)  
+        # anzahl der bins - 3 für die erste gruppe und anzahl - 1 für die restlichen gruppen + itpar - constants
+        npar <- ncol(RESnrm$reshOBJ$Qmat) + pardist - length(RESnrm$ctrl$Clist)
+      }
   
   ######### OUTPUT:
   

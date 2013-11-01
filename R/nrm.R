@@ -238,7 +238,7 @@ if(cont$dooptim)
   ESTlist$SE <- comphesq
   
   
-  # also save the reshOBJ - and of course the queens
+  # also save the reshOBJ - and of course the queen
   ESTlist$reshOBJ   <- reshOBJ
   
   # -----------------------------

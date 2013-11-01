@@ -48,15 +48,27 @@ rownames(SEmat) <- c("SE|mean","SE|sigma^2")
 colnames(SEmat) <- paste("group|",levels(RESnrm$reshOBJ$gr),sep="")
 
   
+  
+if(!RESnrm$ctrl$nonpar)
+{
+  
 ### number of parameters
 nme  <- length(RESnrm$erg_distr$mean_est) - 1
 #RESnrm$ctrl$sigmaest
 nva  <- RESnrm$ctrl$sigmaest * (length(RESnrm$erg_distr$sig_est) -1)
 npar <- ncol(RESnrm$reshOBJ$Qmat) + nme + nva  - length(RESnrm$ctrl$Clist)
+  
+} else 
+    {
+      pardist <- length(RESnrm$QUAD$A$nodes)*length(RESnrm$QUAD) - 3 - (length(RESnrm$QUAD) - 1)  
+      # anzahl der bins - 3 für die erste gruppe und anzahl - 1 für die restlichen gruppen + itpar - constants
+      npar <- ncol(RESnrm$reshOBJ$Qmat) + pardist - length(RESnrm$ctrl$Clist)
+    }
 
+nonparametric <- ifelse(RESnrm$ctrl$nonpar,"nonparametric","parametric")
   
 firstpart <- matrix(c(min2logL,as.integer(RESnrm$n_steps),npar))
-rownames(firstpart) <- c("-2logLikelihood:","Number of EM-cycles:","Number of estimated parameters: ")
+rownames(firstpart) <- c("-2logLikelihood:","Number of EM-cycles:","Number of estimated parameters:")
 colnames(firstpart) <- ""
   
   
@@ -77,7 +89,9 @@ cat("\n Point estimators:\n")
 print(meansig)
 cat("\n Standard Errors:\n")
 print(SEmat)
-
+  
+cat("\nPrior:", nonparametric)  
+  
 cat("\n\n Category Parameter estimates and SE")
 cat("\n -------------------------------------------------------------------- \n")
 print(form1a)
