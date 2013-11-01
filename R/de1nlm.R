@@ -52,9 +52,10 @@ function(Ulstv,erg_estep,startOBJ,reshOBJ,quads)
           
           # 2pl part
           # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+          fique0 <- sapply(RI$riqv_querG,colSums)
           riq_quer_mat <- sapply(RI$riq_querG,function(x)x)
-          f_iq         <- sapply(RI$riqv_querG,colSums) + riq_quer_mat # nodes x items
-
+          f_iq         <- fique0 + riq_quer_mat # nodes x items
+          
             # II denotes the number of the current item
             commonterm <- as.vector(RI$riq_querG[[II]] - ZQstern_all[,1] * f_iq[,II]) ## II brauchst du schon
             
@@ -66,7 +67,7 @@ function(Ulstv,erg_estep,startOBJ,reshOBJ,quads)
           
           # NRM part
           # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
-          fique0 <- sapply(RI$riqv_querG,colSums)
+          #fique0 <- sapply(RI$riqv_querG,colSums)
           
 
             fqomega <- fique0[,II] * ZQstern_all[,-1]
