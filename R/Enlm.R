@@ -147,6 +147,19 @@ if(all(is.na(PREVinp)))
     
   }
   
-  return(riq_querA=riq_querA)
+  
+  if(nonpar)
+  {
+    
+    riq_querA1 <- lapply(riq_querA,function(x)x[1:2]) # change the structure
+    fquer       <- lapply(riq_querA,function(x)x[[3]]) # change the structure
+    return(list(riq_querA=riq_querA1,fquer=fquer))
+    
+  } else 
+  {
+    return(list(riq_querA=riq_querA))
+  }
+  
+  #return(riq_querA=riq_querA)
 
 }

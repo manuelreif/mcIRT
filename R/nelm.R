@@ -107,7 +107,6 @@ nelm <-
         
         #E ****
         erg_estep <- Enlm(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,PREVinp=mueERG,nonpar=cont$nonpar)
-        #browser()
         
         #################################
         ## Newton Raphson Procedure  ####
@@ -117,8 +116,8 @@ nelm <-
         
         for(i in 1:cont$NRmax)
         {
-          fir1 <- de1nlm(mPARS,erg_estep=erg_estep[1:2],reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
-          sec2 <- de2nlm(mPARS,riqv_quer=erg_estep[1:2],reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
+          fir1 <- de1nlm(mPARS,erg_estep=erg_estep$riq_querA,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
+          sec2 <- de2nlm(mPARS,riqv_quer=erg_estep$riq_querA,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
           
           newP <- mPARS - as.vector(fir1 %*% solve(sec2))
           
@@ -137,11 +136,12 @@ nelm <-
         if(sum(abs(mPARS - PARS)) <= cont$exac & ZAEHL > 10 | ZAEHL >= cont$EMmax)
         {
           if(cont$verbose){cat("\r Estep:",ZAEHL,"| Mstep:", ZAEHL," --> estimating EAP & co \r")}
+         
           mueERG <- mueNLM(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest,endest=TRUE)
-          quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev,mu=mueERG$mean_est,sigma=mueERG$sig_est)
+          #quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev,mu=mueERG$mean_est,sigma=mueERG$sig_est)
           
           ###### LIKELIHOOD BERECHNEN #######################
-          value <- ZFnlm(mPARS,erg_estep=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
+          value <- ZFnlm(mPARS,erg_estep=erg_estep$riq_querA,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
           ###################################################
           
           ESTlist[[1]]   <- mPARS
@@ -180,7 +180,7 @@ nelm <-
       }
       
     }
-    
+
     ## Person Parameters
     EAP_nlm <- PePNLM(ESTlist[[1]],reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,mueERG=mueERG)
     ESTlist$EAPs <- EAP_nlm
@@ -211,7 +211,6 @@ nelm <-
     }
     
     
-
     #comphess <- diag(reshOBJ$Qmat %*% solve(ESTlist$last_mstep$hessian) %*% t(reshOBJ$Qmat))
     #comphesq <- sqrt(comphess*(-1))
     #
@@ -219,10 +218,10 @@ nelm <-
     comphesq[notest] <- NA
     attr(comphesq,"listform")  <- relist(comphesq,startOBJ$stwm1)
     ESTlist$SE <- comphesq
-    
+)
     # also save the reshOBJ - and of course the queen
     ESTlist$reshOBJ   <- reshOBJ
-    
+
     # -----------------------------
     # adding category information
     # -----------------------------
