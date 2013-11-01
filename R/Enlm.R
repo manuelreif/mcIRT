@@ -1,5 +1,5 @@
 Enlm <-
-function(Ulstv,reshOBJ,startOBJ,quads,PREVinp)
+function(Ulstv,reshOBJ,startOBJ,quads,PREVinp,nonpar)
 { 
   # new
   dAtA    <- reshOBJ$recm
@@ -98,7 +98,16 @@ if(all(is.na(PREVinp)))
       t(x[,-1]) %*% riqv_1teil
     })
     
-    list(riq_querG=riq_querG, riqv_querG=riqv_querG)
+    #list(riq_querG=riq_querG, riqv_querG=riqv_querG)
+    
+    if(nonpar)
+    {
+      return(list(riq_querG=riq_querG, riqv_querG=riqv_querG,fquer=riqv_1teil)) # fquer added for nonpar distr estimation
+    } else {
+            return(list(riq_querG=riq_querG, riqv_querG=riqv_querG))  
+           }
+    
+    
   },levs=levels(reshOBJ$gr), zqgroup=nrme1, ql=quads, d1uc=datuc, SIMPLIFY = FALSE)
   ############xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -124,7 +133,15 @@ if(all(is.na(PREVinp)))
         t(x[,-1]) %*% riqv_1teil
       })
       
-      list(riq_querG=riq_querG,riqv_querG=riqv_querG)
+      
+      if(nonpar)
+      {
+       return(list(riq_querG=riq_querG, riqv_querG=riqv_querG,fquer=riqv_1teil)) # fquer added for nonpar distr estimation
+      } else {
+             return(list(riq_querG=riq_querG, riqv_querG=riqv_querG))  
+             }
+      
+      #return(list(riq_querG=riq_querG,riqv_querG=riqv_querG,fquer=riqv_1teil))
     },levnr=1:length(levels(reshOBJ$gr)),ql=quads, d1uc=datuc,MER=PREVinp$mue_hat_g,SIMPLIFY = FALSE)
     
     

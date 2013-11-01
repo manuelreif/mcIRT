@@ -16,7 +16,7 @@ nelm <-
     ######### USER CONTROLS #################
     #########################################
     
-    cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, dooptim=FALSE, centBETA=FALSE, centALPHA=FALSE,Clist=NA)
+    cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, dooptim=FALSE, centBETA=FALSE, centALPHA=FALSE,Clist=NA, nonpar=FALSE)
     
     user_ctrlI <- match(names(ctrl),names(cont))
     if(any(is.na(user_ctrlI)))
@@ -106,8 +106,8 @@ nelm <-
         if(cont$verbose & (ZAEHL == 1 | NLev <= 1)){cat("\r Estep:",ZAEHL,"| Mstep:", ZAEHL -1,"\r")}
         
         #E ****
-        erg_estep <- Enlm(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,PREVinp=mueERG)
-        
+        erg_estep <- Enlm(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,PREVinp=mueERG,nonpar=cont$nonpar)
+        #browser()
         
         #################################
         ## Newton Raphson Procedure  ####
@@ -117,8 +117,8 @@ nelm <-
         
         for(i in 1:cont$NRmax)
         {
-          fir1 <- de1nlm(mPARS,erg_estep=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
-          sec2 <- de2nlm(mPARS,riqv_quer=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
+          fir1 <- de1nlm(mPARS,erg_estep=erg_estep[1:2],reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
+          sec2 <- de2nlm(mPARS,riqv_quer=erg_estep[1:2],reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
           
           newP <- mPARS - as.vector(fir1 %*% solve(sec2))
           
@@ -158,13 +158,19 @@ nelm <-
         }
         
         
-        if(NLev > 1)
+        if(NLev > 1 & !cont$nonpar) # more than 1 group and NOT nonpar estimation
         {
           if(cont$verbose & ZAEHL >= 1){cat("\r Estep:",ZAEHL+1,"| Mstep:", ZAEHL,"\r")}  
           # estimate mu and sigma
           mueERG <- mueNLM(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest)
           # new quads
           quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev,mu=mueERG$mean_est,sigma=mueERG$sig_est)
+        }
+        
+        
+        if(cont$nonpar) # nonpar estimation in any case (reference group is standardized 0,1)
+        {
+          quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev, ergE=erg_estep)  
         }
         
         PARS <- mPARS
