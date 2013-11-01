@@ -104,7 +104,7 @@ if(cont$dooptim)
     if(cont$verbose & (ZAEHL == 1 | NLev <= 1)){cat("\r Estep:",ZAEHL,"| Mstep:", ZAEHL -1,"\r")}
     
     # E - STEP
-    erg_estep <-  Enrm(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,PREVinp=mueERG)
+    erg_estep <-  Enrm(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,PREVinp=mueERG,nonpar=cont$nonpar)
     
     #browser()
     
