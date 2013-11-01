@@ -218,7 +218,7 @@ nelm <-
     comphesq[notest] <- NA
     attr(comphesq,"listform")  <- relist(comphesq,startOBJ$stwm1)
     ESTlist$SE <- comphesq
-)
+#)
     # also save the reshOBJ - and of course the queen
     ESTlist$reshOBJ   <- reshOBJ
 
