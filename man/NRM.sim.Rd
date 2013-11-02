@@ -51,7 +51,7 @@ Manuel Reif
 }
 \examples{
 
-\dontrun{
+%\dontrun{
 
 # Simulating 5 Items within a loop
 ParList <- lapply(1:5,function(x)
@@ -69,7 +69,7 @@ perp1     <- rnorm(1500,0,1)
 # simulate data.frame 
 sim.nrm.1 <- NRM.sim(ParList,perp1)
 
-}
+%}
 
 
 }

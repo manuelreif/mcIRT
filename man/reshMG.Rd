@@ -72,7 +72,7 @@ Manuel Reif
 }
 \examples{
 
-\dontrun{
+%\dontrun{
 
 # create a list of parameters (see NRM.sim function)
 NUMBI <- 5
@@ -115,7 +115,7 @@ mydes$lambda[2,5] <- 2
 
 reshdat2 <- reshMG(DAT1,items=1:5,groups=6,correct=rep(1,5), design=mydes)
 
-}
+%}
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

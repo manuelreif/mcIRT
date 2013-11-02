@@ -52,7 +52,7 @@ Manuel Reif
 \code{\link{nelm}}
 }
 \examples{
-\dontrun{
+%\dontrun{
 # item parameters
 
 Item1 <- c(1,-2,c(-0.5,0.3,0.2),c(-0.5,-0.3,0.8))
@@ -78,7 +78,7 @@ pp <- rnorm(1000)
 
 # simulate
 sim.nlm.1 <- NLM.sim(ParList,pp)
-}
+%}
 
 
 

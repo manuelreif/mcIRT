@@ -38,6 +38,9 @@ Suh, Y. & Bolt, D. M. (2011). A nested logit approach for investigating distract
 De Boeck, P. & Wilson, M. (2004). \emph{Explanatory Items Response Models}. New York, NY:
 Springer.
 
+Woods, C. M. (2007). Empirical Histograms in Item Response Theory With Ordinal Data. \emph{Education and Psychological Measurement}, 67:1, 73-87.
+
+Woods, C. M. (2011). DIF Testing With an Empirical-Histogram Approximation of the Latent Density for Each Group. \emph{Applied Measurement in Education}, 24:3, 256-279.
 
 }
 %~~ Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation ~~
