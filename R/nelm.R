@@ -108,6 +108,11 @@ nelm <-
         #E ****
         erg_estep <- Enlm(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,PREVinp=mueERG,nonpar=cont$nonpar)
         
+        if(cont$nonpar) # nonpar estimation in any case (reference group is standardized 0,1)
+        {
+          quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev, ergE=erg_estep)  
+        }
+        
         #################################
         ## Newton Raphson Procedure  ####
         #################################
@@ -168,11 +173,7 @@ nelm <-
         }
         
         
-        if(cont$nonpar) # nonpar estimation in any case (reference group is standardized 0,1)
-        {
-          quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev, ergE=erg_estep)  
-        }
-        
+
         PARS <- mPARS
         ZAEHL <- ZAEHL + 1
         

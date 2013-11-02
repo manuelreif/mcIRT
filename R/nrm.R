@@ -106,7 +106,10 @@ if(cont$dooptim)
     # E - STEP
     erg_estep <-  Enrm(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,PREVinp=mueERG,nonpar=cont$nonpar)
     
-    #browser()
+    if(cont$nonpar) # nonpar estimation in any case (reference group is standardized 0,1)
+    {
+      quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev, ergE=erg_estep)  
+    }
     
     # M - STEP
     if(cont$verbose){cat("\r Estep:",ZAEHL,"| Mstep:", ZAEHL,"\r")}
@@ -170,10 +173,7 @@ if(cont$dooptim)
       quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev,mu=mueERG$mean_est,sigma=mueERG$sig_est)
     }
     
-    if(cont$nonpar) # nonpar estimation in any case (reference group is standardized 0,1)
-    {
-    quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev, ergE=erg_estep)  
-    }
+
      #browser()
     PARS <- mPARS
     ZAEHL <- ZAEHL + 1
