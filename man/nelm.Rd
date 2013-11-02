@@ -82,7 +82,7 @@ A numerical vector of length 1. If the difference between two consecutive NR ste
 
 \item \code{Clist}
 A list which contains informations about which parameters should be held constant during estimation. Each list element has to look similar to this expression: "eta\\d* = -*\\d*" (of course real digits instead of Regexes!). The term \code{eta} refers to a column in the Q matrix in the reshape object which actually represents the parameters. The right side of the equation is the constant the parameter should be set to. So an entry in the \code{Clist} could look like "eta2 = -1" which means that the second eta parameter will not be estimated and is set to the value of -1.
-}
+
 
 \item \code{npar}
 If TRUE, the prior distribution is nonparametric and is reestimated in each EM step by use of the expected number of examinees on each quadrature node. Default: FALSE

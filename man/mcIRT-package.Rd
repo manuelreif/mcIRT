@@ -12,8 +12,8 @@ This package provides functions to evaluate multiples choice items or other mult
 \tabular{ll}{
 Package: \tab mcIRT\cr
 Type: \tab Package\cr
-Version: \tab 0.11\cr
-Date: \tab 2013-03-23\cr
+Version: \tab 0.2\cr
+Date: \tab 2013-11-02\cr
 License: GPL (>= 2)
 }
 

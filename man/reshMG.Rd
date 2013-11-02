@@ -95,7 +95,7 @@ simdat2 <- NRM.sim(ParList,perp2)
 simdat1 <- data.frame(ID=1:1000,simdat1)
 simdat2 <- data.frame(ID=1001:2000,simdat2)
 
-simdatalla <- merge(simdat1,simdat2,all=T)
+simdatalla <- merge(simdat1,simdat2,all=TRUE)
 simdatall  <- simdatalla[,-1]
 
 head(simdatall)
