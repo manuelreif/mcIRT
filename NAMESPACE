@@ -5,6 +5,7 @@ export(nrm)
 export(reshMG)
 export(designTemp)
 export(plotINF)
+export(plot_ldistr)
 
 S3method(summary, nrm)
 S3method(summary, nelm)

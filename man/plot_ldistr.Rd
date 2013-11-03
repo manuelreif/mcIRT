@@ -1,25 +1,29 @@
-\name{plotINF}
-\alias{plotINF}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Plot Information Curves
-}
+\name{plot_ldistr}
+\alias{plot_ldistr}
 
+\title{
+Plot latent distributions
+}
 \description{
-Plot Category/Item/Test Information functions for nominal response models and nested logit models.
+The resulting latent distribution is plotted. This is especially relevant when using a nonparametric estimation of the latent distribution.
 }
 \usage{
-plotINF(x, ...)
+plot_ldistr(x,...)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{x}{
 An object of class \code{nrm} or \code{nelm}.
 }
 
-  \item{\dots}{
-More arguments for plot.
+  \item{...}{
+Insert further arguments to the plot function.
 }
+}
+\details{
+
+The function is plotting quadrature nodes and weights for each group (in the case of a multigroup estimation) which are approximating the posterior ability distribution for the group.
+
 }
 
 \author{
@@ -32,7 +36,8 @@ Manuel Reif
 
 \code{\link{nelm}}
 
-\code{\link{plot_ldistr}}
+\code{\link{plotINF}}
+
 }
 \examples{
 
@@ -59,7 +64,10 @@ reshdat1 <- reshMG(sim.nrm.1,items=1:3,correct=rep(1,3))
 res.nrm <- nrm(reshdat1)
 
 # finally the plot
-plotINF(res.nrm)
+plot_ldistr(res.nrm)
+
+
 
 }
+
 \keyword{plot}
