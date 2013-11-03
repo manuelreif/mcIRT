@@ -48,11 +48,17 @@ Infnrm <- function(ESTlist, fromto=c(-5,5), gran=200)
   },levs=levels(ESTlist$reshOBJ$gr), stvl=relstv ,SIMPLIFY = FALSE)
   
   
+  TIFall <- lapply(catinfG,function(GRs)
+  {
+    apply(simplify2array(GRs, higher=TRUE),1,sum)
+  })
+  
+  
   # category informations - for different thetas for each group
   class(catinfG) <- "infnrm"
   
   
-  return(list(catinfG=catinfG, thetas=thetas))
+  return(list(catinfG=catinfG, thetas=thetas, TestInfGROUPS=TIFall))
   
 }  
 

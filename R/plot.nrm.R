@@ -27,7 +27,7 @@ par("ask"=TRUE)
       {
         if(i == 1)
         {
-          plot(seq(fromto[1],fromto[2],length=numbpoints),ZQstern[,i],type="l",col=i,main=MAIN,xlab=expression(theta),ylab="Prob")
+          plot(seq(fromto[1],fromto[2],length=numbpoints),ZQstern[,i],type="l",col=i,main=MAIN,xlab=expression(theta),ylab="Prob",...)
           
         } else {
           MAIN <- paste("Group",gnames[gru],"- Item",i)
