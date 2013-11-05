@@ -1,7 +1,7 @@
 Package: mcIRT
 Type: Package
 Title: IRT models for multiple choice items (mcIRT)
-Version: 0.2
+Version: 0.20
 Date: 2013-11-02
 Author: Manuel Reif
 Maintainer: Manuel Reif <manuel.reif@univie.ac.at>

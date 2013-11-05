@@ -136,27 +136,30 @@ Manuel Reif
 
 %\dontrun{
 
-# Simulating 5 Items within a loop
-ParList <- lapply(1:5,function(x)
+# Simulating 3 Items within a loop
+ParList <- lapply(1:3,function(x)
 {
   Item1 <- c(c(-2,-1,1,2),c(-1.2,0.3,0.2,0.7))
   names(Item1) <- c(paste("zeta",1:4,sep=""),paste("lamb",1:4,sep=""))
   Item1
 })
 
-names(ParList) <- paste("item",1:5,sep="")
+names(ParList) <- paste("item",1:3,sep="")
 
 # simulate person parameters
-perp1     <- rnorm(1500,0,1)
+perp1     <- rnorm(1100,0,1)
 
 # simulate data.frame 
 sim.nrm.1 <- NRM.sim(ParList,perp1)
 
 # reshape
-reshdat1 <- reshMG(sim.nrm.1,items=1:5,correct=rep(1,5))
+reshdat1 <- reshMG(sim.nrm.1,items=1:3,correct=rep(1,3))
 
-# fit the nrm
-res.nrm <- nrm(reshdat1)
+# fit the nrm with a maximum number of 40 EM iterations, which is NOT recommanded 
+# and is just applied here because estimating the model during example checks on cran
+# took too long with default settings
+
+res.nrm <- nrm(reshdat1, ctrl=list(EMmax=40))
 
 summary(res.nrm)
 
