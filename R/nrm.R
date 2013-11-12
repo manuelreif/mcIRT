@@ -121,8 +121,8 @@ if(cont$dooptim)
     
     for(i in 1:cont$NRmax)
       {
-        fir1 <- de1nrm(mPARS,riqv_quer=erg_estep$riqv_querG,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
-        sec2 <- de2nrm(mPARS,riqv_quer=erg_estep$riqv_querG,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
+        fir1 <- de1nrm(mPARS,Estep=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
+        sec2 <- de2nrm(mPARS,Estep=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
         
         newP <- mPARS - as.vector(fir1 %*% solve(sec2))
         
