@@ -28,62 +28,9 @@ Enrm <-
     if(all(is.na(PREVinp)))
     { 
       
-      nrme1 <- mapply(function(stvl,ql,levs, d1)
-      { # loops all groups
-        
-        Km  <- matrix(c(rep(1,length(ql$nodes)),ql$nodes),ncol=2)
-        
-        nrmez <- mapply(function(pitem,daten) 
-        { # loops all items
-          
-          
-          LAM <- matrix(pitem,nrow=2,byrow=T)
-          
-          ez      <- exp(Km %*% LAM)
-          ezrs    <- rowSums(ez)        
-          ZQstern <- ez / ezrs
-          
-          ZQdstern <- ZQstern %*% t(daten)
-          
-          return(ZQdstern)
-        },pitem=stvl, daten=d1, SIMPLIFY = FALSE)
-        
-        
-      },stvl=relstv, ql=quads, levs=levels(reshOBJ$gr), d1=dAtA, SIMPLIFY = FALSE)
+
+      ergEc <- EnrmC(PITEMLL=relstv, NODW=quads, Yl=reshOBJ$d, NU1=reshOBJ$recm)  
       
-      
-      riqv_quer <- mapply(function(levs, zqgroup, ql, d1uc)
-      {
-        nrme2   <- array(unlist(zqgroup),c(dim(zqgroup[[1]]),length(zqgroup))) #recreate it as 3d array
-        # nodes x persons(groupX) x items
-        
-        bullet_with_butterfly_wings <- apply(nrme2,1:2,function(x) prod(x,na.rm=TRUE))
-        # nodes x persons
-        
-        anzahlnodes <- 1:dim(nrme2)[1]
-        LjmalA <- bullet_with_butterfly_wings * ql$weights
-        Pji_schlange  <- colSums(LjmalA) 
-        
-        ################################################
-        #-------------------------- riqv_quer -----------
-        ################################################
-        riqv_1teil  <- t(LjmalA) / Pji_schlange  
-        #browser()
-        riqv_querG <- lapply(d1uc,function(x)
-        {
-          t(x) %*% riqv_1teil
-        })
-        
-        
-        if(nonpar)
-          {
-          return(list(riqv_querG=riqv_querG,fquer=riqv_1teil)) # fquer added for nonpar distr estimation
-            } else {
-                   return(riqv_querG=riqv_querG)  
-                   }
-          
-        #return(list(riqv_querG=riqv_querG,fquer=riqv_1teil)) # fquer added for nonpar distr estimation
-      },levs=levels(reshOBJ$gr), zqgroup=nrme1, ql=quads, d1uc=datuc, SIMPLIFY = FALSE)
       
     } else { 
       
@@ -115,13 +62,15 @@ Enrm <-
     if(nonpar)
       {
       
-      riqv_querG <- lapply(riqv_quer,function(x)x[[1]]) # change the structure
-      fquer      <- lapply(riqv_quer,function(x)x[[2]]) # change the structure
-      return(list(riqv_querG=riqv_querG,fquer=fquer))
+#       riqv_querG <- lapply(riqv_quer,function(x)x[[1]]) # change the structure
+#       fquer      <- lapply(riqv_quer,function(x)x[[2]]) # change the structure
+      
+      #return(list(riqv_querG=ergEc$riqv_quer,fquer=fquer))
+      return(ergEc)
       
       } else 
           {
-          return(list(riqv_querG=riqv_quer))
+          return(ergEc)
           }
   }
 
