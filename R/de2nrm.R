@@ -1,5 +1,5 @@
 de2nrm <- 
-function(Ulstv,riqv_quer,startOBJ,reshOBJ,quads)
+function(Ulstv,Estep,startOBJ,reshOBJ,quads)
 {
   
   SKEL  <- startOBJ$stwm1
@@ -21,15 +21,15 @@ function(Ulstv,riqv_quer,startOBJ,reshOBJ,quads)
   
   relstv <- relist(opp,SKEL)
   
-  fiq <- lapply(riqv_quer,function(X) sapply(X,function(newx)colSums(newx)))
+  #fiq <- lapply(riqv_quer,function(X) sapply(X,function(newx)colSums(newx)))
+  fiq <- Estep$fiqG
 
-
-  occ <- mapply(function(stvl,ql,levs,RI,FI)
+  occ <- mapply(function(stvl,ql,levs,FI)
   { # loops all groups
     
     Km  <- matrix(c(rep(1,length(ql$nodes)),ql$nodes),ncol=2)
     
-    nrmez <- mapply(function(pitem,rii,itnr)
+    nrmez <- mapply(function(pitem,itnr)
     { # loops all items
       
       LAM <- matrix(pitem,nrow=2,byrow=T)
@@ -54,7 +54,7 @@ function(Ulstv,riqv_quer,startOBJ,reshOBJ,quads)
       
       
       
-    },pitem=stvl,rii=RI,itnr=1:ncol(FI),  SIMPLIFY = F) 
+    },pitem=stvl,itnr=1:ncol(FI),  SIMPLIFY = F) 
     
     ma1 <- lapply(1:length(ql$nodes), function(ijk)
             {
@@ -64,7 +64,7 @@ function(Ulstv,riqv_quer,startOBJ,reshOBJ,quads)
             })
     
     ma1
-  },levs=levels(reshOBJ$gr),stvl=relstv,ql=quads,RI=riqv_quer,FI=fiq,SIMPLIFY = FALSE)
+  },levs=levels(reshOBJ$gr),stvl=relstv,ql=quads,FI=fiq,SIMPLIFY = FALSE)
   
 
   nowornever <- lapply(1:nrow(fiq[[1]]),function(fenode)
