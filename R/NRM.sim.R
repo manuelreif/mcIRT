@@ -18,13 +18,15 @@ function(Parlist,pp)
     
     spalte <- sapply(1:length(pp),function(NEX)
     {
-      back <- sample(1:(length(ITEM)/2),1,prob=Pd2[NEX,]) 
+      #back <- sample(1:(length(ITEM)/2),1,prob=Pd2[NEX,])
+      back <- sample(0:((length(ITEM)/2)-1),1,prob=Pd2[NEX,])
       back
     })
-    factor(spalte)
+    #factor(spalte)
   })
   
   dfsim <- data.frame(realis)
+  #dfsim <- as.matrix(realis)
   #
   dfsim
 }
