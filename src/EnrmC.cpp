@@ -102,7 +102,8 @@ List EnrmC(List PITEMLL, List NODW, List Yl, List NU1) {
     arma::mat AENDm = Rcpp::as<arma::mat>(ENDm);
     
     
-    arma::mat riqv_quer = Anu1m * trans(AENDm); 
+    //arma::mat riqv_quer = Anu1m * trans(AENDm); 
+    arma::mat riqv_quer = trans(Anu1m) * trans(AENDm); 
     
     riqv_querG[gru] = riqv_quer; // save in list
     

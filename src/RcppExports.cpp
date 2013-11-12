@@ -7,17 +7,17 @@
 using namespace Rcpp;
 
 // de1nrmC
-Rcpp::NumericVector de1nrmC(List PITEML, Rcpp::NumericVector nodes, NumericMatrix FIQ, NumericMatrix RIQ);
-RcppExport SEXP mcIRT_de1nrmC(SEXP PITEMLSEXP, SEXP nodesSEXP, SEXP FIQSEXP, SEXP RIQSEXP) {
+Rcpp::NumericVector de1nrmC(List PITEMLL, List QUADS, List fiqG, List riqv_querG);
+RcppExport SEXP mcIRT_de1nrmC(SEXP PITEMLLSEXP, SEXP QUADSSEXP, SEXP fiqGSEXP, SEXP riqv_querGSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< List >::type PITEML(PITEMLSEXP );
-        Rcpp::traits::input_parameter< Rcpp::NumericVector >::type nodes(nodesSEXP );
-        Rcpp::traits::input_parameter< NumericMatrix >::type FIQ(FIQSEXP );
-        Rcpp::traits::input_parameter< NumericMatrix >::type RIQ(RIQSEXP );
-        Rcpp::NumericVector __result = de1nrmC(PITEML, nodes, FIQ, RIQ);
+        Rcpp::traits::input_parameter< List >::type PITEMLL(PITEMLLSEXP );
+        Rcpp::traits::input_parameter< List >::type QUADS(QUADSSEXP );
+        Rcpp::traits::input_parameter< List >::type fiqG(fiqGSEXP );
+        Rcpp::traits::input_parameter< List >::type riqv_querG(riqv_querGSEXP );
+        Rcpp::NumericVector __result = de1nrmC(PITEMLL, QUADS, fiqG, riqv_querG);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);
