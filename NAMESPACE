@@ -1,3 +1,5 @@
+useDynLib(mcIRT)
+
 export(NRM.sim)
 export(NLM.sim)
 export(nelm)
