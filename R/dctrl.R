@@ -16,12 +16,12 @@ function(d,correct)
   # ~~~~~~~~~~~~~~~~~~~~~~~~ minimum
   # minimum <- sapply(d,function(x)min(as.numeric(x),na.rm=T) == 1)
   minimum <- sapply(d,function(x)min(as.numeric(x),na.rm=T) == 0)
-  if(!any(minimum))
-  {
-    problemlist[[a]] <- "minimum != 1 in at least one column!"
-    a <- a + 1
-    probl <- TRUE
-  }
+#   if(!any(minimum))
+#   {
+#     problemlist[[a]] <- "minimum != 1 in at least one column!"
+#     a <- a + 1
+#     probl <- TRUE
+#   }
   
   # ~~~~~~~~~~~~~~~~~~~~~~~~ number of cat
   
