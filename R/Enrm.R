@@ -34,29 +34,8 @@ Enrm <-
       
     } else { 
       
-      riqv_quer <- mapply(function(levs, d1uc, ql, MER)
-      {
-        ################################################
-        #-------------------------- riqv_quer -----------
-        ################################################
-        
-        riqv_1teil  <- t(MER$LjmalA) / MER$Pji_schlange   
-        riqv_querG <- lapply(d1uc,function(x)
-        {
-          t(x) %*% riqv_1teil
-        })
-        
-        if(nonpar)
-        {
-        return(list(riqv_querG=riqv_querG,fquer=riqv_1teil)) # fquer added for nonpar distr estimation
-        } else {
-               return(riqv_querG=riqv_querG)  
-               }
-        
-        
-      },levs=levels(reshOBJ$gr), d1uc=datuc, ql=quads, MER=PREVinp$mue_hat_g, SIMPLIFY = FALSE)  
-      
-      
+      return(PREVinp[c("riqv_querG","fiqG")])
+    
     }
     
     if(nonpar)

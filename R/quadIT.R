@@ -2,6 +2,7 @@ quadIT <-
 function(nodes=14, mu=0, sigma=1,absrange=5, ngr=1, ergE=NULL) 
 {
   # riqv_quer = resulting object of the Estep function. NULL if a parametric prior should be estimated
+  # ergE != NULL if nonpar estimation is required
   
   if(all(is.null(ergE)))
   {
@@ -62,7 +63,7 @@ function(nodes=14, mu=0, sigma=1,absrange=5, ngr=1, ergE=NULL)
       
   return(QN)
       
-    }, pg=ergE$fquer,gruu=1:ngr, SIMPLIFY=FALSE)
+    }, pg=ergE$fiqG,gruu=1:ngr, SIMPLIFY=FALSE)
   
 
     

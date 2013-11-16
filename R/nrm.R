@@ -184,7 +184,7 @@ if(cont$dooptim)
 
   ## Person Parameters
   
-  ##EAP_nrm <- PePNRM(quads=quads,mueERG=mueERG) ###!
+  ##EAP_nrm <- PePNRM(quads=quads,mueERG=mueERG)
   ESTlist$EAPs <- mueERG$thetas
   ## centering
   
