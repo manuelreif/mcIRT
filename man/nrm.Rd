@@ -52,7 +52,7 @@ The following arguments can be comitted within a list (ctrl argument):
 
 \itemize{
   \item \code{nodes}
-A numerical vector of length 1. Set the number of quadrature nodes/points for the a-priori distribution. The distribution is assumed to be normal. Default: \code{14}
+A numerical vector of length 1. Set the number of quadrature nodes/points for the a-priori distribution. The distribution is assumed to be normal. Default: \code{21}
 
   \item \code{absrange}
 A numerical vector of length 1. Denotes the absolute range of the a-priori distribution. The default value is 5, so the normal distribution ranges from \eqn{[-5 ; 5]}.

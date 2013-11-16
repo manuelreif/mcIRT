@@ -17,7 +17,7 @@ function(reshOBJ,etastart=-0.1, ctrl=list())
   ######### USER CONTROLS #################
   #########################################
   
-  cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, dooptim=FALSE,Clist=NA, nonpar=FALSE)
+  cont <- list(nodes=21, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, dooptim=FALSE,Clist=NA, nonpar=FALSE)
 
   user_ctrlI <- match(names(ctrl),names(cont))
   if(any(is.na(user_ctrlI)))
