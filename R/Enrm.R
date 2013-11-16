@@ -29,7 +29,7 @@ Enrm <-
     { 
       
 
-      ergEc <- EnrmC(PITEMLL=relstv, NODW=quads, Yl=reshOBJ$d, NU1=reshOBJ$recm)  
+      ergEc <- EnrmC(PITEMLL=relstv, NODW=quads, Yl=reshOBJ$d, NU1=reshOBJ$d1uc)  
       
       
     } else { 
