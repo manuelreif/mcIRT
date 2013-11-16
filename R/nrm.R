@@ -147,7 +147,7 @@ if(cont$dooptim)
             mueERG <- mueNRM(mPARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest,endest=TRUE)
             
             ###### LIKELIHOOD BERECHNEN #######################
-            value <- ZFnrm(mPARS,riqv_quer=erg_estep$riqv_querG,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads) ###!
+            value <- ZFnrm(mPARS,riqv_quer=erg_estep$riqv_querG,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
             ###################################################
             
             ESTlist[[1]]   <- mPARS
@@ -184,8 +184,8 @@ if(cont$dooptim)
 
   ## Person Parameters
   
-  EAP_nrm <- PePNRM(quads=quads,mueERG=mueERG) ###!
-  ESTlist$EAPs <- EAP_nrm
+  ##EAP_nrm <- PePNRM(quads=quads,mueERG=mueERG) ###!
+  ESTlist$EAPs <- mueERG$thetas
   ## centering
   
   if(all(!is.na(startOBJ$setC)))

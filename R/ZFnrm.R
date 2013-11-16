@@ -26,7 +26,7 @@ function(Ulstv,riqv_quer,startOBJ,reshOBJ,quads)
   occ <- mapply(function(stvl,ql,levs,RI)
   { # loops all groups
     
-    nrmez <- mapply(function(pitem,rii)
+    nrmez <- mapply(function(pitem)
     { # loops all items
       
       Km  <- matrix(c(rep(1,length(ql$nodes)),ql$nodes),ncol=2)
@@ -37,16 +37,37 @@ function(Ulstv,riqv_quer,startOBJ,reshOBJ,quads)
       ezrs <- rowSums(ez)        
       ZQstern <- ez / ezrs
       
-      #ZQstern
-      Prii   <- log(ZQstern) * t(rii)
-      rsprii <- rowSums(Prii)
-      rsprii
-      
-    },pitem=stvl,rii=RI,SIMPLIFY = T)
-    nrmez
+#       #ZQstern
+#       Prii   <- log(ZQstern) * t(rii)
+#       rsprii <- rowSums(Prii)
+#       rsprii
+      ZQstern   
+    },pitem=stvl,SIMPLIFY = FALSE)
+    
+    
+    dc_nrmez <- do.call("cbind",nrmez)
+    
+    sum(log(dc_nrmez) * t(RI))
+  
     
   },levs=levels(reshOBJ$gr),stvl=relstv,ql=quads,RI=riqv_quer,SIMPLIFY = FALSE)
 
   do.call(sum,occ) 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
