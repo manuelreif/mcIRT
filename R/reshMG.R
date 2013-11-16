@@ -62,22 +62,35 @@ if(TYPE == "NRM")
    do.call("cbind",dummycod) # new creates one matrix
   })
   
- 
   
+  ### d1uc new::::::
+  ## anything which is.na() is converted to zero
+ d1uc <-  lapply(recm, function(x){
   
-  d1uc <- lapply(levels(gr), function(LE)
-  {
-    dummycod <- mapply(function(well,item)
-    {
-      COL2 <- factor(ifelse(d[gr == LE,item] == well,"cor",paste("dt_",d[gr == LE,item],sep="")))
-      caa  <- model.matrix(~ -1 + COL2, data = model.frame(~ -1 + COL2, na.action=na.pass))
-      colnames(caa) <- gsub("COL2",paste("I",item,sep=""),colnames(caa))
-      cAA  <- ifelse(is.na(caa),0,caa)
+    grerg <- apply(x, 2, function(spal){
       
-      return(cAA)
-    },well=correct,item = items,SIMPLIFY = FALSE)  
-    return(dummycod)
+      spal[is.na(spal)] <- 0
+      spal
+      
+      })
+    
+    grerg
   })
+  
+  
+#   d1uc <- lapply(levels(gr), function(LE)
+#   {
+#     dummycod <- mapply(function(well,item)
+#     {
+#       COL2 <- factor(ifelse(d[gr == LE,item] == well,"cor",paste("dt_",d[gr == LE,item],sep="")))
+#       caa  <- model.matrix(~ -1 + COL2, data = model.frame(~ -1 + COL2, na.action=na.pass))
+#       colnames(caa) <- gsub("COL2",paste("I",item,sep=""),colnames(caa))
+#       cAA  <- ifelse(is.na(caa),0,caa)
+#       
+#       return(cAA)
+#     },well=correct,item = items,SIMPLIFY = FALSE)  
+#     return(dummycod)
+#   })
   
   
   aDD <- mapply(function(well,item)
