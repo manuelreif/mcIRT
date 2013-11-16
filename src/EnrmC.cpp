@@ -97,6 +97,8 @@ List EnrmC(List PITEMLL, List NODW, List Yl, List NU1) {
        ENDm(_,col) = colmw / sum(colmw); // normalize
        } // das muss ja fiq sein
 
+
+    /////// hier gibts immer noch probleme mit NAs
   
     arma::mat Anu1m = Rcpp::as<arma::mat>(nu1m);
     arma::mat AENDm = Rcpp::as<arma::mat>(ENDm);

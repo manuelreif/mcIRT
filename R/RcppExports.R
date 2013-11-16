@@ -9,3 +9,7 @@ EnrmC <- function(PITEMLL, NODW, Yl, NU1) {
     .Call('mcIRT_EnrmC', PACKAGE = 'mcIRT', PITEMLL, NODW, Yl, NU1)
 }
 
+mue_nrmC <- function(PITEMLL, NODW, Yl, NU1, sigmaest, endest) {
+    .Call('mcIRT_mue_nrmC', PACKAGE = 'mcIRT', PITEMLL, NODW, Yl, NU1, sigmaest, endest)
+}
+
