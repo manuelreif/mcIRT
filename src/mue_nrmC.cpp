@@ -22,7 +22,7 @@ List mue_nrmC(List PITEMLL, List NODW, List Yl, List NU1, int sigmaest, double e
    Rcpp::NumericVector mues(ngru);
    Rcpp::NumericVector sigmas(ngru);
    Rcpp::NumericMatrix errmatB(2,ngru); // matrix for the standard errors
-   
+   List Xqi_querL(ngru);
    // the group loop
    for(int gru = 0; gru < ngru; gru++)
    {
@@ -130,8 +130,7 @@ List mue_nrmC(List PITEMLL, List NODW, List Yl, List NU1, int sigmaest, double e
        } 
 
       mues(gru) = mean(Xqi_quer); //Xqi_qq
-
-Rcout << "Pos 1" << gru << std::endl;
+      Xqi_querL[gru] = Xqi_quer; // save EAP
 
   if(sigmaest == 1 & ngru > 1) // if more than one group and an sigma estimation is desired
   {
@@ -214,7 +213,7 @@ Rcout << "Pos 1" << gru << std::endl;
 
   serror = sqrt(diagvec(inv(Aerrmat)));
  
-  Rcout << "Pos 2: " << endest << std::endl; 
+  //Rcout << "Pos 2: " << endest << std::endl; 
   
     } else if(endest >= 1 & sigmaest == 0){
     NumericVector mulfac1(lno);
@@ -249,7 +248,7 @@ Rcout << "Pos 1" << gru << std::endl;
         
    errmatB(_,gru) = serror;
    
-  Rcout << "Pos 3: " << gru << std::endl;    
+ // Rcout << "Pos 3: " << gru << std::endl;    
 
   
 // ----- computation of Estepthings -----
@@ -292,7 +291,16 @@ Rcout << "Pos 1" << gru << std::endl;
   
 
    
-    return List::create(_["riqv_querG"] = riqv_querG, _["fiqG"] = fiqG,
-    _["mean_est"]=mues, _["sig_est"] = sigmas,_["errmat"] = errmatB);
-     //return riqv_querG;
+   if(endest == 0)
+       {
+     return List::create(_["riqv_querG"] = riqv_querG, _["fiqG"] = fiqG,
+        _["mean_est"]=mues, _["sig_est"] = sigmas,_["errmat"] = errmatB); 
+         
+       } else 
+           { // for the last estimate return the EAPs as well
+         return List::create(_["riqv_querG"] = riqv_querG, _["fiqG"] = fiqG,
+            _["mean_est"]=mues, _["sig_est"] = sigmas,_["errmat"] = errmatB,  _["thetas"] = Xqi_querL); 
+           }
+           
+
 }
