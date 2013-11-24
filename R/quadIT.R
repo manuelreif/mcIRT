@@ -43,7 +43,7 @@ function(nodes=14, mu=0, sigma=1,absrange=5, ngr=1, ergE=NULL)
   # loop over GROUPS 
     nwpgru <- mapply( function(pg,gruu)
     {
-      At <- colSums(pg) # estimate empirical weights
+      At <- rowSums(pg) # estimate empirical weights
       quadnodes <- seq(absrange*(-1), absrange, length.out = nodes) # create nodes 
       
       if(any(At< 0.0001))
