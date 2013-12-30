@@ -25,7 +25,7 @@ function(reshOBJ,etastart="aut",Clist)
     wal <- grep("^.*I\\d+alpha$",rownames(reshOBJ$Qmat),perl=TRUE)
     
     etaSlong <- rep(0,nrow(reshOBJ$Qmat))
-    etaSlong[wbe] <- 0
+    etaSlong[wbe] <- 0.1
 
     etaSlong[wal] <- 1/granz
 

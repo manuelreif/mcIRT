@@ -5,6 +5,10 @@ de1nrmC <- function(PITEMLL, QUADS, fiqG, riqv_querG) {
     .Call('mcIRT_de1nrmC', PACKAGE = 'mcIRT', PITEMLL, QUADS, fiqG, riqv_querG)
 }
 
+EnelmC <- function(PITEMLL, NODW, Yl, NU1) {
+    .Call('mcIRT_EnelmC', PACKAGE = 'mcIRT', PITEMLL, NODW, Yl, NU1)
+}
+
 EnrmC <- function(PITEMLL, NODW, Yl, NU1) {
     .Call('mcIRT_EnrmC', PACKAGE = 'mcIRT', PITEMLL, NODW, Yl, NU1)
 }

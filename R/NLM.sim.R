@@ -19,13 +19,13 @@ function(Parlist,pp)
       if(rf_real == 0)
       {
         back <- sample(2:(ncol(Pd2)+1),1,prob=Pd2[NEX,]) 
-        back
+        back - 1 # um auf dieselbe form zu kommen wie bei nrm
       } else 
       {
-        rf_real  
+        rf_real  - 1
       }
     })
-    factor(spalte)
+    #factor(spalte)
   })
   
   data.frame(realis)

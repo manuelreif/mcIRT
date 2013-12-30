@@ -24,6 +24,24 @@ BEGIN_RCPP
     return __sexp_result;
 END_RCPP
 }
+// EnelmC
+List EnelmC(List PITEMLL, List NODW, List Yl, List NU1);
+RcppExport SEXP mcIRT_EnelmC(SEXP PITEMLLSEXP, SEXP NODWSEXP, SEXP YlSEXP, SEXP NU1SEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< List >::type PITEMLL(PITEMLLSEXP );
+        Rcpp::traits::input_parameter< List >::type NODW(NODWSEXP );
+        Rcpp::traits::input_parameter< List >::type Yl(YlSEXP );
+        Rcpp::traits::input_parameter< List >::type NU1(NU1SEXP );
+        List __result = EnelmC(PITEMLL, NODW, Yl, NU1);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
 // EnrmC
 List EnrmC(List PITEMLL, List NODW, List Yl, List NU1);
 RcppExport SEXP mcIRT_EnrmC(SEXP PITEMLLSEXP, SEXP NODWSEXP, SEXP YlSEXP, SEXP NU1SEXP) {
