@@ -3,8 +3,8 @@ Enrm <-
   {
     
     
-    dAtA    <- reshOBJ$recm
-    datuc   <- reshOBJ$d1uc
+#     dAtA    <- reshOBJ$recm
+#     datuc   <- reshOBJ$d1uc
     
     SKEL  <- startOBJ$stwm1
     Q     <- reshOBJ$Qmat
@@ -40,7 +40,6 @@ Enrm <-
     
     if(nonpar)
       {
-      
 #       riqv_querG <- lapply(riqv_quer,function(x)x[[1]]) # change the structure
 #       fquer      <- lapply(riqv_quer,function(x)x[[2]]) # change the structure
       
@@ -52,10 +51,6 @@ Enrm <-
           return(ergEc)
           }
   }
-
-
-
-
 
 
 
