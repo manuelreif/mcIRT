@@ -6,6 +6,25 @@
 
 using namespace Rcpp;
 
+// de1nelmC
+Rcpp::NumericVector de1nelmC(List PITEMLL, List QUADS, List fiqG, List riqv_querG, List fique0G);
+RcppExport SEXP mcIRT_de1nelmC(SEXP PITEMLLSEXP, SEXP QUADSSEXP, SEXP fiqGSEXP, SEXP riqv_querGSEXP, SEXP fique0GSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< List >::type PITEMLL(PITEMLLSEXP );
+        Rcpp::traits::input_parameter< List >::type QUADS(QUADSSEXP );
+        Rcpp::traits::input_parameter< List >::type fiqG(fiqGSEXP );
+        Rcpp::traits::input_parameter< List >::type riqv_querG(riqv_querGSEXP );
+        Rcpp::traits::input_parameter< List >::type fique0G(fique0GSEXP );
+        Rcpp::NumericVector __result = de1nelmC(PITEMLL, QUADS, fiqG, riqv_querG, fique0G);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
 // de1nrmC
 Rcpp::NumericVector de1nrmC(List PITEMLL, List QUADS, List fiqG, List riqv_querG);
 RcppExport SEXP mcIRT_de1nrmC(SEXP PITEMLLSEXP, SEXP QUADSSEXP, SEXP fiqGSEXP, SEXP riqv_querGSEXP) {

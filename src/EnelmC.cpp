@@ -70,18 +70,15 @@ List EnelmC(List PITEMLL, List NODW, List Yl, List NU1) {
         //std::cout << "Return" << tplf << " \n ";
          } else {
                 x(o,q) = exp(PITEM(q) + nodes(o)*PITEM(lpi2)) * tplf; // mit 1-P multiplizieren
+                gessum += exp(PITEM(q) + nodes(o)*PITEM(lpi2)); // new
                 }
-         gessum += exp(PITEM(q) + nodes(o)*PITEM(lpi2)); // new
          }
           
         x(o,_) = x(o,_) / gessum;
         x(o,0) = z2plv;
         
         //std::cout << "z2plv:" << z2plv << " \n ";
-        // std::cout << "inmattrix" << x(o,0) << " \n ";
-        //arma::mat zwischen = x(o,arma::span(1,lpim1)) / gessum;
-        //x(o,arma::span(1,lpim1)) = zwischen; // nrm cats divided by the gessum
-         
+        //std::cout << "inmattrix:  " << x(o,0) << " \n ";
        }
   
      
@@ -116,7 +113,6 @@ List EnelmC(List PITEMLL, List NODW, List Yl, List NU1) {
 
 
     /////// 
-  
     arma::mat Anu1m = Rcpp::as<arma::mat>(nu1m);
     arma::mat AENDm = Rcpp::as<arma::mat>(ENDm);
     
@@ -148,7 +144,7 @@ List EnelmC(List PITEMLL, List NODW, List Yl, List NU1) {
 //     
   } // end of group loop
    
-   
+   // ENDm nachher wieder entfernen! es wird nur das letzte rausgeschrieben!
     return List::create(_["riqv_querG"] = riqv_querG, _["fiqG"] = fiqG);
      //return riqv_querG;
 }

@@ -37,7 +37,7 @@ if(all(is.na(PREVinp)))
 {
   
 
-  ergEc <- EnrmC(PITEMLL=relstv, NODW=quads, Yl=reshOBJ$d, NU1=reshOBJ$d1uc)  
+  ergEc <- EnelmC(PITEMLL=relstv, NODW=quads, Yl=reshOBJ$d, NU1=reshOBJ$d1uc)  
 
   ergEc$fique0G <- mapply(function(x,y) y - t(x[tplcpos1,]), x=ergEc$riqv_querG, y=ergEc$fiqG,SIMPLIFY=FALSE)
   
