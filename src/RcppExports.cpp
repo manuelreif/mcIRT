@@ -79,6 +79,26 @@ BEGIN_RCPP
     return __sexp_result;
 END_RCPP
 }
+// mue_nelmC
+List mue_nelmC(List PITEMLL, List NODW, List Yl, List NU1, int sigmaest, double endest);
+RcppExport SEXP mcIRT_mue_nelmC(SEXP PITEMLLSEXP, SEXP NODWSEXP, SEXP YlSEXP, SEXP NU1SEXP, SEXP sigmaestSEXP, SEXP endestSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< List >::type PITEMLL(PITEMLLSEXP );
+        Rcpp::traits::input_parameter< List >::type NODW(NODWSEXP );
+        Rcpp::traits::input_parameter< List >::type Yl(YlSEXP );
+        Rcpp::traits::input_parameter< List >::type NU1(NU1SEXP );
+        Rcpp::traits::input_parameter< int >::type sigmaest(sigmaestSEXP );
+        Rcpp::traits::input_parameter< double >::type endest(endestSEXP );
+        List __result = mue_nelmC(PITEMLL, NODW, Yl, NU1, sigmaest, endest);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
 // mue_nrmC
 List mue_nrmC(List PITEMLL, List NODW, List Yl, List NU1, int sigmaest, double endest);
 RcppExport SEXP mcIRT_mue_nrmC(SEXP PITEMLLSEXP, SEXP NODWSEXP, SEXP YlSEXP, SEXP NU1SEXP, SEXP sigmaestSEXP, SEXP endestSEXP) {
