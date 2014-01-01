@@ -121,8 +121,8 @@ nelm <-
         
         for(i in 1:cont$NRmax)
         {
-          fir1 <- de1nlm(mPARS,erg_estep=erg_estep$riq_querA,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
-          sec2 <- de2nlm(mPARS,riqv_quer=erg_estep$riq_querA,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
+          fir1 <- de1nlm(mPARS,erg_estep=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
+          sec2 <- de2nlm(mPARS,erg_estep=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
           
           newP <- mPARS - as.vector(fir1 %*% solve(sec2))
           

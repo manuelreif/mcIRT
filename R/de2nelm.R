@@ -1,5 +1,5 @@
 de2nlm <- 
-  function(Ulstv,riqv_quer,startOBJ,reshOBJ,quads)
+  function(Ulstv,erg_estep,startOBJ,reshOBJ,quads)
   {
 
 SKEL  <- startOBJ$stwm1
@@ -19,8 +19,10 @@ if(all(!is.na(startOBJ$setC)))
 opp   <- as.vector(Q %*% Ulstv)
 
 relstv <- relist(opp,SKEL)
+fiq <- erg_estep$fiqG # new
+fique0G <- erg_estep$fique0G # new
 
-occ <- mapply(function(stvl,ql,levs,RI)
+occ <- mapply(function(stvl,ql,levs, FI, FI0)
 { # loops all groups
   
 Km  <- matrix(c(rep(1,length(ql$nodes)),ql$nodes),ncol=2) #!
@@ -38,10 +40,10 @@ Km  <- matrix(c(rep(1,length(ql$nodes)),ql$nodes),ncol=2) #!
     
     dosolit <- 1-solit
     
-    riq_quer_mat <- sapply(RI$riq_querG,function(x)x)
-    f_iq         <- sapply(RI$riqv_querG,colSums) + riq_quer_mat # nodes x items
+    #riq_quer_mat <- sapply(RI$riq_querG,function(x)x)
+    #f_iq         <- sapply(RI$riqv_querG,colSums) + riq_quer_mat # nodes x items
     
-    base2pl <- f_iq[,itnr] * as.vector(solit) * as.vector(dosolit)
+    base2pl <- FI[,itnr] * as.vector(solit) * as.vector(dosolit)
     
     Xqs <- cbind(1,ql$nodes,ql$nodes,ql$nodes^2)
     fiqPiqnode <- Xqs * base2pl
@@ -54,7 +56,7 @@ Km  <- matrix(c(rep(1,length(ql$nodes)),ql$nodes),ncol=2) #!
      
     ZQstern <- coP_nrm(pitemNRM,Km) 
     
-    fique0 <- sapply(RI$riqv_querG,colSums)
+    #fique0 <- sapply(RI$riqv_querG,colSums)
     
     W_g <- mapply(function(zei,TWOP)
         {
@@ -63,7 +65,7 @@ Km  <- matrix(c(rep(1,length(ql$nodes)),ql$nodes),ncol=2) #!
           Pqrep <- matrix(-Zqrow ,length(Zqrow),length(Zqrow)) 
           diag(Pqrep) <- 1-Zqrow 
           Pdi <- diag(Zqrow )
-          Wq  <- fique0[zei,itnr] * Pqrep %*% Pdi
+          Wq  <- FI0[zei,itnr] * Pqrep %*% Pdi
           thetamat <- matrix(c(-1,-z,-z,-z^2),ncol=2)
           kronmat  <- kronecker(thetamat,Wq)
           
@@ -92,7 +94,7 @@ Km  <- matrix(c(rep(1,length(ql$nodes)),ql$nodes),ncol=2) #!
   })
   
   ma1
-},levs=levels(reshOBJ$gr), stvl=relstv, ql=quads, RI=riqv_quer, SIMPLIFY = FALSE)
+},levs=levels(reshOBJ$gr), stvl=relstv, ql=quads, FI=fiq, FI0=fique0G, SIMPLIFY = FALSE)
 
 
 
