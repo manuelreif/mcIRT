@@ -2,7 +2,7 @@ mueNRM <-
 function(Ulstv,reshOBJ,startOBJ,quads,sigmaest=FALSE,endest=FALSE)
 {
   
-  dAtA    <- reshOBJ$recm
+  #dAtA    <- reshOBJ$recm
   
   SKEL  <- startOBJ$stwm1
   Q     <- reshOBJ$Qmat
@@ -23,8 +23,8 @@ function(Ulstv,reshOBJ,startOBJ,quads,sigmaest=FALSE,endest=FALSE)
   opp    <- as.vector(Q %*% Ulstv)
   relstv <- relist(opp,SKEL)
   
-  if(sigmaest) sigmaest <- 1;
-  if(endest) endest <- 1;
+  if(sigmaest) sigmaest <- 1
+  if(endest) endest <- 1
   
 #   mue_nrmC <- function(PITEMLL, NODW, Yl, NU1, sigmaest, endest) {
 #     .Call('mcIRT_mue_nrmC', PACKAGE = 'mcIRT', PITEMLL, NODW, Yl, NU1, sigmaest, endest)
