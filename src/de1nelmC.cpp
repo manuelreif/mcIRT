@@ -67,12 +67,14 @@ Rcpp::NumericVector de1nelmC(List PITEMLL, List QUADS, List fiqG, List riqv_quer
           tplf = 1 - z2plv; // 1-P
 
          } else {
-                x(o,q) = exp(PITEM(q) + nodes(o)*PITEM(lpi2)) * tplf; // mit 1-P multiplizieren
-                gessum += exp(PITEM(q) + nodes(o)*PITEM(lpi2)); // new
+                x(o,q) = exp(PITEM(q) + nodes(o)*PITEM(lpi2)); // different than Enlm
+                gessum += x(o,q);
                 }
          }
         x(o,_) = x(o,_) / gessum;
         x(o,0) = z2plv;
+        
+        //std::cout << "firstofNRMpart: " << x(o,1) << " \n "; //deleteme
         //std::cout << "z2plv:" << z2plv << " \n ";
         // std::cout << "inmattrix" << x(o,0) << " \n ";
        }

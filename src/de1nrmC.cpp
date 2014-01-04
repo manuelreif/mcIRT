@@ -63,8 +63,9 @@ Rcpp::NumericVector de1nrmC(List PITEMLL, List QUADS, List fiqG, List riqv_querG
 
              x(o,_) =  x(o,_) /gessum;
              
-         }
 
+         }
+     
         
        for(int blab = 0; blab < lpi; blab++)
            {
@@ -75,7 +76,7 @@ Rcpp::NumericVector de1nrmC(List PITEMLL, List QUADS, List fiqG, List riqv_querG
            indexdrivs += 1;
            }
 
-//      Rcout << "The value is " << endE << std::endl;
+
 //      Rcout << "The value is " << derivs.size() << std::endl;
 
         indexdrivs = indexdrivs + lpi;
