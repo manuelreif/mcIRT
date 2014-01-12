@@ -146,7 +146,7 @@ nelm <-
           #quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev,mu=mueERG$mean_est,sigma=mueERG$sig_est)
           
           ###### LIKELIHOOD BERECHNEN #######################
-          value <- ZFnlm(mPARS,erg_estep=erg_estep$riq_querA,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
+          value <- ZFnlm(mPARS,erg_estep=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
           ###################################################
           
           ESTlist[[1]]   <- mPARS
@@ -183,8 +183,7 @@ nelm <-
     }
 
     ## Person Parameters
-    EAP_nlm <- PePNLM(ESTlist[[1]],reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,mueERG=mueERG)
-    ESTlist$EAPs <- EAP_nlm
+    ESTlist$EAPs <- mueERG$thetas
     # center the parameters
     parcent <- Cnlm(reshOBJ=reshOBJ,ESTlist=ESTlist, centBETA=cont$centBETA, centALPHA=cont$centALPHA, startOBJ = startOBJ)
     
