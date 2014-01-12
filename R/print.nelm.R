@@ -38,18 +38,31 @@ function(x, ...)
   colnames(albePm) <- c("alpha","SE|alpha","beta","SE|beta")
   
   
-  catnrgroup <- lapply(RESnlm$reshOBJ$recm, function(grou)
+#   catnrgroup <- lapply(RESnlm$reshOBJ$recm, function(grou)
+#   {
+#     
+#     catnr <- mapply(function(x,numbers) 
+#     {
+#       cn <- colnames(x)[-1]
+#       cnn <- gsub(".*_(\\d+)","\\1",cn, perl=TRUE)
+#       paste("Item",numbers, "|categ",cnn,sep="") 
+#       
+#     },x=grou, numbers=1:length(RESnlm$reshOBJ$aDD),SIMPLIFY=FALSE)
+#     catnr  
+#   })
+  
+  catnrgroup <- lapply(levels(RESnlm$reshOBJ$gr),function(nixi)
   {
     
-    catnr <- mapply(function(x,numbers) 
+    catallIT <- as.vector(mapply(function(x,y)
     {
-      cn <- colnames(x)[-1]
-      cnn <- gsub(".*_(\\d+)","\\1",cn, perl=TRUE)
-      paste("Item",numbers, "|categ",cnn,sep="") 
-      
-    },x=grou, numbers=1:length(RESnlm$reshOBJ$aDD),SIMPLIFY=FALSE)
-    catnr  
+      paste0("Item",y, "|categ",1: (x$anz_cat-1))
+    },x=RESnlm$reshOBJ$aDD,y=1:length(RESnlm$reshOBJ$aDD)))
+    
+    catallIT 
+    
   })
+  
   
   #   
   form1a <- mapply(function(eachG,eachSE,cnrg)
