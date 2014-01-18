@@ -16,7 +16,7 @@ nelm <-
     ######### USER CONTROLS #################
     #########################################
     
-    cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, dooptim=FALSE, centBETA=FALSE, centALPHA=FALSE,Clist=NA, nonpar=FALSE)
+    cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, centBETA=FALSE, centALPHA=FALSE,Clist=NA, nonpar=FALSE)
     
     user_ctrlI <- match(names(ctrl),names(cont))
     if(any(is.na(user_ctrlI)))
@@ -47,58 +47,6 @@ nelm <-
     value0 <- 10000
     
     
-    
-    if(cont$dooptim)
-    {
-      
-      repeat
-      {
-        if(cont$verbose){cat("\r Estep:",ZAEHL,"| Mstep:", ZAEHL -1,"\r")}
-        
-        #E ****
-        erg_estep <- Enlm(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,PREVinp=mueERG)
-        
-        #M ****
-        oerg <- optim(par=PARS,fn=ZFnlm,gr=de1nlm,erg_estep=erg_estep, startOBJ=startOBJ, reshOBJ=reshOBJ, quads=quads, control=list(fnscale=-1,maxit=50),method="BFGS",hessian=TRUE)
-        
-        
-        if(NLev > 1)
-        {
-          # estimate mu and sigma
-
-          mueERG <- mueNLM(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest)
-          # new quads
-          quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev,mu=mueERG$mean_est,sigma=mueERG$sig_est)
-        }
-        
-        if(abs(OLD - abs(oerg$value)) <= cont$exac & ZAEHL > 10 | ZAEHL > cont$EMmax)
-        {
-          mueERG <- mueNLM(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest,endest=TRUE)
-          
-          ESTlist[[1]]   <- oerg$par
-          ESTlist[[2]]   <- erg_estep
-          ESTlist[[3]]   <- oerg
-          ESTlist[[4]]   <- ZAEHL
-          ESTlist[[5]]   <- mueERG
-          ESTlist[[6]]   <- quads
-          ESTlist[[7]]   <- startOBJ
-          ESTlist[[8]]   <- cont
-          
-          names(ESTlist) <- c("etapar","last_estep","last_mstep" ,"n_steps","erg_distr","QUAD","starting_values","ctrl")
-          break
-        }
-        
-        OLD <- abs(oerg$value)
-        PARS <- oerg$par
-        ZAEHL <- ZAEHL + 1
-      }
-      
-      
-      
-      
-    } else {
-      
-      
       
       ## EM Algorithm
       repeat
@@ -179,7 +127,7 @@ nelm <-
         
       }
       
-    }
+
 
     ## Person Parameters
     ESTlist$EAPs <- mueERG$thetas

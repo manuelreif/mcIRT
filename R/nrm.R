@@ -17,7 +17,7 @@ function(reshOBJ,etastart=-0.1, ctrl=list())
   ######### USER CONTROLS #################
   #########################################
   
-  cont <- list(nodes=21, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, dooptim=FALSE,Clist=NA, nonpar=FALSE)
+  cont <- list(nodes=21, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, Clist=NA, nonpar=FALSE)
 
   user_ctrlI <- match(names(ctrl),names(cont))
   if(any(is.na(user_ctrlI)))
@@ -50,55 +50,6 @@ function(reshOBJ,etastart=-0.1, ctrl=list())
   ## EM Algorithm  #################
   ##################################
 
-  
-if(cont$dooptim)
-{
-
-  repeat
-  {
-    if(cont$verbose){cat("\r Estep:",ZAEHL,"\r")}
-    
-    #E ****
-    erg_estep <- Enrm(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,PREVinp=mueERG)
-    
-    #M ****
-    oerg <- optim(par=PARS,fn=ZFnrm,gr=de1nrm,riqv_quer=erg_estep$riqv_querG, startOBJ=startOBJ, reshOBJ=reshOBJ, quads=quads, control=list(fnscale=-1,maxit=50),method="BFGS",hessian=TRUE)
-    
-    if(NLev > 1)
-    {
-      # estimate mu and sigma
-      mueERG <- mueNRM(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest)
-      # new quads
-      quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev,mu=mueERG$mean_est,sigma=mueERG$sig_est)
-    }
-    
-
-    
-    if(abs(OLD - abs(oerg$value)) <= cont$exac & ZAEHL > 10 | ZAEHL > cont$EMmax)
-    {
-      mueERG <- mueNRM(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest,endest=TRUE)
-      
-      ESTlist[[1]]   <- oerg$par
-      ESTlist[[2]]   <- erg_estep
-      ESTlist[[3]]   <- oerg
-      ESTlist[[4]]   <- ZAEHL
-      ESTlist[[5]]   <- mueERG
-      ESTlist[[6]]   <- quads
-      ESTlist[[7]]   <- startOBJ
-      ESTlist[[8]]   <- cont
-      
-      names(ESTlist) <- c("etapar","last_estep","last_mstep" ,"n_steps","erg_distr","QUAD","starting_values","ctrl")
-      break
-    }
-    
-    OLD <- abs(oerg$value)
-    PARS <- oerg$par
-    ZAEHL <- ZAEHL + 1
-  }  
-  
-} else 
-{
-  
   repeat
   {
     if(cont$verbose & (ZAEHL == 1 | NLev <= 1)){cat("\r Estep:",ZAEHL,"| Mstep:", ZAEHL -1,"\r")}
@@ -180,7 +131,7 @@ if(cont$dooptim)
   }  
   
 
-}
+
 
   ## Person Parameters
   
