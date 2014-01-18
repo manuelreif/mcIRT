@@ -90,7 +90,7 @@ If TRUE, the prior distribution is nonparametric and is reestimated in each EM s
 
 \item \code{quads}
 Supply specific quadrature nodes and weights for nonparametric estimation (\code{npar} must be TRUE). It has to be a list of length = number of groups. Inside each list element a list with two elements (a vector of nodes and a vector of weights) is expected. To get an idea what this looks like use \code{mcIRT:::quadIT(nodes=15,ngr=2)}.
-
+}
 
   }
 
