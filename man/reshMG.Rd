@@ -14,7 +14,7 @@ echo = TRUE, TYPE = "NRM", paraM="bock")
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{da}{
-The data.frame that has to be reshaped.
+The \code{data.frame} that has to be reshaped. Each row contains the responses of a person, each column contains the responses of different persons to one item. Use NA if a value is missing.
 }
   \item{items}{
 An index vector which indicates the columns containing the items. If it is set to 0 (which is the default), all columns are included.
@@ -23,7 +23,7 @@ An index vector which indicates the columns containing the items. If it is set t
 An index number which indicates the column containing the group membership of each person.
 }
   \item{correct}{
-An integer vector which denotes the position of the correct response category for each item. In cases in which no correct answer exists, it is reasonable to set this at \code{rep(1,length(items))}.
+An integer vector which denotes the position of the correct response category for each item. In cases in which no correct answer exists, it is reasonable to set this at \code{rep(0,length(items))}.
 }
   \item{design}{
 A character string or a group-design has to be committed. Valid inputs are: 'nodif' or a design as resulting from the \code{designTemp} function.
@@ -41,11 +41,13 @@ Choose the parametrization. There are 2 valid inputs: "bock" and "01". If "bock"
 }
 \details{
 
+The category responses in \code{da} must be \code{numeric} or \code{integer} and must start with \textbf{0}. An item, for instance, with 5 options must be coded with 0,1,2,3,4. If e.g. the first category is the correct option set \code{correct} to 0 for this item.
+
 
 The \code{correct} argument merely reorders the categories. The 'correct' category is set as first category and labeled as 'cor'. Note that this argument is essential for the nested logit model.
 
 
-Note that a committed design is checked whether it is valid and possibly corrected. So it is recommended to check the function, the design and the design matrix.
+Note that a committed \code{design} is checked whether it is valid and possibly corrected. So it is recommended to check the function, the design and the design matrix.
 
 }
 \value{
