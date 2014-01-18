@@ -65,7 +65,7 @@ The following arguments can be comitted within a list (ctrl argument)
   If TRUE, the variance of the latent person distribution is estimated. Otherwise it is set to 1 (for each group).
   
     \item \code{exac}
-  A numerical vector of length 1. If the difference between two consecutive EM steps is not larger than 'exac' - the estimation will stop.
+  A numerical vector of length 1. If the difference in the log-Likelihood between two consecutive EM steps is not larger than 'exac' - the estimation will stop. Default: \code{0.001}
   
     \item \code{EMmax}
   A numerical vector of length 1. This argument sets the maximum number of EM steps. The default value is 500. Feel free to enlarge this number.

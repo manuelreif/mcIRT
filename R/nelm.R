@@ -16,7 +16,7 @@ nelm <-
     ######### USER CONTROLS #################
     #########################################
     
-    cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, dooptim=FALSE, centBETA=FALSE, centALPHA=FALSE,Clist=NA, nonpar=FALSE)
+    cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, dooptim=FALSE, centBETA=FALSE, centALPHA=FALSE,Clist=NA, nonpar=FALSE)
     
     user_ctrlI <- match(names(ctrl),names(cont))
     if(any(is.na(user_ctrlI)))
@@ -44,7 +44,7 @@ nelm <-
     NLev    <- nlevels(reshOBJ$gr)
     ESTlist <- list()
     mueERG <- NA
-    
+    value0 <- 10000
     
     
     
@@ -135,19 +135,17 @@ nelm <-
           }
         }
         
-        
+        ###### LIKELIHOOD BERECHNEN #######################
+        value <- ZFnlm(mPARS,erg_estep=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
 
         
-        if(sum(abs(mPARS - PARS)) <= cont$exac & ZAEHL > 10 | ZAEHL >= cont$EMmax)
+        #if(sum(abs(mPARS - PARS)) <= cont$exac & ZAEHL > 10 | ZAEHL >= cont$EMmax)
+        if(abs(value0-value) <= cont$exac & ZAEHL > 2 | ZAEHL >= cont$EMmax)
         {
           if(cont$verbose){cat("\r Estep:",ZAEHL,"| Mstep:", ZAEHL," --> estimating EAP & co \r")}
          
           mueERG <- mueNLM(mPARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest,endest=TRUE)
-          #quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev,mu=mueERG$mean_est,sigma=mueERG$sig_est)
-          
-          ###### LIKELIHOOD BERECHNEN #######################
-          value <- ZFnlm(mPARS,erg_estep=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
-          ###################################################
+
           
           ESTlist[[1]]   <- mPARS
           ESTlist[[2]]   <- erg_estep
@@ -167,19 +165,16 @@ nelm <-
         {
           if(cont$verbose & ZAEHL >= 1){cat("\r Estep:",ZAEHL+1,"| Mstep:", ZAEHL,"\r")}  
           # estimate mu and sigma
-          #mueERG <- mueNLM(PARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest)
           mueERG <- mueNLM(mPARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest)
           # new quads
           quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=NLev,mu=mueERG$mean_est,sigma=mueERG$sig_est)
         }
         
-        ###!
-        value <- ZFnlm(mPARS,erg_estep=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
-        
-        cat("logL: ",value,"\n")
+
         
         PARS <- mPARS
         ZAEHL <- ZAEHL + 1
+        value0 <- value
         
         
       }
