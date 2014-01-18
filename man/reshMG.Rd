@@ -41,7 +41,7 @@ Choose the parametrization. There are 2 valid inputs: "bock" and "01". If "bock"
 }
 \details{
 
-The category responses in \code{da} must be \code{numeric} or \code{integer} and must start with \textbf{0}. An item, for instance, with 5 options must be coded with 0,1,2,3,4. If e.g. the first category is the correct option set \code{correct} to 0 for this item.
+The category responses in \code{da} must be \code{numeric} or \code{integer} and must start with 0. An item, for instance, with 5 options must be coded with 0,1,2,3,4. If e.g. the first category is the correct option set \code{correct} to 0 for this item.
 
 
 The \code{correct} argument merely reorders the categories. The 'correct' category is set as first category and labeled as 'cor'. Note that this argument is essential for the nested logit model.
