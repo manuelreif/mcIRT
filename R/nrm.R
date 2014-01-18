@@ -44,6 +44,7 @@ function(reshOBJ,etastart=-0.1, ctrl=list())
   NLev    <- nlevels(reshOBJ$gr)
   ESTlist <- list()
   mueERG  <- NA
+  value0 <- 10000
   
   
   ##################################
@@ -87,20 +88,21 @@ function(reshOBJ,etastart=-0.1, ctrl=list())
       }
 
 
+    
+    ###### LIKELIHOOD BERECHNEN #######################
+    value <- ZFnrm(mPARS,riqv_quer=erg_estep$riqv_querG,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
+    
           
     ###########################
     # FINISHED ? ##############
     ###########################
     
-        if(sum(abs(mPARS - PARS)) <= cont$exac & ZAEHL > 10 | ZAEHL >= cont$EMmax)
+        if(sum(abs(mPARS - PARS)) <= cont$exac & ZAEHL > 2 | ZAEHL >= cont$EMmax)
           {
             if(cont$verbose){cat("\r Estep:",ZAEHL,"| Mstep:", ZAEHL," --> estimating EAP & co \r")}
             mueERG <- mueNRM(mPARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest,endest=TRUE)
             
-            ###### LIKELIHOOD BERECHNEN #######################
-            value <- ZFnrm(mPARS,riqv_quer=erg_estep$riqv_querG,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
-            ###################################################
-            
+
             ESTlist[[1]]   <- mPARS
             ESTlist[[2]]   <- erg_estep
             ESTlist[[3]]   <- list(value=value, hessian=sec2)
@@ -125,9 +127,9 @@ function(reshOBJ,etastart=-0.1, ctrl=list())
     }
     
 
-     #browser()
     PARS <- mPARS
     ZAEHL <- ZAEHL + 1
+    value0 <- value
   }  
   
 
