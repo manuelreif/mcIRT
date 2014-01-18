@@ -18,24 +18,19 @@ function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM", paraM
 
   if(is.na(groups) & any(items == 0))
   {
-    d  <- da
+    #d  <- da
     gr <- factor(rep("A",nrow(da)))
     items <- 1:ncol(da)
   } else if(is.na(groups)){
-    d  <- da[,items]
+    #d  <- da[,items]
     gr <- factor(rep("A",nrow(da)))
   } else {
-    d  <- da[,items]
+    #d  <- da[,items]
     gr <- da[,groups] 
   }
   
   # doing controls - its necessary - trust me
-  ctrlERG <- dctrl(d,correct)
-  
-  
-  d_new <- split(d,gr) ## Achtung es muss mit 0 beginnen!!!
-  d_new <- lapply(d_new,as.matrix)
-  
+  ctrlERG <- dctrl(da[,items],correct)
   
   if(ctrlERG$probl)
   {
@@ -43,16 +38,20 @@ function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM", paraM
     stop("we've got a problem")
   }
   
+  
+  d_new <- split(da[,items],gr) ## Achtung es muss mit 0 beginnen!!!
+  d_new <- lapply(d_new,as.matrix)
+  
+  
   # create dummy coded data
   recm <- lapply(levels(gr), function(LE)
   {
     
     dummycod <- mapply(function(well,item)
     {
-      COL2 <- factor(ifelse(d[gr == LE,item] == well,"cor",paste("dt_",d[gr == LE,item],sep="")))
+      COL2 <- factor(ifelse(da[gr == LE,item] == well,"cor",paste("dt_",da[gr == LE,item],sep="")))
       caa  <- model.matrix(~ -1 + COL2, data = model.frame(~ -1 + COL2, na.action=na.pass))
       colnames(caa) <- gsub("COL2",paste("I",item,sep=""),colnames(caa))
-      
       return(caa)
     },well=correct,item = items,SIMPLIFY = FALSE)  
     #return(dummycod)
@@ -76,24 +75,10 @@ function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM", paraM
   })
   
   
-#   d1uc <- lapply(levels(gr), function(LE)
-#   {
-#     dummycod <- mapply(function(well,item)
-#     {
-#       COL2 <- factor(ifelse(d[gr == LE,item] == well,"cor",paste("dt_",d[gr == LE,item],sep="")))
-#       caa  <- model.matrix(~ -1 + COL2, data = model.frame(~ -1 + COL2, na.action=na.pass))
-#       colnames(caa) <- gsub("COL2",paste("I",item,sep=""),colnames(caa))
-#       cAA  <- ifelse(is.na(caa),0,caa)
-#       
-#       return(cAA)
-#     },well=correct,item = items,SIMPLIFY = FALSE)  
-#     return(dummycod)
-#   })
-  
   
   aDD <- mapply(function(well,item)
   {
-    COL2    <- factor(ifelse(d[,item] == well,"cor",paste("dt_",d[,item],sep="")))
+    COL2    <- factor(ifelse(da[,item] == well,"cor",paste("dt_",da[,item],sep="")))
     tabcat  <- table(COL2)
     categ   <- levels(COL2)
     anz_cat <- length(categ)
@@ -103,27 +88,22 @@ function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM", paraM
   },well=correct,item = items,SIMPLIFY = FALSE)
   
   
-  
-  #recm <- lapply(dummycod,function(x)x[[1]])
-  #aDD  <- lapply(dummycod,function(x)x[[2]])
-  #d1uc <- lapply(recm,function(x) lapply(x, function(xx1) ifelse(is.na(xx1),0,xx1)))
-  
   cat("data = reshaped\n")
-  
+
   # descriptives
-   coluN <- max(sapply(d,function(x)length(table(x))))
+   coluN <- max(sapply(da[,items],function(x)length(table(x))))
 #   relev <- data.frame(lapply(d,function(x) factor(x,levels=0:coluN,labels=0:coluN)))
 #   
   
   
   if(is.na(groups))
   {
-    absF1 <- sapply(d,function(TA)table(TA,useNA="always"))
+    absF1 <- sapply(da[,items],function(TA)table(TA,useNA="ifany"))
     rownames(absF1)[1:coluN] <- paste("category",1:coluN,sep="")  
   } else {
-    absF1 <- lapply(d,function(TA)
+    absF1 <- lapply(da[,items],function(TA)
     {
-      tt1 <- table(TA,gr,useNA="always")
+      tt1 <- table(TA,gr,useNA="ifany")
       rownames(tt1)[1:coluN] <- paste("category",1:coluN,sep="")
       tt1
     })

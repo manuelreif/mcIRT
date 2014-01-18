@@ -35,11 +35,11 @@ nelm <-
     ## generate starting values
     startOBJ <- startV_nlmMG(reshOBJ=reshOBJ,etastart=etastart,Clist=cont$Clist)
     ##generate quadrature nodes and weights
-    if(all(is.na(cont$quads)) | ( !all(is.na(cont$quads)) & cont$nonpar) )
+    if(all(is.na(cont$quads)) | ( !all(is.na(cont$quads)) & !cont$nonpar) )
     {
       quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=nlevels(reshOBJ$gr))
       wherefrom <- "automatically generated"
-      if(!cont$nonpar){cat("supplied quads are ignored because 'nonpar=FALSE'.")}
+      if(!all(is.na(cont$quads))){warning("supplied quads are ignored because 'nonpar=FALSE'.")}
       
     } else {
       cquads(cont$quads) # check the quads
