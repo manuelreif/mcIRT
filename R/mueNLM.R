@@ -32,7 +32,7 @@ function(Ulstv,reshOBJ,startOBJ,quads,sigmaest=FALSE,endest=FALSE)
   if(endest) endest <- 1
   
   # c++
-  ergmuec <- mue_nrmC(PITEMLL=relstv, NODW=quads, Yl=reshOBJ$d, NU1=reshOBJ$d1uc, sigmaest=sigmaest,endest=endest)
+  ergmuec <- mue_nelmC(PITEMLL=relstv, NODW=quads, Yl=reshOBJ$d, NU1=reshOBJ$d1uc, sigmaest=sigmaest,endest=endest)
   
 ergmuec$fique0G <- mapply(function(x,y) y - t(x[tplcpos1,]), x=ergmuec$riqv_querG, y=ergmuec$fiqG,SIMPLIFY=FALSE)
   

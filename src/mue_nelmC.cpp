@@ -141,6 +141,9 @@ List mue_nelmC(List PITEMLL, List NODW, List Yl, List NU1, int sigmaest, double 
       mues(gru) = mean(Xqi_quer); //Xqi_qq
       Xqi_querL[gru] = Xqi_quer; // save EAP
 
+    //std::cout << "Return" << mues(gru) << " \n ";
+
+
   if(sigmaest == 1 & ngru > 1) // if more than one group and an sigma estimation is desired
   {
     
