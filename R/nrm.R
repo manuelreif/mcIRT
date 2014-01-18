@@ -17,7 +17,7 @@ function(reshOBJ,etastart=-0.1, ctrl=list())
   ######### USER CONTROLS #################
   #########################################
   
-  cont <- list(nodes=21, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, Clist=NA, nonpar=FALSE)
+  cont <- list(nodes=21, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, Clist=NA, nonpar=FALSE, quads=NA)
 
   user_ctrlI <- match(names(ctrl),names(cont))
   if(any(is.na(user_ctrlI)))
@@ -35,7 +35,17 @@ function(reshOBJ,etastart=-0.1, ctrl=list())
   ## generate starting values
   startOBJ <- startV_nrmMG(reshOBJ=reshOBJ,etastart=etastart,Clist=cont$Clist)
   ##generate quadrature nodes and weights
+  if(all(is.na(cont$quads)) | ( !all(is.na(cont$quads)) & cont$nonpar) )
+  {
   quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=nlevels(reshOBJ$gr))
+  wherefrom <- "automatically generated"
+  if(!cont$nonpar){cat("supplied quads are ignored because 'nonpar=FALSE'.")}
+  
+  } else {
+  cquads(cont$quads) # check the quads
+  quads <- cont$quads
+  wherefrom <- "individual quads"
+  }
   
   
   OLD     <- 0
@@ -101,6 +111,8 @@ function(reshOBJ,etastart=-0.1, ctrl=list())
           {
             if(cont$verbose){cat("\r Estep:",ZAEHL,"| Mstep:", ZAEHL," --> estimating EAP & co \r")}
             mueERG <- mueNRM(mPARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest,endest=TRUE)
+            
+            attr(quads,"wherefrom") <- wherefrom
             
 
             ESTlist[[1]]   <- mPARS

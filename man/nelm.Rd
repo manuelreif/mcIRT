@@ -87,9 +87,11 @@ A list which contains informations about which parameters should be held constan
 \item \code{npar}
 If TRUE, the prior distribution is nonparametric and is reestimated in each EM step by use of the expected number of examinees on each quadrature node. Default: FALSE. Computations are based on the EH (empirical histogram) estimation method of Woods 2007 & 2011. It is possible to estimate EHs for more than one group. First experiences showed that a huge amount of EM steps are needed (> 5000) to approximate the latent ability distributions.
 
-}
- 
-  
+
+\item \code{quads}
+Supply specific quadrature nodes and weights for nonparametric estimation (\code{npar} must be TRUE). It has to be a list of length = number of groups. Inside each list element a list with two elements (a vector of nodes and a vector of weights) is expected. To get an idea what this looks like use \code{mcIRT:::quadIT(nodes=15,ngr=2)}.
+
+
   }
 
 \value{

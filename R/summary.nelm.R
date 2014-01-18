@@ -156,7 +156,7 @@ catnrgroup <- lapply(levels(RESnlm$reshOBJ$gr),function(nixi)
   cat("\n Standard Errors:\n")
   print(SEmat)
   
-  cat("\nPrior:", nonparametric)
+  cat("\nPrior:", nonparametric , "&", attr(RESnlm$QUAD,"wherefrom"))  
   
   cat("\n\n Parameter estimates for the 2-PL part")
   cat("\n -------------------------------------------------------------------- \n")

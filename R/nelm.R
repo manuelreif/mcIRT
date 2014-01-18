@@ -16,7 +16,7 @@ nelm <-
     ######### USER CONTROLS #################
     #########################################
     
-    cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, centBETA=FALSE, centALPHA=FALSE,Clist=NA, nonpar=FALSE)
+    cont <- list(nodes=14, absrange=5, sigmaest=FALSE, exac=0.001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, centBETA=FALSE, centALPHA=FALSE,Clist=NA, nonpar=FALSE,quads=NA)
     
     user_ctrlI <- match(names(ctrl),names(cont))
     if(any(is.na(user_ctrlI)))
@@ -35,8 +35,17 @@ nelm <-
     ## generate starting values
     startOBJ <- startV_nlmMG(reshOBJ=reshOBJ,etastart=etastart,Clist=cont$Clist)
     ##generate quadrature nodes and weights
-    quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=nlevels(reshOBJ$gr))
-    
+    if(all(is.na(cont$quads)) | ( !all(is.na(cont$quads)) & cont$nonpar) )
+    {
+      quads <- quadIT(nodes=cont$nodes,absrange=cont$absrange,ngr=nlevels(reshOBJ$gr))
+      wherefrom <- "automatically generated"
+      if(!cont$nonpar){cat("supplied quads are ignored because 'nonpar=FALSE'.")}
+      
+    } else {
+      cquads(cont$quads) # check the quads
+      quads <- cont$quads
+      wherefrom <- "individual quads"
+    }
     
     OLD     <- 0
     ZAEHL   <- 1
@@ -94,6 +103,7 @@ nelm <-
          
           mueERG <- mueNLM(mPARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest,endest=TRUE)
 
+          attr(quads,"wherefrom") <- wherefrom
           
           ESTlist[[1]]   <- mPARS
           ESTlist[[2]]   <- erg_estep

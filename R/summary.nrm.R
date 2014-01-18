@@ -47,7 +47,7 @@ SEmat <- RESnrm$erg_distr$errmat
 rownames(SEmat) <- c("SE|mean","SE|sigma^2")
 colnames(SEmat) <- paste("group|",levels(RESnrm$reshOBJ$gr),sep="")
 
-  
+
   
 if(!RESnrm$ctrl$nonpar)
 {
@@ -90,7 +90,7 @@ print(meansig)
 cat("\n Standard Errors:\n")
 print(SEmat)
   
-cat("\nPrior:", nonparametric)  
+cat("\nPrior:", nonparametric , "&", attr(RESnrm$QUAD,"wherefrom"))  
   
 cat("\n\n Category Parameter estimates and SE")
 cat("\n -------------------------------------------------------------------- \n")
