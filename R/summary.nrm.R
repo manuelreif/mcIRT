@@ -82,6 +82,7 @@ cat("\n -------------------------------------------------------------------- \n"
 
 print(firstpart)
 
+cat(">>",attr(RESnrm$call,"convergence"),"<<")
 
 cat("\n\n Parameter estimates for latent distributions")
 cat("\n -------------------------------------------------------------------- \n")

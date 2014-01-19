@@ -148,6 +148,7 @@ catnrgroup <- lapply(levels(RESnlm$reshOBJ$gr),function(nixi)
   
   print(firstpart)
   
+  cat(">>",attr(RESnlm$call,"convergence"),"<<")
   
   cat("\n\n Parameter estimates for latent distributions")
   cat("\n -------------------------------------------------------------------- \n")

@@ -99,11 +99,19 @@ nelm <-
         #if(sum(abs(mPARS - PARS)) <= cont$exac & ZAEHL > 10 | ZAEHL >= cont$EMmax)
         if(abs(value0-value) <= cont$exac & ZAEHL > 2 | ZAEHL >= cont$EMmax)
         {
-          if(cont$verbose){cat("\r Estep:",ZAEHL,"| Mstep:", ZAEHL," --> estimating EAP & co \r")}
+          if(cont$verbose){cat("\r Estep:",ZAEHL,"| Mstep:", ZAEHL," --> estimating EAP & co \r\n")}
          
           mueERG <- mueNLM(mPARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest,endest=TRUE)
 
           attr(quads,"wherefrom") <- wherefrom
+          
+          # convergence reached?
+          if(abs(value0-value) <= cont$exac)
+          {
+            conv <- "convergence reached" 
+          } else {
+            conv <- "EM iteration limit reached! Increase EMmax."   
+          }
           
           ESTlist[[1]]   <- mPARS
           ESTlist[[2]]   <- erg_estep
@@ -184,6 +192,11 @@ nelm <-
     # -----------------------------
     ESTlist$Catinf <- Infnelm(ESTlist)
     
+
+    cat(">>>>>>>",conv,"\n")
+    attr(call,"convergence") <- conv
+    
+  
     ESTlist$call <- call
     
     class(ESTlist) <- "nelm"

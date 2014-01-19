@@ -114,6 +114,13 @@ function(reshOBJ,etastart=-0.1, ctrl=list())
             
             attr(quads,"wherefrom") <- wherefrom
             
+            # convergence reached?
+            if(abs(value0-value) <= cont$exac)
+            {
+              conv <- "convergence reached" 
+            } else {
+              conv <- "EM iteration limit reached! Increase EMmax."   
+            }
 
             ESTlist[[1]]   <- mPARS
             ESTlist[[2]]   <- erg_estep
@@ -210,6 +217,11 @@ function(reshOBJ,etastart=-0.1, ctrl=list())
   # adding category information
   # -----------------------------
   ESTlist$Catinf <- Infnrm(ESTlist)
+  
+  
+  cat(">>>>>>>",conv,"\n")
+  attr(call,"convergence") <- conv
+  
   
   ESTlist$call <- call
   
