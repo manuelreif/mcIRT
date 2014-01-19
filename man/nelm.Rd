@@ -18,6 +18,7 @@ nelm(reshOBJ, etastart = "aut", ctrl=list())
 \method{summary}{nelm}(object, \dots)
 \method{print}{nelm}(x, \dots)
 \method{deviance}{nelm}(object, \dots)
+\method{logLik}{nelm}(object, \dots)
 
 }
 %- maybe also 'usage' for other objects documented here.

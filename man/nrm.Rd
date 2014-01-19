@@ -20,6 +20,7 @@ nrm(reshOBJ,etastart=-0.1, ctrl=list())
 \method{summary}{nrm}(object, \dots)
 \method{print}{nrm}(x, \dots)
 \method{deviance}{nrm}(object, \dots)
+\method{logLik}{nrm}(object, \dots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
