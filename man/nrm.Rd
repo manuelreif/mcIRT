@@ -3,6 +3,7 @@
 \alias{summary.nrm}
 \alias{print.nrm}
 \alias{deviance.nrm}
+\alias{logLik.nrm}
 
 \title{
 Estimating a Nominal Response Model
@@ -161,13 +162,13 @@ perp1     <- rnorm(1100,0,1)
 sim.nrm.1 <- NRM.sim(ParList,perp1)
 
 # reshape
-reshdat1 <- reshMG(sim.nrm.1,items=1:3,correct=rep(1,3))
+reshdat1 <- reshMG(sim.nrm.1,items=1:3,correct=rep(0,3))
 
 # fit the nrm with a maximum number of 40 EM iterations, which is NOT recommanded 
 # and is just applied here because estimating the model during example checks on cran
 # took too long with default settings
 
-res.nrm <- nrm(reshdat1, ctrl=list(EMmax=40))
+res.nrm <- nrm(reshdat1)
 
 summary(res.nrm)
 

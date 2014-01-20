@@ -70,7 +70,7 @@ DAT1 <- data.frame(simdatall,ABgroup = gruAB)
 head(DAT1)
 
 ## reshaping the data
-reshOBJ <- reshMG(DAT1,items=1:NUMBI,groups=NUMBI+1,correct=rep(1,NUMBI))
+reshOBJ <- reshMG(DAT1,items=1:NUMBI,groups=NUMBI+1,correct=rep(0,NUMBI))
 
 
 ## estimating the model

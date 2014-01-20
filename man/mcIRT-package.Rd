@@ -73,7 +73,7 @@ perp1     <- rnorm(1500,0,1)
 sim.nrm.1 <- NRM.sim(ParList,perp1)
 
 # reshape
-reshdat1 <- reshMG(sim.nrm.1,items=1:5,correct=rep(1,5))
+reshdat1 <- reshMG(sim.nrm.1,items=1:5,correct=rep(0,5))
 
 # fit the nrm
 res.nrm <- nrm(reshdat1)

@@ -3,6 +3,7 @@
 \alias{summary.nelm}
 \alias{print.nelm}
 \alias{deviance.nelm}
+\alias{logLik.nelm}
 
 \title{
 Estimating a Nested Logit Model
@@ -164,13 +165,13 @@ perp1 <- rnorm(1000,0,1)
 simdat1 <- NLM.sim(ParList,perp1)
 
 # reshape
-reshOBJ <- reshMG(simdat1,items=1:5,groups=NA,correct=rep(1,5),design="nodif",echo=TRUE,TYPE="NLM")
+reshOBJ <- reshMG(simdat1,items=1:5,groups=NA,correct=rep(0,5),design="nodif",echo=TRUE,TYPE="NLM")
 
 # estimate a nested logit model with a maximum number of 40 EM iterations, 
 # which is NOT recommanded and is just applied here because estimating the model
 # during example checks on cran took too long with default settings
 
-res.nlm <- nelm(reshOBJ=reshOBJ, ctrl=list(EMmax=40))
+res.nlm <- nelm(reshOBJ=reshOBJ)
 
 summary(res.nlm)
 

@@ -108,14 +108,14 @@ DAT1 <- data.frame(simdatall,ABgroup = gruAB)
 head(DAT1)
 
 # reshape the data
-reshdat <- reshMG(DAT1,items=1:5,groups=6,correct=rep(1,5), design="nodif")
+reshdat <- reshMG(DAT1,items=1:5,groups=6,correct=rep(0,5), design="nodif")
 
 # DIF design
 mydes <- designTemp(ngru= 2, nit= 5, TYPE= "NRM")
 mydes$zeta[2,5]   <- 2
 mydes$lambda[2,5] <- 2
 
-reshdat2 <- reshMG(DAT1,items=1:5,groups=6,correct=rep(1,5), design=mydes)
+reshdat2 <- reshMG(DAT1,items=1:5,groups=6,correct=rep(0,5), design=mydes)
 
 %}
 

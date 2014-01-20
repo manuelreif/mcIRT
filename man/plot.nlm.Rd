@@ -59,7 +59,7 @@ perp1 <- rnorm(1000,0,1)
 simdat1 <- NLM.sim(ParList,perp1)
 
 # reshape
-reshOBJ <- reshMG(simdat1,items=1:5,groups=NA,correct=rep(1,5),design="nodif",echo=TRUE,TYPE="NLM")
+reshOBJ <- reshMG(simdat1,items=1:5,groups=NA,correct=rep(0,5),design="nodif",echo=TRUE,TYPE="NLM")
 
 # estimate a nested logit model
 res.nlm <- nelm(reshOBJ=reshOBJ)
