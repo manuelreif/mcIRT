@@ -17,7 +17,7 @@ function(reshOBJ,etastart=-0.1, ctrl=list())
   ######### USER CONTROLS #################
   #########################################
   
-  cont <- list(nodes=21, absrange=5, sigmaest=FALSE, exac=0.00001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, Clist=NA, nonpar=FALSE, quads=NA)
+  cont <- list(nodes=21, absrange=5, sigmaest=FALSE, exac=0.001, EMmax = 500, verbose=TRUE, NRmax=20, NRexac=0.01, Clist=NA, nonpar=FALSE, quads=NA)
 
   user_ctrlI <- match(names(ctrl),names(cont))
   if(any(is.na(user_ctrlI)))
@@ -107,9 +107,9 @@ function(reshOBJ,etastart=-0.1, ctrl=list())
     # FINISHED ? ##############
     ###########################
     
-        if(sum(abs(mPARS - PARS)) <= cont$exac & ZAEHL > 2 | ZAEHL >= cont$EMmax)
+        if(abs(value0-value) <= cont$exac & ZAEHL > 2 | ZAEHL >= cont$EMmax)
           {
-            if(cont$verbose){cat("\r Estep:",ZAEHL,"| Mstep:", ZAEHL," --> estimating EAP & co \r")}
+            if(cont$verbose){cat("\r Estep:",ZAEHL,"| Mstep:", ZAEHL," --> estimating EAP & co \r\n")}
             mueERG <- mueNRM(mPARS,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads,sigmaest=cont$sigmaest,endest=TRUE)
             
             attr(quads,"wherefrom") <- wherefrom
