@@ -16,7 +16,7 @@ This function fits a Nested Logit model proposed by Suh and Bolt (2010). Like th
 \usage{
 nelm(reshOBJ, etastart = "aut", ctrl=list())
 
-\method{summary}{nelm}(object, \dots)
+\method{summary}{nelm}(object, RETURN=FALSE, \dots)
 \method{print}{nelm}(x, \dots)
 \method{deviance}{nelm}(object, \dots)
 \method{logLik}{nelm}(object, \dots)
@@ -40,6 +40,10 @@ An object of class \code{nlm}.
 }
   \item{x}{
 An object of class \code{nlm}.
+}
+
+\item{RETURN}{
+A logical vector of length 1. If TRUE all result tables are returned by the summary function.
 }
 
 \item{\dots}{ 

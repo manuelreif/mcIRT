@@ -51,19 +51,34 @@ function(x, ...)
 #     catnr  
 #   })
   
-  catnrgroup <- lapply(levels(RESnlm$reshOBJ$gr),function(nixi)
+#   catnrgroup <- lapply(levels(RESnlm$reshOBJ$gr),function(nixi)
+#   {
+#     
+#     catallIT <- as.vector(mapply(function(x,y)
+#     {
+#       paste0("Item",y, "|categ",1: (x$anz_cat-1))
+#     },x=RESnlm$reshOBJ$aDD,y=1:length(RESnlm$reshOBJ$aDD)))
+#     
+#     catallIT 
+#     
+#   })
+  
+  
+catnrgroup <- lapply(levels(RESnlm$reshOBJ$gr),function(nixi)
+{
+  
+  catallIT <- as.vector(mapply(function(x,y)
   {
-    
-    catallIT <- as.vector(mapply(function(x,y)
-    {
-      paste0("Item",y, "|categ",1: (x$anz_cat-1))
-    },x=RESnlm$reshOBJ$aDD,y=1:length(RESnlm$reshOBJ$aDD)))
-    
-    catallIT 
-    
-  })
+    #paste0("Item",y, "|categ",1: (x$anz_cat-1))
+    paste0("Item",y, "|categ",gsub(".*(\\d{1,}).*","\\1",x$categ[-1]))
+  },x=RESnlm$reshOBJ$aDD,y=1:length(RESnlm$reshOBJ$aDD)))
   
+  catallIT 
   
+})
+
+
+
   #   
   form1a <- mapply(function(eachG,eachSE,cnrg)
   {

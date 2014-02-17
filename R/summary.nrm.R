@@ -1,5 +1,5 @@
 summary.nrm <-
-function(object, ...)
+function(object, RETURN=FALSE, ...)
 {
 
   RESnrm <- object
@@ -98,5 +98,10 @@ cat("\n -------------------------------------------------------------------- \n"
 print(form1a)
 
 
+if(RETURN)  
+{
+  return(list(firstpart=firstpart,meansig=meansig,SEmat=SEmat,form1a=form1a))
+ 
+}
 
 }

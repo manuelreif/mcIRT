@@ -1,7 +1,7 @@
 summary.nelm <-
-function(object, ...)
+function(object, RETURN=FALSE, ...)
 {
-
+#browser()
   RESnlm <- object
   # 2 not (-2) because it is fnscale=-1 in optim  
   min2logL <- 2*RESnlm$last_mstep$value 
@@ -39,32 +39,21 @@ function(object, ...)
   
   
   
-#   catnrgroup <- lapply(RESnlm$reshOBJ$recm, function(grou)
-#       {
-#         
-#       catnr <- mapply(function(x,numbers) 
-#                     {
-#                     cn <- colnames(x)[-1]
-#                     cnn <- gsub(".*_(\\d+)","\\1",cn, perl=TRUE)
-#                     paste("Item",numbers, "|categ",cnn,sep="") 
-#                     
-#                     },x=grou, numbers=1:length(RESnlm$reshOBJ$aDD),SIMPLIFY=FALSE)
-#       catnr  
-#       })
-#       
 
 
 catnrgroup <- lapply(levels(RESnlm$reshOBJ$gr),function(nixi)
-      {
+{
   
-        catallIT <- as.vector(mapply(function(x,y)
-              {
-              paste0("Item",y, "|categ",1: (x$anz_cat-1))
-              },x=RESnlm$reshOBJ$aDD,y=1:length(RESnlm$reshOBJ$aDD)))
-        
-      catallIT 
-      
-      })
+  catallIT <- as.vector(mapply(function(x,y)
+  {
+    #paste0("Item",y, "|categ",1: (x$anz_cat-1))
+    paste0("Item",y, "|categ",gsub(".*(\\d{1,}).*","\\1",x$categ[-1]))
+  },x=RESnlm$reshOBJ$aDD,y=1:length(RESnlm$reshOBJ$aDD)))
+  
+  catallIT 
+  
+})
+
 
 
   
@@ -169,6 +158,11 @@ catnrgroup <- lapply(levels(RESnlm$reshOBJ$gr),function(nixi)
   cat("\n -------------------------------------------------------------------- \n")
   print(form1a)
   
+if(RETURN)  
+{
+return(list(firstpart=firstpart,meansig=meansig,SEmat=SEmat,albePm=albePm,form1a=form1a))
   
   
+}
+
 }

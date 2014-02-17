@@ -18,7 +18,7 @@ The model estimates two parameters for each response category: \eqn{\zeta} and \
 }
 \usage{
 nrm(reshOBJ,etastart=-0.1, ctrl=list())
-\method{summary}{nrm}(object, \dots)
+\method{summary}{nrm}(object, RETURN=FALSE, \dots)
 \method{print}{nrm}(x, \dots)
 \method{deviance}{nrm}(object, \dots)
 \method{logLik}{nrm}(object, \dots)
@@ -42,6 +42,12 @@ An object of class \code{nrm}.
   \item{x}{
 An object of class \code{nrm}.
 }
+
+\item{RETURN}{
+A logical vector of length 1. If TRUE all result tables are returned by the summary function.
+}
+
+
 \item{\dots}{
 }
 }

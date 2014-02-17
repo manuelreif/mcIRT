@@ -44,7 +44,11 @@ Choose the parametrization. There are 2 valid inputs: "bock" and "01". If "bock"
 The category responses in \code{da} must be \code{numeric} or \code{integer} and must start with 0. An item, for instance, with 5 options must be coded with 0,1,2,3,4. If e.g. the first category is the correct option set \code{correct} to 0 for this item.
 
 
-The \code{correct} argument merely reorders the categories. The 'correct' category is set as first category and labeled as 'cor'. Note that this argument is essential for the nested logit model.
+In the case of a nominal response model, the \code{correct} argument just adds labels to the different categories, and does nothing else.
+
+In the case of a nested logit model, the \code{correct} argument reorders the categories. The 'correct' option is set as first category and labeled as 'cor'. For example: If the vector c(1,0,2) is supplied, then for the first item the second (!) category is denoted as the 'correct' one. So inspecting the reshaped output we would see in the \code{recm} list element dummy matrices (in the case of more than 1 group), which are reordered due to the correct option (the correct option within each item is always first). The \code{d} element of the list, contains a list of recoded numeric matrices. The matrices were recoded so that '0' always denotes the 'correct' option. So in our example, the response vector for item 1 would be recoded so that each '1' would be recoded to '0' and each '0' to '1'. So \code{d} is in general not the same as the original input, but a version which is prepared for fitting the model.
+
+The labels of the categories are consistent with the original numeric coding.
 
 
 Note that a committed \code{design} is checked whether it is valid and possibly corrected. So it is recommended to check the function, the design and the design matrix.
@@ -52,14 +56,13 @@ Note that a committed \code{design} is checked whether it is valid and possibly 
 }
 \value{
 
- \item{recm}{The input data.frame reshaped as list of dummy matrices.}
+ \item{recm}{A list with dummy matrices created from the (possibly transformed) original data.}
  \item{aDD}{Some infos about the data which are used by internal functions.}
- \item{d}{The original data.frame.}
+ \item{d}{A list of response matrices - which may be different than the original input. See details for more information.}
  \item{gr}{A vector containing the group membership for each person.}
  \item{Qmat}{The design matrix. Feel free to modify the  desing matrix and insert it back into this object. Note that the \code{rownames} of the  design matrix \strong{must not be changed!}}
- \item{d1uc}{A modified version of the original data.frame.}
+ \item{d1uc}{A modified version of the data input, which deals with NAs.}
  \item{design}{The committed design. The returned design might differ from the submitted one in order to get a valid design. Please check whether there were changes.}
-
 }
 
 \author{

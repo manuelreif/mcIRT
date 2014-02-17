@@ -92,7 +92,7 @@ nelm <-
           }
         }
         
-        ###### LIKELIHOOD BERECHNEN #######################
+        ###### LIKELIHOOD ESTIMATION #######################
         value <- ZFnlm(mPARS,erg_estep=erg_estep,reshOBJ=reshOBJ,startOBJ=startOBJ,quads=quads)
 
         
@@ -176,8 +176,6 @@ nelm <-
     }
     
     
-    #comphess <- diag(reshOBJ$Qmat %*% solve(ESTlist$last_mstep$hessian) %*% t(reshOBJ$Qmat))
-    #comphesq <- sqrt(comphess*(-1))
     #
     notest <- which(rowSums(reshOBJ$Qmat) == 0)
     comphesq[notest] <- NA

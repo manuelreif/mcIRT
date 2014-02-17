@@ -8,6 +8,7 @@ export(reshMG)
 export(designTemp)
 export(plotINF)
 export(plot_ldistr)
+export(model_comp)
 
 S3method(summary, nrm)
 S3method(summary, nelm)
