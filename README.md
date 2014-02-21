@@ -23,10 +23,13 @@ This version runs stable in first tests and provides markedly faster estimation 
 TO-DOs for the next release version:
 
 
-* add some new examples and extend existing examples
-* add info about convergence
-* add and LRT routine which computes Likelihood ratio tests for two or more models
+* add some new examples and extend existing examples [creating examples in wiki]
+* add info about convergence [done]
+* add an LRT routine which computes Likelihood ratio tests for two or more models
 * perhaps: add the possibility to resume estimation after `EMmax` is reached
+* fit a bunch of models in a row with smartly chosen starting values [done]
+* do some simulations [done - see wiki - upcoming more in the next days]
+* watch the number of EM-steps growing until convergence [done]
 
 
 Further TO-DOs:
