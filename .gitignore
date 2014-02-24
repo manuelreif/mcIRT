@@ -38,3 +38,4 @@ Testing_functions*.R
 *.o
 *.so
 wiki
+dontgit
