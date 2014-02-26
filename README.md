@@ -25,17 +25,18 @@ TO-DOs for the next release version:
 
 * add some new examples and extend existing examples [creating examples in wiki]
 * add info about convergence [done]
-* add an LRT routine which computes Likelihood ratio tests for two or more models
-* perhaps: add the possibility to resume estimation after `EMmax` is reached
 * fit a bunch of models in a row with smartly chosen starting values [done]
-* do some simulations [done - see wiki - upcoming more in the next days]
+* do some simulations [done - see wiki - upcoming more]
+* Nonparametric tests [first template]
 * watch the number of EM-steps growing until convergence [done]
+* perhaps: add the possibility to resume estimation after `EMmax` is reached
+* add an LRT routine which computes Likelihood ratio tests for two or more models
 
 
 Further TO-DOs:
 
 
-* Nonparametric tests
+
 * Big data adaption
 * more tests :-)
 
