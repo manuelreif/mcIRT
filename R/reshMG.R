@@ -196,6 +196,7 @@ function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM", paraM
   }
   
   attr(gdema,"paraM") <- paraM
+  attr(d_new,"correct") <- correct
   
   if(echo){print(absF1)}
   
