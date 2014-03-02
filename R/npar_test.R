@@ -43,7 +43,7 @@ Ps <- mapply(function(daf,d01)
       null_table <- table(mycol)
       null_table[] <- 0
       
-      prp2 <- lapply(prp,function(inn)
+      prp2 <- sapply(prp,function(inn)#
               {
               if(is.null(inn)) null_table
                   else inn
@@ -94,26 +94,21 @@ wmc <- wm_all[[2]]
   
 }
 
-
+##### standardized p-difference #################
 
 items <- ncol(reshOBJ$d[[1]])
 
+# gesamtabweichungsindex
+
 stdpdif <- lapply(1:items,function(alli)
-    {# geht die items durch
-    
+      {
       totsum <- sum(unlist(wmc[[alli]]))
-    
-    isws <- mapply(function(a1,a2,w)
-              { # geht die randummen durch
-            
-              w*(a1 - a2)/totsum
-              
-              },a1=Ps[[1]][[alli]],a2=Ps[[2]][[alli]],w=wmc[[alli]], SIMPLIFY=TRUE)
-    
-    rowSums(isws)
-    
+      # w*(reference - focal)/sum(w)
+      colSums((t(Ps[[1]][[alli]]-Ps[[2]][[alli]]) * unlist(wmc[[alli]]))/totsum)
     })
 
+
+##### RMWSD #################
 
 stdpdif
 }
