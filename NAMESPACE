@@ -9,6 +9,7 @@ export(designTemp)
 export(plotINF)
 export(plot_ldistr)
 export(model_comp)
+export(DDF)
 
 S3method(summary, nrm)
 S3method(summary, nelm)
