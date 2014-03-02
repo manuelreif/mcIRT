@@ -13,7 +13,7 @@ This package provides functions to evaluate multiples choice items or other mult
 Package: \tab mcIRT\cr
 Type: \tab Package\cr
 Version: \tab 0.3\cr
-Date: \tab 2014-02-27\cr
+Date: \tab 2014-03-02\cr
 License: GPL (>= 2)
 }
 

@@ -58,7 +58,6 @@ ParList <- lapply(1:NUMBI,function(x)
 
 
 names(ParList) <- paste("item",1:NUMBI,sep="")
-# Add names to each list element, because this names are added to the columns in the simulated data.frame.
 
 set.seed(111)
 
