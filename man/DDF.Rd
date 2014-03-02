@@ -33,7 +33,9 @@ No more detail until now.
 
 }
 \references{
-More references
+Dorans, N. J. and Kullick, E. (1986). Demonstrating the utility of the standardization approach
+to assessing unexpected differential item performance on the Scholastic Aptitude Test. Journal of 
+Educational Measurement, 23, 355-368.
 }
 \author{
 Manuel Reif

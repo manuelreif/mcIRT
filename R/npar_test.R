@@ -139,7 +139,10 @@ names(stdpdif) <- colnames(reshOBJ$d[[1]])
 names(rmwsd) <- colnames(reshOBJ$d[[1]])
 names(varpp) <- colnames(reshOBJ$d[[1]])
 
-return(list(stdpdif=stdpdif,rmwsd=rmwsd,varpp=varpp,Ps=Ps))
+ergddf <- list(stdpdif=stdpdif,rmwsd=rmwsd,varpp=varpp,Ps=Ps)
+class(ergddf) <- c("DDF","standardization")
+
+return(ergddf)
 
 }
 
