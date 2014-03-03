@@ -1,23 +1,9 @@
-### nonparameteric test
-## input is reshape object
-
-# head(daf[[1]])
-# head(my_resh$recm[[1]])
-
-
-### focal group
 
 DDF <- function(reshOBJ, wm="focal")
 {
   
-#   d01_r <- reshOBJ$recm[[1]]
-#   daf_r <- reshOBJ$d[[1]]
-#   
-#   d01_f <- reshOBJ$recm[[2]]
-#   daf_f <- reshOBJ$d[[2]]
 
 # ------------------------------------------------------------------
-
 
   
 faclev <- lapply(1:ncol(reshOBJ$d[[1]]), function(zi){
@@ -52,13 +38,6 @@ Ps <- mapply(function(daf,d01)
         
   }, daf=reshOBJ$d, d01 = reshOBJ$recm,SIMPLIFY=FALSE)
   
-
-## und die jetzt irgendwie voneinander geschickt abziehen - ist das wunderschön oder was?
-
-
-## da muss man geschickt aus der funktion vorher rausfischen
-
-
 
 
 wm_all <- mapply(function(daf,d01)
