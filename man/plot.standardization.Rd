@@ -24,7 +24,7 @@ Further arguments for the \code{plot()} function.
 }
 \details{
 
-There will be more plots ... soon.
+For more detailed information, e.g. how to interprete the plot see Dorans and Kullick (1986).
 
 }
 

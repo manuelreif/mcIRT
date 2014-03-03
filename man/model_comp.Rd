@@ -12,14 +12,14 @@ model_comp(object, ...)
 }
 \arguments{
   \item{object}{
-An object of class \code{nrm} or \code{nlm}, which is the outcome of fitting \code{nrm()} or \code{nelm()} to a reshape object.
+An object of class \code{nrm} or \code{nlm}, which is the outcome of fitting a nominal response model \code{nrm()} or a nested logit model \code{nelm()}.
 }
   \item{\dots}{
-Insert different design matrices here. Use the helper function \code{designTemp()} to create the different designs. These designs will be translated into an design matrix, and the supplied data will be fitted with these different designs.
+Insert different design matrices here. Use the help function \code{designTemp()} to create different designs. These designs will be translated into an design matrix, and the supplied data will be fitted with these different designs.
 }
 }
 \details{
-The main advantage of this function is first, that different models with different design-matrices are fitted in one step and second that reasonable starting values are used, based on the values of the sumitted model object. This should accelerate the model fitting process a bit.\\
+The main advantage of this function is first, that different models with different design-matrices are fitted in one step and second that reasonable starting values are used, based on the values of the sumitted model object. This should accelerate the model fitting process (by reducing the number of iterations until convergence). \\
 
 The loop which fits the models always \code{try()}s to fit the model, which means that an output is returned even if one or more models fail to converge.
 
@@ -38,15 +38,16 @@ Manuel Reif
 
 
 \seealso{
-\code{\link{reshMG}}
 \code{\link{designTemp}}
+\code{\link{reshMG}}
 \code{\link{nrm}}
 \code{\link{nelm}}
 
 }
 \examples{
 
-
+\dontrun{
+# Don't run this example because it takes more than 5sec.
 NUMBI <- 5
 
 ParList <- lapply(1:NUMBI,function(x)
@@ -94,7 +95,7 @@ mydes[[1]][2,1] <- 2
 erg_modc <- model_comp(ergNRM,mydes)
 
 
-
+}
 
 }
 

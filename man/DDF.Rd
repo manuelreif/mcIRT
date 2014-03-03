@@ -5,7 +5,7 @@
 Differential Distractor Functioning
 }
 \description{
-This function yields nonparametric measures for getting insight into items and distractors. There are two groups expected - a reference group and a focal group. The empirical item response curves are the basis of the resulting indices.
+This function yields nonparametric measures for getting insight into items and categories. There are two groups expected - a reference group and a focal group. The empirical item response curves are the basis of the resulting indices.
 }
 \usage{
 DDF(reshOBJ, wm = "focal")
@@ -16,12 +16,12 @@ DDF(reshOBJ, wm = "focal")
 A reshape object which is a result of the \code{reshMG()} function. Make sure there are two groups supplied - the first is always supposed to be the reference group.
 }
   \item{wm}{
-Which weights should be used? There are 3 options: "focal" (default), "reference" and "total". Focal is fine in the most cases. For further informations see the references.
+Which weights should be used? There are 3 options: "focal" (default), "reference" and "total". Focal is fine in the most cases. For further informations see the paper of Dorans and Kullick (1986).
 }
 }
 \details{
 
-No more detail until now.
+There function will get much bigger.
 
 }
 \value{
