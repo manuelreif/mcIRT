@@ -14,15 +14,15 @@ model_comp <- function(object,...)
   
   Qs <- lapply(dem,function(ed){
 
-        design <- mcIRT:::ctrl_design(design=ed,aDD=object$reshOBJ$aDD,gr=object$reshOBJ$gr,TYPE=TYPE)  
+        design <- ctrl_design(design=ed,aDD=object$reshOBJ$aDD,gr=object$reshOBJ$gr,TYPE=TYPE)  
     
     # create Q matrix
     if(attr(object$reshOBJ$Qmat,"paraM") == "bock")
         {
-          gdema <- mcIRT:::grDMb(object$reshOBJ$aDD,object$reshOBJ$gr,design,TYPE=TYPE)
+          gdema <- grDMb(object$reshOBJ$aDD,object$reshOBJ$gr,design,TYPE=TYPE)
         } else if(attr(object$reshOBJ$Qmat,"paraM") == "01")
           {
-          gdema <- mcIRT:::grDM(object$reshOBJ$aDD,object$reshOBJ$gr,design,TYPE=TYPE)
+          gdema <- grDM(object$reshOBJ$aDD,object$reshOBJ$gr,design,TYPE=TYPE)
           }  
     
    return(gdema) 
@@ -33,7 +33,7 @@ model_comp <- function(object,...)
   
   if(class(object) == "nrm")
   {
-  moderg <- lapply(Qs,function(ds)
+  modres <- lapply(Qs,function(ds)
       {
         reshEX$Qmat <- ds # add new Q matrix
         newsv <- solve(t(ds) %*% ds) %*%  (t(ds) %*% old) # new starting values
@@ -44,7 +44,7 @@ model_comp <- function(object,...)
   } else {
     
     
-  moderg <- lapply(Qs,function(ds)
+  modres <- lapply(Qs,function(ds)
   {
     reshEX$Qmat <- ds # add new Q matrix
     newsv <- solve(t(ds) %*% ds) %*%  (t(ds) %*% old) # new starting values
@@ -52,11 +52,13 @@ model_comp <- function(object,...)
   })
     
   }
+  
+  
+  bigres <- list(object=object,modres=modres)
+  class(bigres) <- "modc"
+  
 
-  
-class(moderg) <- "modc"
-  
-  
-return(moderg)  
+
+return(bigres)  
 }  
   
