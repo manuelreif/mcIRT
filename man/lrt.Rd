@@ -83,8 +83,6 @@ nper <- 2000
 
 
 names(ParList) <- paste0("item",1:length(ParList))
-# Add names to each list element, because this names are added to the columns in the simulated data.frame.
-
 
 perp1 <- rnorm(nper,0,1)
 perp2 <- rnorm(nper,0.3,1)
