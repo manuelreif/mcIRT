@@ -8,10 +8,10 @@ citEntry(entry="Manual",
          author = personList(as.person("Manuel Reif")),
          year = year,
          note = vers,
-
+	 url  = "https://github.com/manuelreif/mcIRT",		 	
          textVersion =
-         paste("Manuel Reif (",
+         paste0("Reif, M. (",
                year,
                "). mcIRT: IRT models for multiple choice items. ",
-               vers, ".", sep=""))
+               vers, "."," https://github.com/manuelreif/mcIRT"))
 

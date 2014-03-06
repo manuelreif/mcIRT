@@ -9,7 +9,7 @@
 Likelihood Ratio Test
 }
 \description{
-LRTs
+This function applies likelihood ratio tests, between one reference model (object) and some competing models.
 }
 \usage{
 lrt(object, ...)
@@ -21,14 +21,15 @@ lrt(object, ...)
 
 \arguments{
   \item{object}{
-An object of class \code{nrm}, \code{nelm} or \code{modc}. In general, there are two approaches. First, fitting 2 or more models separately and supplying them to the function. The second approach is fitting the \code{model_comp()} function first and then supplying the resulting object to this function to gain lrt tests.
+An object of class \code{nrm}, \code{nelm} or \code{modc}. In general, there are two approaches. The first one is fitting 2 or more models separately and supplying them to the function. The first object should be the most restrictive one (smalles number of parameters). The second approach is using the \code{model_comp()} function first to fit several models and then supplying the resulting object to this function to gain lrt tests.
 }
   \item{\dots}{
 Objects of class code{nrm} or \code{nelm}, which should be compared to the first object (reference model). So likelihood ratio tests are realized always between the reference model and all the others (1 vs 2, 1 vs 3, 1 vs 4 \ldots).
 }
 }
 \details{
--- details?
+-- details? 
+%% something about nesting structure when using lrt.
 }
 \value{
 
