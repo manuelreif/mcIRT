@@ -16,17 +16,29 @@ This function visualizes DDF summary indices and some other more things in the f
 An object of class \code{standardization}.
 }
   \item{type}{
-Choose between different types of plots. Available: "rmwsd".
+Choose between different types of plots. Valid inputs are "rmwsd" and "catwise". See details for more information.
 }
+
   \item{\dots}{
 Further arguments for the \code{plot()} function.
 }
 }
 \details{
 
+There are different types of plots.
+
+\bold{rmwsd} Is a radar plot, which shows the difference of percent correct in 2 groups on the x-axis, and the variance of the difference on the y-axis.
+
+
+\bold{catwise} Prompts a plot which shows the empirical category probability functions.
+
+
 For more detailed information, e.g. how to interprete the plot see Dorans and Kullick (1986).
 
 }
+
+
+
 
 \references{
 Dorans, N. J. and Kullick, E. (1986). Demonstrating the utility of the standardization approach
