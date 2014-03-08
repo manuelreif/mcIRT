@@ -16,7 +16,7 @@ This function visualizes DDF summary indices and some other more things in the f
 An object of class \code{standardization}.
 }
   \item{type}{
-Choose between different types of plots. Valid inputs are "rmwsd" and "catwise". See details for more information.
+Choose between different types of plots. Valid inputs are "rmwsd", "catwise" and "allin1. See details for more information.
 }
 
   \item{\dots}{
@@ -33,7 +33,10 @@ There are different types of plots.
 \bold{catwise} Prompts a plot which shows the empirical category probability functions.
 
 
-For more detailed information, e.g. how to interprete the plot see Dorans and Kullick (1986).
+\bold{allin1} Items on the x-axis, standardized p-difference on the y-axis for each category (categories are colored). This plot is supposed to give an quick impression of the overall DDF status of this item set.
+
+
+For more detailed information, e.g. how to interprete the plots see Dorans and Kullick (1986).
 
 }
 
@@ -107,9 +110,11 @@ my_resh <- reshMG(simdatallg,items=2:11,groups=1,correct=rep(3,10),echo=FALSE)
 my_ddf <- DDF(my_resh)
 
 
-##### PLOT ###########
+##### PLOTS ###########
 
 plot(my_ddf)
+plot(my_ddf, type="allin1")
+plot(my_ddf, type="catwise")
 
 
 }

@@ -52,7 +52,7 @@ plot.standardization <- function(x, type="rmwsd",...)
             }
         
         # lines for group 1
-        plot(xen,grada[1,],type="l",ylim=c(0,1),xlab="score",ylab="prob", main=paste("Item",it))
+        plot(xen,grada[1,],type="l",ylim=c(0,1),xlab="score",ylab="prob", main=paste("Item",it),...)
         text(xen,grada[1,],labels=rownames(gradaf)[1])
         for(i in 2:nrow(grada))
           {
@@ -86,7 +86,63 @@ plot.standardization <- function(x, type="rmwsd",...)
       }
     
         
-      }
+      } else if(type == "allin1")
+  
+          {
+          maxii <- max(sapply(x$stdpdif,function(z1)max(abs(z1))))
+          if(maxii < 0.5)
+          {
+          maxii <- 0.5  
+          } else {
+            
+          maxii <- maxii + 0.1  
+          }
+          
+           
+          for(it in 1:length(x$stdpdif))
+            {
+  
+            #x$stdpdif[[it]]
+            ncat <- length(x$stdpdif[[it]])
+            if(it == 1)
+              {
+              plot(x=rep(it,ncat),x$stdpdif[[it]],ylim=c(-maxii ,maxii ),col=1:ncat,pch="-",cex=2.5,xlim=c(1,length(x$stdpdif)),axes=FALSE,xlab="Items",ylab="Difference in Percent",...)
+              axis(1,at=c(1,1:length(x$stdpdif)))
+              axis(2)
+              box()
+              abline(h=0)
+              abline(h=seq(-1,1,0.2),lty=3)
+                } else {
+                points(x=rep(it,ncat),x$stdpdif[[it]],ylim=c(-maxii ,maxii ),col=1:ncat,pch="-",cex=2.5)  
+                }
+      
+            }
+          maxncat <- max(sapply(x$stdpdif,function(ncc1701D)length(ncc1701D)))
+            
+          legend("topright",legend=1:maxncat,fill=1:maxncat,cex=0.65,horiz=TRUE,x.intersp=0.2)
+            
+          }
+      
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
