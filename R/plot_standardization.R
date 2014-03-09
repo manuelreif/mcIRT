@@ -26,14 +26,14 @@ plot.standardization <- function(x, type="rmwsd",...)
     abline(v=seq(-1,1,0.1),lty=2)
     
     }
+    par("ask"=FALSE)
   
   } else if(type == "catwise")
       {
-      
+
      par("ask"=TRUE)
       for(it in 1:length(x$stdpdif)) # items
       {
-
 
         whereobs <- apply(x$Ps[[1]][[it]],2,function(w) !all(log(w) < -30))
         whereobs2 <- apply(x$Ps[[2]][[it]],2,function(w) !all(log(w) < -30))
@@ -53,10 +53,10 @@ plot.standardization <- function(x, type="rmwsd",...)
         
         # lines for group 1
         plot(xen,grada[1,],type="l",ylim=c(0,1),xlab="score",ylab="prob", main=paste("Item",it),...)
-        text(xen,grada[1,],labels=rownames(gradaf)[1])
+        text(xen,grada[1,],labels=rownames(grada)[1])
         for(i in 2:nrow(grada))
           {
-          text(xen,grada[i,],labels=rownames(gradaf)[i])
+          text(xen,grada[i,],labels=rownames(grada)[i])
           lines(xen,grada[i,])
           }
 
@@ -76,15 +76,15 @@ plot.standardization <- function(x, type="rmwsd",...)
         # lines for group 2
         for(i in 1:nrow(grada))
         {
-          text(xen,grada[i,],labels=rownames(gradaf)[i],col="red")
+          text(xen,grada[i,],labels=rownames(grada)[i],col="red")
           lines(xen,grada[i,],col="red",lty=2)
         }
-        
+        legend
         
         
         
       }
-    
+     par("ask"=FALSE)
         
       } else if(type == "allin1")
   
