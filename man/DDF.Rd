@@ -20,8 +20,12 @@ Which weights should be used? There are 3 options: "focal" (default), "reference
 }
 }
 \details{
+\bold{reference group:} This denotes the group which is the "first" group within the reshape object - e.g. if the variable which denotes the different groups contains levels "A" and "B" then "A" is called the reference group and "B" is the focal group. You can choose the order of groups easily with \code{factor()} by permutating the levels. 
 
-There function will get much bigger.
+The choice which group to label as the reference group and which one as the focal group is up to the researcher. Often the bigger group is chosen as the reference group, whereas the focal group is often the one which is of special interest. 
+
+
+Only 2 groups are possible! If you want to compare > 2 groups, apply this function repeatedly.
 
 }
 \value{
@@ -45,7 +49,7 @@ Manuel Reif
 \seealso{
 
 \code{\link{reshMG}}
-
+\code{\link{lrt}}
 
 }
 \examples{
@@ -96,6 +100,28 @@ my_resh <- reshMG(simdatallg,items=2:11,groups=1,correct=rep(3,10),echo=FALSE)
 ##### DDF ###########
 
 my_ddf <- DDF(my_resh)
+
+# inspection of some arbitrary chosen item
+my_ddf[[1]][[1]]
+
+
+####### different reference group ##########
+
+# use the level argument to set a different reference group
+simdatallg2 <- data.frame(GROUP=factor(rep(c("A","B"),each=6000),levels=c("B","A")),simdatall)
+
+
+##### RESHAPE ###########
+
+my_resh2 <- reshMG(simdatallg2,items=2:11,groups=1,correct=rep(3,10),echo=FALSE)
+  
+##### DDF ###########
+
+my_ddf2 <- DDF(my_resh2)
+
+# inspection of some arbitrary chosen item
+my_ddf2[[1]][[1]]
+
 
 }
 
