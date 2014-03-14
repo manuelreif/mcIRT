@@ -9,7 +9,7 @@
 Likelihood Ratio Test
 }
 \description{
-This function applies likelihood ratio tests, between one reference model (object) and some competing models.
+This function applies likelihood ratio tests between one reference model (object) and some competing models.
 }
 \usage{
 lrt(object, ...)

@@ -23,7 +23,7 @@ An index vector which indicates the columns containing the items. If it is set t
 An index number which indicates the column containing the group membership of each person.
 }
   \item{correct}{
-An integer vector which denotes the position of the correct response category for each item. In cases in which no correct answer exists, it is reasonable to set this at \code{rep(0,length(items))}.
+An integer vector which denotes the position of the correct response category for each item. In cases in which no correct answer exists, it is reasonable to set this at \code{rep(0,length(items))}. \bold{The first category is denoted as 0.} See details for a detailed explanation.
 }
   \item{design}{
 A character string or a group-design has to be committed. Valid inputs are: 'nodif' or a design as resulting from the \code{designTemp} function.

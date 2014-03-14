@@ -13,7 +13,7 @@ This package provides functions to evaluate multiples choice items or other mult
 Package: \tab mcIRT\cr
 Type: \tab Package\cr
 Version: \tab 0.4\cr
-Date: \tab 2014-03-05\cr
+Date: \tab 2014-03-14\cr
 License: GPL (>= 2)
 }
 
@@ -43,14 +43,20 @@ Woods, C. M. (2007). Empirical Histograms in Item Response Theory With Ordinal D
 Woods, C. M. (2011). DIF Testing With an Empirical-Histogram Approximation of the Latent Density for Each Group. \emph{Applied Measurement in Education}, 24:3, 256-279.
 
 }
-%~~ Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation ~~
-%~~ directory ~~
+
 \keyword{package}
 
 \seealso{
+
+\code{\link{reshMG}}
+
 \code{\link{nrm}}
 
 \code{\link{nelm}}
+
+\code{\link{DDF}}
+
+
 }
 \examples{
 
