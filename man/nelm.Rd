@@ -32,7 +32,7 @@ A numerical vector or "aut" (which is the default). Starting values for the eta 
 }
 
   \item{ctrl}{
-A list of argumets to customize the computations.
+A list of arguments to customize the computations.
 }
 
   \item{object}{
@@ -71,7 +71,7 @@ The following arguments can be comitted within a list (ctrl argument)
   If TRUE, the variance of the latent person distribution is estimated. Otherwise it is set to 1 (for each group).
   
     \item \code{exac}
-  A numerical vector of length 1. If the difference in the log-Likelihood between two consecutive EM steps is not larger than 'exac' - the estimation will stop. Default: \code{0.001}
+  A numerical vector of length 1. If the difference in the log-likelihood between two consecutive EM steps is not larger than 'exac' - the estimation will stop. Default: \code{0.001}
   
     \item \code{EMmax}
   A numerical vector of length 1. This argument sets the maximum number of EM steps. The default value is 500. Feel free to enlarge this number.
@@ -112,7 +112,7 @@ Supply specific quadrature nodes and weights for nonparametric estimation (\code
 \item{starting_values}{A list with infos concerning the starting values. The first entry gives merely the structure of the starting values whereas \code{$ulstv} gives the used starting values for the first EM step}
 \item{EAPs}{The exact a-posteriori values for each person - which is a person parameter estimate. (Group membership is considered.)}
 \item{ZLpar}{The list of item parameter estimates for each group.}
-\item{SE}{The list of Standard Errors for the item parameter estimates.}
+\item{SE}{The list of standard errors for the item parameter estimates.}
 \item{reshOBJ}{The committed reshape object (which includes the data).}
 \item{Catinf}{A list which contains 1) the information amount for each category/item/group for a sequence of ability values; 2) the sequence of ability values; 3) test information (sum above all items) for each of the ability values.}
 \item{call}{Shows the actual call of the nrm function.}

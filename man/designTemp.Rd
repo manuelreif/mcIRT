@@ -27,10 +27,10 @@ For setting up a new multigroup design run \code{designTemp()} with default sett
 The rows denote the different groups (e.g. interpreted as 'reference' and 'focal group'), and the columns denote the items (which depends on the chosen model). Each matrix in the list denotes a model specific parameter (zetas, lambdas etc.).
 
 
-The first row in each matrix, has to contain only 1s, which means that these parameters will be estimated for the first group (e.g.: all the zeta parameters of item 1).
+The first row in each matrix, has to contain only ones, which means that these parameters will be estimated for the first group (e.g.: all the zeta parameters of item 1).
 
 
-The second row in each matrix indicates if the parameter for this group is estimated seperately or together with another group. 
+The second row in each matrix indicates if the parameter for this group is estimated separately or together with another group. 
 A '1' in the second row means that this parameter of group 2 is set equal to the parameter of the row above (which is in this example row 1 and therefore group 1).  
 By contrast, a '2' in the second row means that no restriction is set to the parameter estimation. The parameter of group 2 is estimated independently from the parameter of group 1 
 (because the first row is forced to contain only '1s'). For instance, if the zeta parameters of item 1 in group 2 should be estimated independently of those in group 1, fill in '2' (second row, first column) in the 'zeta' matrix. (To get an idea about the model parameters, take a closer look e.g. at Bock (1972), Baker & Kim (2004))

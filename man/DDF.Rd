@@ -5,7 +5,7 @@
 Differential Distractor Functioning
 }
 \description{
-This function yields nonparametric measures for getting insight into items and categories. There are two groups expected - a reference group and a focal group. The empirical item response curves are the basis of the resulting indices.
+This function yields nonparametric measures for getting insight into items and response categories. There are two groups expected - a reference group and a focal group. The empirical item response curves are the basis of the resulting indices.
 }
 \usage{
 DDF(reshOBJ, wm = "focal")
@@ -22,7 +22,7 @@ Which weights should be used? There are 3 options: "focal" (default), "reference
 \details{
 \bold{reference group:} This denotes the group which is the "first" group within the reshape object - e.g. if the variable which denotes the different groups contains levels "A" and "B" then "A" is called the reference group and "B" is the focal group. You can choose the order of groups easily with \code{factor()} by permutating the levels. 
 
-The choice which group to label as the reference group and which one as the focal group is up to the researcher. Often the bigger group is chosen as the reference group, whereas the focal group is often the one which is of special interest. 
+The choice which group to label as the reference group and which one as the focal group is up to the researcher. Often the larger group is chosen as the reference group, whereas the focal group is often the one which is of special interest. 
 
 
 Only 2 groups are possible! If you want to compare > 2 groups, apply this function repeatedly.

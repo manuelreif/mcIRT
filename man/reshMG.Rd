@@ -35,7 +35,7 @@ Logical input, whether infos should be displayed on the console immediately afte
 Character string -- which kind of model the user intends to fit afterwards. There are two valid inputs: 'NRM' and 'NLM' 
 }
   \item{paraM}{
-Choose the parametrization. There are 2 valid inputs: "bock" and "01". If "bock" is used, the Q matrix is built following Bock 1972 - otherwise the last parameter of the NRM part is set so zero. To get a better idea of the differences take a closer look at the Q matrix after reshaping the data. 
+Choose the parametrization. There are 2 valid inputs: "bock" and "01". If "bock" is used, the Q matrix is built following Bock (1972) - otherwise the last parameter of the NRM part is set to zero. To get a better idea of the differences take a closer look at the Q matrix after reshaping the data. 
 }
 
 }
@@ -44,7 +44,7 @@ Choose the parametrization. There are 2 valid inputs: "bock" and "01". If "bock"
 The category responses in \code{da} must be \code{numeric} or \code{integer} and must start with 0. An item, for instance, with 5 options must be coded with 0,1,2,3,4. If e.g. the first category is the correct option set \code{correct} to 0 for this item.
 
 
-In the case of a nominal response model, the \code{correct} argument just adds labels to the different categories, and does nothing else.
+In the case of a nominal response model, the \code{correct} argument just adds labels to the different categories, and does nothing else. The correct option will be named as "cor".
 
 In the case of a nested logit model, the \code{correct} argument reorders the categories. The 'correct' option is set as first category and labeled as 'cor'. For example: If the vector c(1,0,2) is supplied, then for the first item the second (!) category is denoted as the 'correct' one. So inspecting the reshaped output we would see in the \code{recm} list element dummy matrices (in the case of more than 1 group), which are reordered due to the correct option (the correct option within each item is always first). The \code{d} element of the list, contains a list of recoded numeric matrices. The matrices were recoded so that '0' always denotes the 'correct' option. So in our example, the response vector for item 1 would be recoded so that each '1' would be recoded to '0' and each '0' to '1'. So \code{d} is in general not the same as the original input, but a version which is prepared for fitting the model.
 

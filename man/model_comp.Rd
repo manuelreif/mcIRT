@@ -15,11 +15,11 @@ model_comp(object, ...)
 An object of class \code{nrm} or \code{nlm}, which is the outcome of fitting a nominal response model \code{nrm()} or a nested logit model \code{nelm()}. This should be the most parsimonious model, e.g. the model which suspects no DIF.
 }
   \item{\dots}{
-Insert different design matrices here (Input of at least one design-matrix is required!). Use the help function \code{designTemp()} to create different designs. These designs will be translated into an design matrix, and the supplied data will be fitted with these different designs. These competing models are typically using more parameters than the reference model because they often assume some kind of group x item interaction.
+Insert different design matrices here (Input of at least one design-matrix is required!). Use the help function \code{designTemp()} to create different designs. These designs will be transformed into a design matrix, and the supplied data will be fitted with these different designs. These competing models are typically using more parameters than the reference model because they often assume some kind of group x item interaction.
 }
 }
 \details{
-The main advantage of this function is first, that different models with different design-matrices are fitted in one step and second that reasonable starting values are used, based on the values of the sumitted model object. This should accelerate the model fitting process (by reducing the number of iterations until convergence).
+The main advantage of this function is first, that different models with different design-matrices are fitted in one step and second that reasonable starting values are used, based on the values of the submitted model object. This should accelerate the model fitting process (by reducing the number of iterations until convergence).
 
 The loop which fits the models always \code{try()}s to fit the model, which means that an output is returned even if one or more models fail to converge.
 

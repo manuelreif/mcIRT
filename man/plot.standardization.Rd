@@ -5,7 +5,7 @@
 Plot DDF
 }
 \description{
-This function visualizes DDF summary indices and some other more things in the future.
+This function visualizes DDF summary indices and empirical distractor functions.
 }
 \usage{
 \method{plot}{standardization}(x, type = "rmwsd", ...)
@@ -16,7 +16,7 @@ This function visualizes DDF summary indices and some other more things in the f
 An object of class \code{standardization}.
 }
   \item{type}{
-Choose between different types of plots. Valid inputs are "rmwsd", "catwise" and "allin1. See details for more information.
+Choose between different types of plots. Valid inputs are "rmwsd", "catwise" and "allin1". See details for more information.
 }
 
   \item{\dots}{
@@ -33,7 +33,7 @@ There are different types of plots.
 \bold{catwise} Prompts a plot which shows the empirical category probability functions.
 
 
-\bold{allin1} Items on the x-axis, standardized p-difference on the y-axis for each category (categories are colored). This plot is supposed to give an quick impression of the overall DDF status of this item set.
+\bold{allin1} Items on the x-axis, standardized p-difference on the y-axis for each category (categories are colored). This plot is supposed to give a quick impression of the overall DDF status of this item set.
 
 
 For more detailed information, e.g. how to interprete the plots see Dorans and Kullick (1986).

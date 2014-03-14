@@ -21,23 +21,20 @@ lrt(object, ...)
 
 \arguments{
   \item{object}{
-An object of class \code{nrm}, \code{nelm} or \code{modc}. In general, there are two approaches. The first one is fitting 2 or more models separately and supplying them to the function. The first object should be the most restrictive one (smalles number of parameters). The second approach is using the \code{model_comp()} function first to fit several models and then supplying the resulting object to this function to gain lrt tests.
+An object of class \code{nrm}, \code{nelm} or \code{modc}. In general, there are two approaches. The first one is fitting 2 or more models separately and supplying them to the function. The first object should be the most restrictive one (smallest number of parameters). The second approach is using the \code{model_comp()} function first to fit several models and then supplying the resulting object to this function to get lrt tests.
 }
   \item{\dots}{
-Objects of class code{nrm} or \code{nelm}, which should be compared to the first object (reference model). So likelihood ratio tests are realized always between the reference model and all the others (1 vs 2, 1 vs 3, 1 vs 4 \ldots).
+Objects of class \code{nrm} or \code{nelm}, which should be compared to the first object (reference model). So likelihood ratio tests are realized always between the reference model and all the others (1 vs 2, 1 vs 3, 1 vs 4 \ldots).
 }
 }
-\details{
--- details? 
-%% something about nesting structure when using lrt.
-}
+
 \value{
 
 The function returns a matrix with the following values
 
 \item{-2 loglikelihood difference}{This is the difference of every submitted model vs. the reference model (object).}
 \item{degrees of freedom difference}{This is the difference in df between the reference model and the other models.}
-\item{p-value}{The resulting X^2 value.}
+\item{p-value}{The resulting p-value whoch depends on the particular likelihood and the df difference.}
 
 }
 \references{
