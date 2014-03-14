@@ -79,7 +79,7 @@ plot.standardization <- function(x, type="rmwsd",...)
           text(xen,grada[i,],labels=rownames(grada)[i],col="red")
           lines(xen,grada[i,],col="red",lty=2)
         }
-        legend
+        legend("top",legend=names(x$Ps),fill=1:2,cex=0.65,horiz=TRUE,x.intersp=0.2)
         
         
         
