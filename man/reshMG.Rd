@@ -11,7 +11,7 @@ Run this function before fitting a nominal response model or nested logit model.
 reshMG(da, items = 0, groups = NA, correct, design = "nodif",
 echo = TRUE, TYPE = "NRM", paraM="bock")
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{da}{
 The \code{data.frame} that has to be reshaped. Each row contains the responses of a person, each column contains the responses of different persons to one item. Use NA if a value is missing.
@@ -77,7 +77,6 @@ Manuel Reif
 }
 \examples{
 
-%\dontrun{
 
 # create a list of parameters (see NRM.sim function)
 NUMBI <- 5
@@ -120,11 +119,9 @@ mydes$lambda[2,5] <- 2
 
 reshdat2 <- reshMG(DAT1,items=1:5,groups=6,correct=rep(0,5), design=mydes)
 
-%}
 
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
 \keyword{reshape}
 \keyword{nominal response model}
 \keyword{nested logit model}

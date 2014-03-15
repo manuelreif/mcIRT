@@ -11,6 +11,8 @@ function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM", paraM
   # find items and groups ----
   #---------------------------
 
+  if(length(groups)>1) stop("Only one group variable is permitted!")
+  
   if(is.na(groups) & any(items == 0))
     {
       gr <- factor(rep("A",nrow(da)))
@@ -21,15 +23,15 @@ function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM", paraM
             gr <- da[,groups] 
           }
         
+
   # doing controls - its necessary - trust me
-  ctrlERG <- dctrl(da[,items],correct)
+  ctrlERG <- dctrl(da[,items],correct,items)
   
   if(ctrlERG$probl)
   {
     print(ctrlERG$problemlist)
     stop("we've got a problem")
   }
-
   
   if(TYPE == "NLM") 
     {
@@ -52,8 +54,9 @@ function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM", paraM
     #
     d_new <- split(da1,gr) ## categories start with 0
     d_new <- lapply(d_new,as.matrix)
-  
-    
+
+    ###  more controls
+    egal <- dctrl2(d_new,da,items)
     
     recm <- lapply(levels(gr), function(LE)
     {
@@ -99,6 +102,8 @@ function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM", paraM
     d_new <- split(da[,items],gr) ## categories start with 0
     d_new <- lapply(d_new,as.matrix)
 
+    ###  more controls
+    egal <- dctrl2(d_new,da,items)
   # create dummy coded data
   recm <- lapply(levels(gr), function(LE)
   {
@@ -212,5 +217,28 @@ function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM", paraM
                               class(reshret) <- "reshNLM"  
                              }
       
+
+##### WARNING ##############
+
+testN <- lapply(d_new,function(x1)
+{
+  apply(x1,2,function(aa4)
+  {
+    ct <- table(aa4)[table(aa4) < 10]
+    ctn <- paste("cat",names(ct),"with",ct,"obs")
+    if(length(ct) == 0) NA
+    else ctn
+  })
+})
+
+if(!all(sapply(testN,function(dk) all(is.na(dk)))))
+{
+  pit <- lapply(testN,function(dk) dk[!is.na(dk)])
+  warning("There are categories with a small number of observations.\n",immediate. = TRUE)
+  print(pit)
+  cat("\n")
+}
+
+
   return(reshret)
 }
