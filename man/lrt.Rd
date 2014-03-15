@@ -52,6 +52,9 @@ Manuel Reif
 }
 \examples{
 
+## Too long for R CMD check :-(
+
+\dontrun{
 ## NUMBER OF ITEMS
 nit <- 3
 
@@ -107,6 +110,7 @@ est2 <- nrm(my_resh2)
 ### LIKELIHOOD RATIO TEST
 lrt(est1,est2)
 
+}
 }
 
 \keyword{lrt}

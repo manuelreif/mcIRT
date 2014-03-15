@@ -49,10 +49,19 @@ simdatallg2$item2 <- ifelse(simdatallg2$item1 == 1,5,simdatallg2$item1)
 mydesign <- designTemp(ngru=2,nit=10,TYPE="NRM")
 mydesign2 <- designTemp(ngru=2,nit=9,TYPE="NRM")
 mydesign3 <- designTemp(ngru=2,nit=10,TYPE="NRM")
+mydesign4 <- designTemp(ngru=2,nit=10,TYPE="NRM")
+mydesign5 <- designTemp(ngru=2,nit=10,TYPE="NRM")
 
 mydesign[[1]][2,1] <- 3 
 mydesign3[[1]][2,1] <- 2
 
+
+mydesign4[[2]][1,2:5] <- 2
+mydesign4[[1]][2,7] <- 2
+
+mydesign5[[1]][2,7] <- 2
+
+test <- reshMG(simdatallg,items=2:11,groups=1,correct=rep(3,10),echo=FALSE,design=mydesign4)
 
 ################## CREATE DATA - fin ################################
 
@@ -73,6 +82,7 @@ test_that("reshMG throws an error/warning when necessary", {
   expect_that(reshMG(simdatallg,items=2:11,groups=1,correct=rep(3,10),echo=FALSE,design=mydesign3,TYPE="AAA"), throws_error())
   expect_that(reshMG(simdatallg,items=2:11,groups=1,correct=rep(3,10),echo=FALSE,design=mydesign3,TYPE="AAA"), throws_error())
   expect_that(reshMG(simdatallg,items=2:11,groups=1,correct=rep(3,10),echo=FALSE,design=mydesign3,TYPE="BOCK"), throws_error())
+  expect_that(reshMG(simdatallg,items=2:11,groups=1,correct=rep(3,10),echo=FALSE,design=mydesign4)$design, is_identical_to(mydesign5))
 })
 
 
