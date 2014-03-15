@@ -53,7 +53,6 @@ mydesign3 <- designTemp(ngru=2,nit=10,TYPE="NRM")
 mydesign[[1]][2,1] <- 3 
 mydesign3[[1]][2,1] <- 2
 
-reshMG(simdatallg,items=2:11,groups=1,correct=rep(3,10),echo=FALSE,design=mydesign,TYPE=)
 
 ################## CREATE DATA - fin ################################
 
