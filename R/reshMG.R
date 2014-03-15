@@ -12,6 +12,8 @@ function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM", paraM
   #---------------------------
 
   if(length(groups)>1) stop("Only one group variable is permitted!")
+  if(!TYPE %in% c("NRM","NLM")) stop("TYPE must be NRM or NLM!")
+  if(!paraM %in% c("bock","01")) stop("paraM must be bock or 01!")
   
   if(is.na(groups) & any(items == 0))
     {
@@ -184,6 +186,9 @@ function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM", paraM
   # controlling the input design !!
   if(is.list(design))
   {
+    
+    if(!all(sapply(design,ncol) == length(items)))(stop("The number of items in the design != number of items in the dataset.\n"))
+    
     design <- ctrl_design(design=design,aDD=aDD,gr=gr,TYPE=TYPE)  
   }
   

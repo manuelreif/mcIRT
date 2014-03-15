@@ -45,11 +45,21 @@ simdatallg1[simdatallg1$GROUP == "A","item1"] <- ifelse(simdatallg1[simdatallg1$
 simdatallg2 <- simdatallg
 simdatallg2$item2 <- ifelse(simdatallg2$item1 == 1,5,simdatallg2$item1)
 
+### designs
+mydesign <- designTemp(ngru=2,nit=10,TYPE="NRM")
+mydesign2 <- designTemp(ngru=2,nit=9,TYPE="NRM")
+mydesign3 <- designTemp(ngru=2,nit=10,TYPE="NRM")
+
+mydesign[[1]][2,1] <- 3 
+mydesign3[[1]][2,1] <- 2
+
+reshMG(simdatallg,items=2:11,groups=1,correct=rep(3,10),echo=FALSE,design=mydesign,TYPE=)
+
 ################## CREATE DATA - fin ################################
 
 
 
-test_that("reshMG throws an error when necessary", {
+test_that("reshMG throws an error/warning when necessary", {
   expect_that(reshMG(simdatallg,items=2:11,groups=1,correct=rep(2,11),echo=FALSE), throws_error()) 
   expect_that(reshMG(simdatallg,items=2:11,groups=1,correct=rep(5,10),echo=FALSE), throws_error()) 
   expect_that(reshMG(simdatallg1,items=2:11,groups=1,correct=rep(3,10),echo=FALSE), throws_error())
@@ -58,6 +68,12 @@ test_that("reshMG throws an error when necessary", {
   expect_that(reshMG(simdatallg2,items=2:11,groups=1:2,correct=rep(3,10),echo=FALSE), throws_error())
   expect_that(reshMG(simdatallg,items=2:11,groups=1,correct=rep(3,10),echo=FALSE), gives_warning("small number"))
   expect_that(reshMG(simdatallg2,items=2:11,groups=12,correct=rep(3,10),echo=FALSE), throws_error())
+  expect_that(reshMG(simdatallg,items=2:11,groups=1,correct=rep(3,10),echo=FALSE,design=mydesign), throws_error("The numbers inside the matrix should refer to the groups!"))
+  expect_that(reshMG(simdatallg,items=2:11,groups=1,correct=rep(3,10),echo=FALSE,design=mydesign2), throws_error())
+  expect_that(reshMG(simdatallg,items=2:11,groups=1,correct=rep(3,10),echo=FALSE,design=mydesign[[1]]), throws_error("design"))
+  expect_that(reshMG(simdatallg,items=2:11,groups=1,correct=rep(3,10),echo=FALSE,design=mydesign3,TYPE="AAA"), throws_error())
+  expect_that(reshMG(simdatallg,items=2:11,groups=1,correct=rep(3,10),echo=FALSE,design=mydesign3,TYPE="AAA"), throws_error())
+  expect_that(reshMG(simdatallg,items=2:11,groups=1,correct=rep(3,10),echo=FALSE,design=mydesign3,TYPE="BOCK"), throws_error())
 })
 
 
