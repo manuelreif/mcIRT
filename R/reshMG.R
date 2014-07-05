@@ -146,7 +146,6 @@ function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM", paraM
 
 
     }
-
   ### d1uc new::::::
   ## anything which is.na() is converted to zero
  d1uc <-  lapply(recm, function(x){
@@ -170,19 +169,31 @@ function(da,items=0,groups=NA,correct,design="nodif",echo=TRUE,TYPE="NRM", paraM
    coluN <- max(sapply(da[,items],function(x)length(table(x))))
 
   
-  if(is.na(groups))
-  {
-    absF1 <- sapply(da[,items],function(TA)table(TA,useNA="ifany"))
-    rownames(absF1)[1:coluN] <- paste("category",1:coluN,sep="")  
-  } else {
+#   if(is.na(groups))
+#   {
+#     absF1 <- sapply(da[,items],function(TA)table(TA,useNA="ifany"))
+#     rownames(absF1)[1:coluN] <- paste("category",1:coluN,sep="")  
+#   } else {
+#     absF1 <- lapply(da[,items],function(TA)
+#     {
+#       tt1 <- table(TA,gr,useNA="ifany")
+#       rownames(tt1)[1:coluN] <- paste("category",1:coluN,sep="")
+#       tt1
+#     })
+#   }
+  
+
     absF1 <- lapply(da[,items],function(TA)
     {
       tt1 <- table(TA,gr,useNA="ifany")
-      rownames(tt1)[1:coluN] <- paste("category",1:coluN,sep="")
+      rownames(tt1)[1:nrow(tt1)] <- paste0("category",1:nrow(tt1))
       tt1
     })
-  }
-  
+
+
+
+
+
   # controlling the input design !!
   if(is.list(design))
   {
