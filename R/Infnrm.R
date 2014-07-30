@@ -47,13 +47,18 @@ Infnrm <- function(ESTlist, fromto=c(-5,5), gran=200)
     catinfI
   },levs=levels(ESTlist$reshOBJ$gr), stvl=relstv ,SIMPLIFY = FALSE)
   
+#browser()
+# GRs <- catinfG[[1]]
+#   TIFall <- lapply(catinfG,function(GRs)
+#   {
+#     apply(simplify2array(GRs, higher=TRUE),1,sum)
+#   })
   
-  TIFall <- lapply(catinfG,function(GRs)
-  {
-    apply(simplify2array(GRs, higher=TRUE),1,sum)
-  })
-  
-  
+    TIFall <- lapply(catinfG,function(GRs)
+      {
+        rowSums(do.call("cbind",GRs))
+      })
+      
   # category informations - for different thetas for each group
   class(catinfG) <- "infnrm"
   

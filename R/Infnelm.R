@@ -66,12 +66,16 @@ Infnelm <- function(ESTlist, fromto=c(-5,5), gran=200)
     
   },levs=levels(ESTlist$reshOBJ$gr), alphaG=ALPHAS ,betaG = BETAS, nrmG = NRMS ,SIMPLIFY = FALSE)
   
-  
-  TIFall <- lapply(catinfG,function(GRs)
-              {
-              apply(simplify2array(GRs, higher=TRUE),1,sum)
-              })
+# this approach does not work with unequal number of categories 
+#   TIFall <- lapply(catinfG,function(GRs)
+#               {
+#               apply(simplify2array(GRs, higher=TRUE),1,sum)
+#               })
 
+  TIFall <- lapply(catinfG,function(GRs)
+    {
+      rowSums(do.call("cbind",GRs))
+    })
   
   # category informations - for different thetas for each group
   class(catinfG) <- "infnlm"
