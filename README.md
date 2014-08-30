@@ -1,7 +1,9 @@
 mcIRT
 =====
 
-**Version 0.40 is on cran now!**
+**Version 0.41 is on cran now!**
+
+### [For examples check out the WIKI](https://github.com/manuelreif/mcIRT/wiki)
 
 
 This is an R package to fit 2 Item Response Theory (IRT) models: the Nominal Response Model and the Nested Logit Model.
@@ -14,8 +16,6 @@ To install this package from github, install [devtools](https://github.com/hadle
 library(devtools)
 install_github("mcIRT", "manuelreif", ref="master")
 ```
-
-More examples & informations are available on the github **[WIKI](https://github.com/manuelreif/mcIRT/wiki)**!
 
 
 TO-DOs for the next release version:
