@@ -1,6 +1,5 @@
 useDynLib(mcIRT)
 import(Rcpp)
-import(RcppArmadillo)
 
 export(NRM.sim)
 export(NLM.sim)
