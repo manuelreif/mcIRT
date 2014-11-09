@@ -14,7 +14,7 @@ To install this package from github, install [devtools](https://github.com/hadle
 
 ```R
 library(devtools)
-install_github("mcIRT", "manuelreif", ref="master")
+install_github("manuelreif/mcIRT", ref="master")
 ```
 
 
