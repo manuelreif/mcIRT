@@ -5,7 +5,7 @@ function(object, ...)
   nva  <- object$ctrl$sigmaest *(length(object$erg_distr$sig_est) -1)
   npar <- ncol(object$reshOBJ$Qmat) + nme + nva - length(object$ctrl$Clist)
   
-structure(2*object$last_mstep$value, df=npar)
+structure((-2)*object$last_mstep$value, df=npar)
 }
 
 
@@ -23,7 +23,7 @@ logLik.nelm <-
     # number of observations
     nobs <- sum(sapply(object$reshOBJ$d,nrow))
     
-    return(structure((-1)*object$last_mstep$value, df=npar, nobs=nobs))
+    return(structure(object$last_mstep$value, df=npar, nobs=nobs))
     
   }
 

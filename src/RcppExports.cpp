@@ -10,112 +10,88 @@ using namespace Rcpp;
 Rcpp::NumericVector de1nelmC(List PITEMLL, List QUADS, List fiqG, List riqv_querG, List fique0G);
 RcppExport SEXP mcIRT_de1nelmC(SEXP PITEMLLSEXP, SEXP QUADSSEXP, SEXP fiqGSEXP, SEXP riqv_querGSEXP, SEXP fique0GSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< List >::type PITEMLL(PITEMLLSEXP );
-        Rcpp::traits::input_parameter< List >::type QUADS(QUADSSEXP );
-        Rcpp::traits::input_parameter< List >::type fiqG(fiqGSEXP );
-        Rcpp::traits::input_parameter< List >::type riqv_querG(riqv_querGSEXP );
-        Rcpp::traits::input_parameter< List >::type fique0G(fique0GSEXP );
-        Rcpp::NumericVector __result = de1nelmC(PITEMLL, QUADS, fiqG, riqv_querG, fique0G);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< List >::type PITEMLL(PITEMLLSEXP);
+    Rcpp::traits::input_parameter< List >::type QUADS(QUADSSEXP);
+    Rcpp::traits::input_parameter< List >::type fiqG(fiqGSEXP);
+    Rcpp::traits::input_parameter< List >::type riqv_querG(riqv_querGSEXP);
+    Rcpp::traits::input_parameter< List >::type fique0G(fique0GSEXP);
+    __result = Rcpp::wrap(de1nelmC(PITEMLL, QUADS, fiqG, riqv_querG, fique0G));
+    return __result;
 END_RCPP
 }
 // de1nrmC
 Rcpp::NumericVector de1nrmC(List PITEMLL, List QUADS, List fiqG, List riqv_querG);
 RcppExport SEXP mcIRT_de1nrmC(SEXP PITEMLLSEXP, SEXP QUADSSEXP, SEXP fiqGSEXP, SEXP riqv_querGSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< List >::type PITEMLL(PITEMLLSEXP );
-        Rcpp::traits::input_parameter< List >::type QUADS(QUADSSEXP );
-        Rcpp::traits::input_parameter< List >::type fiqG(fiqGSEXP );
-        Rcpp::traits::input_parameter< List >::type riqv_querG(riqv_querGSEXP );
-        Rcpp::NumericVector __result = de1nrmC(PITEMLL, QUADS, fiqG, riqv_querG);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< List >::type PITEMLL(PITEMLLSEXP);
+    Rcpp::traits::input_parameter< List >::type QUADS(QUADSSEXP);
+    Rcpp::traits::input_parameter< List >::type fiqG(fiqGSEXP);
+    Rcpp::traits::input_parameter< List >::type riqv_querG(riqv_querGSEXP);
+    __result = Rcpp::wrap(de1nrmC(PITEMLL, QUADS, fiqG, riqv_querG));
+    return __result;
 END_RCPP
 }
 // EnelmC
 List EnelmC(List PITEMLL, List NODW, List Yl, List NU1);
 RcppExport SEXP mcIRT_EnelmC(SEXP PITEMLLSEXP, SEXP NODWSEXP, SEXP YlSEXP, SEXP NU1SEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< List >::type PITEMLL(PITEMLLSEXP );
-        Rcpp::traits::input_parameter< List >::type NODW(NODWSEXP );
-        Rcpp::traits::input_parameter< List >::type Yl(YlSEXP );
-        Rcpp::traits::input_parameter< List >::type NU1(NU1SEXP );
-        List __result = EnelmC(PITEMLL, NODW, Yl, NU1);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< List >::type PITEMLL(PITEMLLSEXP);
+    Rcpp::traits::input_parameter< List >::type NODW(NODWSEXP);
+    Rcpp::traits::input_parameter< List >::type Yl(YlSEXP);
+    Rcpp::traits::input_parameter< List >::type NU1(NU1SEXP);
+    __result = Rcpp::wrap(EnelmC(PITEMLL, NODW, Yl, NU1));
+    return __result;
 END_RCPP
 }
 // EnrmC
 List EnrmC(List PITEMLL, List NODW, List Yl, List NU1);
 RcppExport SEXP mcIRT_EnrmC(SEXP PITEMLLSEXP, SEXP NODWSEXP, SEXP YlSEXP, SEXP NU1SEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< List >::type PITEMLL(PITEMLLSEXP );
-        Rcpp::traits::input_parameter< List >::type NODW(NODWSEXP );
-        Rcpp::traits::input_parameter< List >::type Yl(YlSEXP );
-        Rcpp::traits::input_parameter< List >::type NU1(NU1SEXP );
-        List __result = EnrmC(PITEMLL, NODW, Yl, NU1);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< List >::type PITEMLL(PITEMLLSEXP);
+    Rcpp::traits::input_parameter< List >::type NODW(NODWSEXP);
+    Rcpp::traits::input_parameter< List >::type Yl(YlSEXP);
+    Rcpp::traits::input_parameter< List >::type NU1(NU1SEXP);
+    __result = Rcpp::wrap(EnrmC(PITEMLL, NODW, Yl, NU1));
+    return __result;
 END_RCPP
 }
 // mue_nelmC
 List mue_nelmC(List PITEMLL, List NODW, List Yl, List NU1, int sigmaest, double endest);
 RcppExport SEXP mcIRT_mue_nelmC(SEXP PITEMLLSEXP, SEXP NODWSEXP, SEXP YlSEXP, SEXP NU1SEXP, SEXP sigmaestSEXP, SEXP endestSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< List >::type PITEMLL(PITEMLLSEXP );
-        Rcpp::traits::input_parameter< List >::type NODW(NODWSEXP );
-        Rcpp::traits::input_parameter< List >::type Yl(YlSEXP );
-        Rcpp::traits::input_parameter< List >::type NU1(NU1SEXP );
-        Rcpp::traits::input_parameter< int >::type sigmaest(sigmaestSEXP );
-        Rcpp::traits::input_parameter< double >::type endest(endestSEXP );
-        List __result = mue_nelmC(PITEMLL, NODW, Yl, NU1, sigmaest, endest);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< List >::type PITEMLL(PITEMLLSEXP);
+    Rcpp::traits::input_parameter< List >::type NODW(NODWSEXP);
+    Rcpp::traits::input_parameter< List >::type Yl(YlSEXP);
+    Rcpp::traits::input_parameter< List >::type NU1(NU1SEXP);
+    Rcpp::traits::input_parameter< int >::type sigmaest(sigmaestSEXP);
+    Rcpp::traits::input_parameter< double >::type endest(endestSEXP);
+    __result = Rcpp::wrap(mue_nelmC(PITEMLL, NODW, Yl, NU1, sigmaest, endest));
+    return __result;
 END_RCPP
 }
 // mue_nrmC
 List mue_nrmC(List PITEMLL, List NODW, List Yl, List NU1, int sigmaest, double endest);
 RcppExport SEXP mcIRT_mue_nrmC(SEXP PITEMLLSEXP, SEXP NODWSEXP, SEXP YlSEXP, SEXP NU1SEXP, SEXP sigmaestSEXP, SEXP endestSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< List >::type PITEMLL(PITEMLLSEXP );
-        Rcpp::traits::input_parameter< List >::type NODW(NODWSEXP );
-        Rcpp::traits::input_parameter< List >::type Yl(YlSEXP );
-        Rcpp::traits::input_parameter< List >::type NU1(NU1SEXP );
-        Rcpp::traits::input_parameter< int >::type sigmaest(sigmaestSEXP );
-        Rcpp::traits::input_parameter< double >::type endest(endestSEXP );
-        List __result = mue_nrmC(PITEMLL, NODW, Yl, NU1, sigmaest, endest);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< List >::type PITEMLL(PITEMLLSEXP);
+    Rcpp::traits::input_parameter< List >::type NODW(NODWSEXP);
+    Rcpp::traits::input_parameter< List >::type Yl(YlSEXP);
+    Rcpp::traits::input_parameter< List >::type NU1(NU1SEXP);
+    Rcpp::traits::input_parameter< int >::type sigmaest(sigmaestSEXP);
+    Rcpp::traits::input_parameter< double >::type endest(endestSEXP);
+    __result = Rcpp::wrap(mue_nrmC(PITEMLL, NODW, Yl, NU1, sigmaest, endest));
+    return __result;
 END_RCPP
 }
