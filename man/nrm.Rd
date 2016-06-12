@@ -56,7 +56,7 @@ A logical vector of length 1. If TRUE all result tables are returned by the summ
 The eta parameters in \code{etastart} denote the estimable parameters of the model. For example, for an item with 4 categories, 3 \eqn{\gamma}'s (which substitute the 4 \eqn{\zeta}'s) and 3 \eqn{\xi}'s (which substitute the 4 \eqn{\lambda}'s) are constrained for normalization (parameter sets add up to zero). 
 
 
-The following arguments can be comitted within a list (ctrl argument):
+The following arguments can be committed within a list (ctrl argument):
 
 \itemize{
   \item \code{nodes}
