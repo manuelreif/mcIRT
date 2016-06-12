@@ -55,7 +55,7 @@ The eta parameters in \code{etastart} denote the estimable parameters of the mod
 
 
 
-The following arguments can be comitted within a list (ctrl argument)
+The following arguments can be committed within a list (ctrl argument)
 
 \itemize{
     \item \code{nodes}
